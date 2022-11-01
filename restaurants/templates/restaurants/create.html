@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block body %}
+  <div style='background: skyblue; height: 100rem;'>
+    <h2 class='text-center mt-5'>내 점포 등록 하기</h2>
+    <div class='container mt-5'>
+      <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% bootstrap_form restaurants_form %}
+        <input class='btn btn-dark' type="submit" name="" id="" value='추가하기'>
+      </form>
+    </div>
+  </div>
+{% endblock body %}

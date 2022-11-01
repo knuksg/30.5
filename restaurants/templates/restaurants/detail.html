@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}
+  상세보기
+{% endblock title %}
+
+{% block body %}
+  <h3 class='mt-5'>{{ restaurant.name }}</h3>
+  <hr>
+  <p>주소 :
+    {{restaurant.address }}</p>
+  <p>전화번호 :
+    {{ restaurant.shop_number }}</p>
+  <p>기본 가격대 :
+    {{ restaurant.between_pay }}</p>
+  <p>영업 시간 :
+    {{ restaurant.opening_time }}</p>
+  <span>식당 홈페이지:
+  </span>
+  <a href="">식당 홈페에지 수정 할 곳</a>
+
+{% endblock body %}
