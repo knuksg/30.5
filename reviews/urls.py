@@ -5,4 +5,5 @@ app_name = "reviews"
 
 urlpatterns = [
     path("", views.index, name="index"),
+    path("<int:restaurant_id>/review/", views.review_create, name="review_create"),
 ]
