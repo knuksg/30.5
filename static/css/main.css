@@ -16,7 +16,7 @@ a:link {
 }
 
 a {
-  text-decoration: none
+  text-decoration: none !important;
 }
 
 a:visited {
@@ -24,7 +24,7 @@ a:visited {
 }
 
 a:hover {
-  color: var(--gray-color);
+  color: var(--gray-color) !important;
 }
 
 input:focus {
@@ -39,6 +39,20 @@ input::placeholder {
   color: var(--gray-color);
 }
 
+input[type=button]{
+  width: 10%;
+  height:100%;
+  background-color: lightgray;
+  border:none;
+  background-color: white;
+  font-size:1em;
+  color:var(--gray-color);
+  outline:none;
+  display:inline;
+  margin-left: -10px;
+  box-sizing: border-box;
+}
+
 
 /* Nav */
 .nav {
@@ -50,6 +64,9 @@ input::placeholder {
   z-index: 999;
 }
 
+.nav-wrap > form {
+  width: 650px;
+}
 
 /* Footer */
 .footer {
