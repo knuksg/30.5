@@ -1,10 +1,11 @@
 from django.db import models
-
+from django.conf import settings
+from restaurants.models import restaurants
 # Create your models here.
 
 
 class Review(models.Model):
-    restaurant = models.ForeignKey("restaurants.Restaurant", on_delete=models.CASCADE)
+    restaurant = models.ForeignKey(restaurants, on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     content = models.TextField(max_length=500, null=True)
     rating = models.IntegerField("숫자", default=0, help_text="0~5사이 값으로 입력하세요")
@@ -13,6 +14,6 @@ class Review(models.Model):
 
 
 class ReviewImage(models.Model):
-    reviews = models.ForeignKey("Review", on_delete=models.CASCADE)
+    reviews = models.ForeignKey(Review, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
