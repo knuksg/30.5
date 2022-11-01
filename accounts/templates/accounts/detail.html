@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load django_bootstrap5 %}
+{% block body %}
+<div class="bg-light" style="width: 200px;">
+  <div>
+    <img src="{{ user.profile_image.url }}" alt="">
+  </div>
+  <div>
+    <span>이름</span>
+    <span>{{ user }}</span>
+  </div>
+  <div>
+    <span>이메일</span>
+    <span>{{ user.email }}</span>
+  </div>
+</div>
+<div class="d-flex">
+  <div>
+    <!-- Modal trigger button -->
+    <a type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#modalId">
+      회원 탈퇴
+    </a>
+  </div>
+  <div>
+    <a href="{% url 'accounts:logout' %}" class="btn btn-dark">로그아웃</a>
+  </div>
+</div>
+
+
+<!-- Modal Body -->
+<!-- if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard -->
+<div class="modal fade" id="modalId" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalTitleId">회원 탈퇴</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center">
+        정말로 탈퇴하시겠습니까?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">그만두기</button>
+        <a href="{% url 'accounts:delete' %}" class="btn btn-dark">탈퇴하기</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Optional: Place to the bottom of scripts -->
+<script>
+  const myModal = new bootstrap.Modal(document.getElementById('modalId'), options)
+</script>
+
+{% endblock body %}

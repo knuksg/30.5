@@ -1,8 +1,17 @@
 {% extends 'base.html' %}
-
-
-
 {% block body %}
-  111
+{% for user in users %}
+{{ user.username }}
+{% endfor %}
+<div>
+  {% if request.user.is_authenticated %}
+    <a href="{% url 'accounts:detail' request.user.pk %}">{{ request.user }}님의 프로필</a>
+    <a href="{% url 'accounts:update' %}">프로필 수정하기</a>
+    <a href="{% url 'accounts:logout' %}">로그아웃</a>
+  {% else %}
+    <a href="{% url 'accounts:signup' %}">회원가입</a>
+    <a href="{% url 'accounts:login' %}">로그인</a>
+  {% endif %}
+</div>
 {% endblock body %}
   
