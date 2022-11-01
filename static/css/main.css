@@ -1,0 +1,47 @@
+@import 'reset.css';
+
+
+:root {
+  --main-color: #FF7929;
+  --gray-color: #adb5bd;
+  --gray-light--color:#F7F7F7;
+  --gray-dark--color:#6c757d;
+}
+
+a:link {
+  color: var(--gray-color);
+}
+
+a {
+  text-decoration: none
+}
+
+a:visited {
+  color: var(--gray-color);
+}
+
+a:hover {
+  color: var(--gray-color);
+}
+
+input:focus {
+  outline: none;
+}
+
+body {
+  height: 2000px;
+}
+
+/* Nav */
+.nav {
+  background-color: #fff;
+  box-shadow: 1px 1px 10px 1px var(--gray-color);
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 999;
+}
+
+input::placeholder {
+  color: var(--gray-color);
+}
