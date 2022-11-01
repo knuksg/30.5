@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+{% block title %}
+  수정하기
+{% endblock title %}
+
+{% block body %}
+  <div class='container'>
+    <h2 class='text-center my-4'>상호 수정 하기</h2>
+    <form action="" method="POST">
+      {% csrf_token %}
+      {% bootstrap_form restaurant_form %}
+      <input class='btn btn-dark' type="submit" value='수정하기'>
+    </form>
+  </div>
+{% endblock body %}
