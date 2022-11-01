@@ -5,4 +5,5 @@ app_name = "restaurants"
 
 urlpatterns = [
     path("", views.index, name="index"),
+    path("detail/", views.detail, name="detail"),
 ]
