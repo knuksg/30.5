@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+{% block body %}
+<form action="" method="POST" enctype="multipart/form-data">
+  {% csrf_token %}
+  {% bootstrap_form form %}
+  {% bootstrap_button "확인" button_type="submit" button_class="btn-primary" %}
+</form>
+
+{% comment %} summernote 사진 크기 조절 {% endcomment %}
+<script>
+  $('#summernote').summernote({height: 300,  focus:true,  maxWidth:500,  
+    lang : 'ko-KR',
+    callbacks: {
+      onImageUpload: function(image) {
+             var file = image[0];
+             var reader = new FileReader();
+            reader.onloadend = function() {
+                var image = $('<img>').attr('src',  reader.result);
+                   image.attr('width','100%');
+                $('#summernote').summernote("insertNode", image[0]);
+            }
+           reader.readAsDataURL(file);
+      }
+  }
+ });
+</script>
+{% endblock body %}
