@@ -46,9 +46,17 @@ def review_create(request, pk):
     return render(request, "reviews/review_create.html", context)
 
 
-def review_detail(request, pk):
-    review = get_object_or_404(Review, pk=pk)
+def review_detail(request, restaurant_pk, review_pk):
+    reviews = get_object_or_404(Review, pk=review_pk)
+    restaurant = get_object_or_404(Restaurant, pk=restaurant_pk)
     context = {
-        "context": context,
+        "reviews": reviews,
+        "restaurant": restaurant,
     }
-    return render(request, "review_detail.html", context)
+    return render(request, "reviews/review_detail.html", context)
+
+
+# def review_delete(request, restaurant_pk, review_pk):
+#     review = ReviewForm.objects.get(pk=review_pk)
+#     review.delete()
+#     return redirect("restaurants:detail", restaurant_pk)

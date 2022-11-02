@@ -32,12 +32,15 @@
     </div>
     <hr>
     {% for review in reviews %}
-      <p>{{ review.user }}</p>
+      <p>
+        <b>{{ review.user }}</b>
+      </p>
       <p>{{ review.content }}</p>
       {% for reviewimage in review.reviewimage_set.all %}
         <img src="{{ reviewimage.photo1.url }}" alt="">
         {% endfor%}
-        <p>{{ review.created_at }}</p>
+        <p class='text-end'>{{ review.created_at }}</p>
+        <hr>
         {% endfor%}
       </div>
     {% endblock body %}
