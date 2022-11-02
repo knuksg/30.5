@@ -4,6 +4,7 @@ from .models import Restaurant, Category
 from reviews.models import Review
 from .forms import CategoryForm, RestaurantsForm
 from django.contrib.auth.decorators import login_required
+from datetime import date, datetime, timedelta
 
 
 def main(request):
@@ -41,6 +42,7 @@ def detail(request, pk):
     restaurant = Restaurant.objects.get(pk=pk)
     reviews = restaurant.review_set.all()
 
+
     ratings = []
     for review in reviews:
         ratings.append(review.rating)
@@ -60,7 +62,24 @@ def detail(request, pk):
         "middle": middle,
         "lower": lower,
     }
-    return render(request, "restaurants/detail.html", context)
+
+    response = render(request, "restaurants/detail.html", context)
+
+    expire_date, now = datetime.now(), datetime.now()
+    expire_date += timedelta(days=1)
+    expire_date = expire_date.replace(hour=0, minute=0, second=0, microsecond=0)
+    expire_date -= now
+    max_age = expire_date.total_seconds()
+    
+    cookie_value = request.COOKIES.get('hitboard', '_')
+
+    if f'_{pk}_' not in cookie_value:
+        cookie_value += f'_{pk}_'
+        response.set_cookie('hitboard', value=cookie_value, max_age=max_age, httponly=True)
+        restaurant.hits += 1
+        restaurant.save()
+
+    return response
 
 
 def update(request, pk):
