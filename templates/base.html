@@ -48,7 +48,7 @@
           <!-- Modal-btn -->
           {% if request.user.profile_image %}
           <a href="#" data-bs-toggle="modal" data-bs-target="#modalId"><img
-              src="{{ request.user.profile_image.url }}" alt="" class="w-100"></a>
+              src="{{ request.user.profile_image }}" alt="" class="w-100"></a>
           {% endif %}
         </div>
         {% else %}
