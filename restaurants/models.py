@@ -11,6 +11,7 @@ class Restaurant(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+
 class Category(models.Model):
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
     tag2 = models.TextField()
