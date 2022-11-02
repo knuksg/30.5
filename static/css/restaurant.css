@@ -129,3 +129,88 @@
   text-align: end;
   color: var(--gray-color);
 }
+
+
+/* Restaurants-Detail */
+/* Img-Top */
+.img-top {
+  width: 100%;
+  overflow: auto;
+}
+
+.img-top__list {
+  display: flex;
+  overflow: auto;
+}
+
+.img-top__img {
+  width: 350px;
+  max-height: 350px;
+  position: relative;
+  overflow: hidden;
+  margin-right: 10px;
+}
+
+.img-top__img img {
+  width: 100%;
+}
+
+
+/* Detail */
+.detail {
+  margin-top: 50px;
+  border-bottom: 1px solid var(--gray-color);
+}
+
+.detail-top {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 30px;
+  border-bottom: 1px solid var(--gray-color);
+}
+
+.detail__title {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.detail__title h2 {
+  margin: 0;
+  margin-right: 10px;
+}
+
+.detail__title span {
+  color: var(--main-color);
+}
+
+.detail__count {
+  color: var(--gray-color);
+}
+
+.detail__btn {
+  color: var(--gray-color);
+}
+
+
+/* Detail-Table */
+table {
+  padding-top: 10px;
+  border-spacing: 15px;
+  border-collapse: separate;
+}
+
+table th {
+  width: 150px;
+  color: var(--gray-dark-color);
+}
+
+table td {
+  padding: 10px;
+  color: var(--dark-color);
+}
+
+.detail-update p {
+  color: var(--gray-dark-color);
+  font-size: 12px;
+}

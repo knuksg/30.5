@@ -19,6 +19,21 @@
   <link rel="stylesheet" href="{% static 'css/main.css' %}" />
   <script defer src="{% static 'js/main.js' %}"></script>
   {% bootstrap_css %}
+  <style>
+    /* Modal-Position */
+    .modal-dialog {
+      position: fixed;
+      margin: auto;
+      width: 320px;
+      height: 100%;
+      top: 10px;
+      right: 10px;
+    }
+
+    .modal-content {
+      height: 300px;
+    }
+  </style>
 </head>
 
 <body>
@@ -61,7 +76,7 @@
 
   <!-- Modal Body -->
   <!-- if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard -->
-  <div style="transform: translateX(36%);" class="modal fade" id="modalId" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog"
+  <div class="modal fade" id="modalId" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog"
     aria-labelledby="modalTitleId" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-dialog modal-sm" role="document">
       <div class="modal-content">
