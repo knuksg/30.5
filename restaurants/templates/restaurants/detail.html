@@ -35,7 +35,7 @@
       <p>
         <b>{{ review.user }}</b>
       </p>
-      <p>{{ review.content }}</p>
+      <a href="{% url 'reviews:review_detail' restaurant.pk review.pk %}">{{ review.content }}</a>
       {% for reviewimage in review.reviewimage_set.all %}
         <img src="{{ reviewimage.photo1.url }}" alt="">
         {% endfor%}
