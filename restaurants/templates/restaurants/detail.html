@@ -30,7 +30,6 @@
       <!-- Detail-Top -->
       <div class="detail-top">
         <div class="">
-
           <div class="detail__title">
             <h2>{{ restaurant.name }}</h2>
             <span>평점</span>
@@ -50,26 +49,26 @@
             </div>
           </div>
         </div>
-
-      <div class="detail__btn d-flex">
-        <div class="text-center me-3">
-          <a href="{% url 'reviews:review_create' restaurant.pk %}">
+        <div class="detail__btn d-flex">
+          <div class="text-center me-3">
+            <a href="{% url 'reviews:review_create' restaurant.pk %}">
               <i class="fa-regular fa-pen-to-square fa-2x"></i>
               <p>리뷰쓰기</p>
             </a>
-        </div>
-        <div class="text-center">
-          {% if restaurant in request.user.like_restaurants.all %}
-          <a href="{% url 'restaurants:like' restaurant.pk %}">
-            <i class="fa-solid fa-star fa-2x"></i>
-            <p>찜한 식당</p>
-          </a>
-          {% else %}
-          <a href="{% url 'restaurants:like' restaurant.pk %}">
-            <i class="fa-regular fa-star fa-2x"></i>
-            <p>가고 싶다</p>
-          </a>
-          {% endif %}
+          </div>
+          <div class="text-center">
+            {% if restaurant in request.user.like_restaurants.all %}
+            <a href="{% url 'restaurants:like' restaurant.pk %}">
+              <i class="fa-solid fa-star fa-2x"></i>
+              <p>찜한 식당</p>
+            </a>
+            {% else %}
+            <a href="{% url 'restaurants:like' restaurant.pk %}">
+              <i class="fa-regular fa-star fa-2x"></i>
+              <p>가고 싶다</p>
+            </a>
+            {% endif %}
+          </div>
         </div>
       </div>
 
@@ -77,6 +76,7 @@
       <div class="detail-info">
         <table>
           <tbody>
+            <p></p>
             <tr>
               <th>주소</th>
               <td>{{ restaurant.address }}</td>
@@ -107,42 +107,79 @@
           {{ restaurant.updated_at|date:'Y-m-d' }}</p>
       </div>
     </div>
-  </div>
 
-  <div class='container'>
-    <h1 class='mt-4'>{{ restaurant.name }}
-      <a class='btn' href="{% url 'reviews:review_create' restaurant.pk%}">리뷰작성</a>
-    </h1>
-    <hr>
-    <p>주소 :
-      {{restaurant.address }}</p>
-    <p>전화번호 :
-      {{ restaurant.shop_number }}</p>
-    <p>기본 가격대 :
-      {{ restaurant.between_pay }}</p>
-    <p>영업 시간 :
-      {{ restaurant.opening_time }}</p>
-    <span>식당 홈페이지:
-    </span>
-    <a href="">식당 홈페에지 수정 할 곳</a>
-    <p>카테고리 :
-      {{ category.tag1 }},
-      {{ category.tag2 }},
-      {{ category.tag3 }},
-      {{ category.tag4 }},
-      {{ category.tag5 }}</p>
-    <div class='text-end'>
-      <a class='btn btn-dark my-2' href="{% url 'restaurants:delete' restaurant.pk %}">삭제하기</a>
-    </div>
-    <hr>
-    {% for review in reviews %}
-      <p>{{ review.user }}</p>
-      <p>{{ review.content }}</p>
-      {% for reviewimage in review.reviewimage_set.all %}
-        <img src="{{ reviewimage.photo1.url }}" alt="">
-        {% endfor%}
-        <p>{{ review.created_at }}</p>
-        {% endfor%}
+    <!-- Review -->
+    <div class="review">
+      {% for review in reviews %}
+      <div class="review-top">
+        <h6>리뷰 <span>()</span></h6>
+        <div class="like-count">
+          <h6>전체 ()</h6>
+          <h6>맛있다 ()</h6>
+          <h6>괜찮다 ()</h6>
+          <h6>별로 ()</h6>
+        </div>
       </div>
+      <div class="review-content">
+        <div class="review-left">
+          <img src="" alt="">
+          <p>{{ review.user.username }}</p>
+        </div>
+        <div class="review-center">
+          <p class="review-create">{{ review.created_at|date:'Y-m-d' }}</p>
+            <p class="mb-2">{{ review.content }}</p>
+            {% for reviewimage in review.reviewimage_set.all %}
+              <img src="{{ reviewimage.photo1.url }}" alt="">
+              {% endfor%}
+        </div>
+        <div class="review-right">
+          {{ review.rating }}
+        </div>
+      </div>
+      {% endfor%}
+      <p></p>
+    </div>
+  </div>
+</div>
 
-    {% endblock body %}
+
+{% endblock body %}
+
+
+
+<!-- stop -->
+<div class='container'>
+  <h1 class='mt-4'>{{ restaurant.name }}
+    <a class='btn' href="{% url 'reviews:review_create' restaurant.pk%}">리뷰작성</a>
+  </h1>
+  <hr>
+  <p>주소 :
+    {{restaurant.address }}</p>
+  <p>전화번호 :
+    {{ restaurant.shop_number }}</p>
+  <p>기본 가격대 :
+    {{ restaurant.between_pay }}</p>
+  <p>영업 시간 :
+    {{ restaurant.opening_time }}</p>
+  <span>식당 홈페이지:
+  </span>
+  <a href="">식당 홈페에지 수정 할 곳</a>
+  <p>카테고리 :
+    {{ category.tag1 }},
+    {{ category.tag2 }},
+    {{ category.tag3 }},
+    {{ category.tag4 }},
+    {{ category.tag5 }}</p>
+  <div class='text-end'>
+    <a class='btn btn-dark my-2' href="{% url 'restaurants:delete' restaurant.pk %}">삭제하기</a>
+  </div>
+  <hr>
+  {% for review in reviews %}
+    <p>{{ review.user }}</p>
+    <p>{{ review.content }}</p>
+    {% for reviewimage in review.reviewimage_set.all %}
+      <img src="{{ reviewimage.photo1.url }}" alt="">
+      {% endfor%}
+      <p>{{ review.created_at }}</p>
+      {% endfor%}
+    </div>

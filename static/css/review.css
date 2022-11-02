@@ -1,0 +1,68 @@
+:root {
+  /* Color */
+  --main-color: #FF7929;
+  --gray-color: #adb5bd;
+  --gray-light--color:#F7F7F7;
+  --gray-dark--color:#6c757d;
+  --gray-dark-color: #9C9C9C;
+  --green-color: #f3f7f0;
+  --dark-color: #3E3E3E;
+  --white-color: #F7F7F7;
+}
+
+
+/* Review */
+.review {
+  display: flex;
+  flex-direction: column;
+}
+
+.review-top {
+  display: flex;
+  justify-content: space-between;
+  padding: 30px 0;
+}
+
+.like-count {
+  display: flex;
+}
+
+.like-count h6:first-child {
+  color: var(--main-color);
+  border-left: 0;
+}
+
+.like-count h6 {
+  padding-left: 10px;
+  margin-left: 10px;
+  border-left: 2px solid var(--gray-color);
+  color: var(--gray-dark--color);
+}
+
+.review-content {
+  display: flex;
+  padding-bottom: 40px;
+  border-bottom: 1px solid var(--gray-color);
+}
+
+.review-left,
+.review-right {
+  width: 15%;
+  background-color: antiquewhite;
+}
+
+.review-center {
+  width: 68%;
+  padding: 0 30px;
+}
+
+.review-center img {
+  width: 120px;
+  margin-right: 10px;
+}
+
+.review-create {
+  color: var(--gray-color);
+  font-size: 14px;
+  margin: 0;
+}
