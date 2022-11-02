@@ -34,7 +34,10 @@
     {% for review in reviews %}
       <p>{{ review.user }}</p>
       <p>{{ review.content }}</p>
-      <p>{{ review.created_at }}</p>
-      {% endfor%}
-    </div>
-  {% endblock body %}
+      {% for reviewimage in review.reviewimage_set.all %}
+        <img src="{{ reviewimage.photo1.url }}" alt="">
+        {% endfor%}
+        <p>{{ review.created_at }}</p>
+        {% endfor%}
+      </div>
+    {% endblock body %}

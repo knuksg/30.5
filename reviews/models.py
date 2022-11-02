@@ -15,6 +15,11 @@ class Review(models.Model):
 
 
 class ReviewImage(models.Model):
+    restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
     reviews = models.ForeignKey(Review, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    photo1 = models.ImageField(upload_to="reviewBoard/images", blank=True)
+    photo2 = models.ImageField(upload_to="reviewBoard/images", blank=True)
+    photo3 = models.ImageField(upload_to="reviewBoard/images", blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
