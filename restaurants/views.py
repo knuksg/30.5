@@ -68,3 +68,9 @@ def update(request, pk):
     #     # return HttpResponseForbidden()
     #     # (2) flash message 활용!
     #     return redirect('restaurants:detail', restaurant.pk)
+
+
+def delete(request, pk):
+    restaurant = Restaurant.objects.get(pk=pk)
+    restaurant.delete()
+    return redirect("restaurants:main")
