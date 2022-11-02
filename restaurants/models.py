@@ -13,8 +13,9 @@ class Restaurant(models.Model):
 
 
 class Category(models.Model):
+    restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
     tag2 = models.TextField()
-    tag2 = models.TextField()
-    tag2 = models.TextField()
-    tag2 = models.TextField()
-    tag2 = models.TextField()
+    tag1 = models.TextField()
+    tag3 = models.TextField()
+    tag4 = models.TextField()
+    tag5 = models.TextField()
