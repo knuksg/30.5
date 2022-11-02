@@ -21,7 +21,7 @@ def create(request):
             # 로그인한 유저 => 작성자네!
             # restaurants.user = request.user
             restaurants.save()
-            return redirect("restaurants:index")
+            return redirect("restaurants:main")
     else:
         restaurants_form = RestaurantsForm()
     context = {
