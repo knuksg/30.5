@@ -1,8 +1,7 @@
-import re
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from restaurants.models import Restaurant
-from django.http import JsonResponse
+from django.contrib import messages
 from .forms import ReviewForm, ReviewImageForm
 from .models import Review
 
@@ -46,9 +45,66 @@ def review_create(request, pk):
     return render(request, "reviews/review_create.html", context)
 
 
-def review_detail(request, pk):
-    review = get_object_or_404(Review, pk=pk)
+def review_detail(request, restaurant_pk, review_pk):
+    reviews = get_object_or_404(Review, pk=review_pk)
+    restaurant = get_object_or_404(Restaurant, pk=restaurant_pk)
     context = {
-        "context": context,
+        "reviews": reviews,
+        "restaurant": restaurant,
     }
-    return render(request, "review_detail.html", context)
+    return render(request, "reviews/review_detail.html", context)
+
+
+def review_delete(request, restaurant_pk, review_pk):
+    review = get_object_or_404(Review, pk=review_pk)
+    restaurant = get_object_or_404(Restaurant, pk=restaurant_pk)
+    if request.user == review.user:
+        review = Review.objects.get(pk=review_pk)
+        review.delete()
+        return redirect("restaurants:detail", restaurant_pk)
+    else:
+        messages.warning(request, "권한 없음.")
+        context = {"review": review}
+        return render(
+            request, "reviews/review_detail.html", context, review.pk, restaurant_pk
+        )
+
+
+def review_update(request, review_pk):
+    restaurant = get_object_or_404(Restaurant, pk=review_pk)
+    if request.user == restaurant.user:
+        if request.method == "POST":
+            review_form = ReviewForm(request.POST, instance=review)
+            reviewimage_form = ReviewImageForm(
+                request.POST, request.FILES, instance=review_image
+            )
+            if review_form.is_valid():
+                # 리뷰내용 폼
+                review = review_form.save(commit=False)
+                review.restaurant = restaurant
+                review.user = request.user
+                review.save()
+                # 리뷰 이미지 폼
+                review_image = reviewimage_form.save(commit=False)
+                review_image.restaurant = restaurant
+                review_image.reviews = review
+                review_image.user = request.user
+                review_image.save()
+                messages.success(request, "글이 수정되었습니다.")
+                return redirect("restaurants:detail", review_pk)
+        else:
+            review_form = ReviewForm(instance=review)
+            reviewimage_form = ReviewImageForm(instance=review_image)
+        context = {
+            # "content": review.content,
+            # "userName": review.user.username,
+            "review_form": review_form,
+            "reviewimage_form": reviewimage_form,
+        }
+        return render(request, "reviews/review_create.html", context)
+
+
+# def review_delete(request, restaurant_pk, review_pk):
+#     review = ReviewForm.objects.get(pk=review_pk)
+#     review.delete()
+#     return redirect("restaurants:detail", restaurant_pk)

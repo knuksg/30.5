@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
 {% load django_bootstrap5 %}
 {% block body %}
+{% if request.user.is_authenticated %}
+<a href="{% url 'stories:create' %}">망고 스토리 작성하기</a>
+{% endif %}
 <div>
   <h1>11월 월간 망고</h1>
 </div>

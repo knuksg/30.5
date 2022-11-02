@@ -8,8 +8,22 @@ app_name = "reviews"
 
 urlpatterns = [
     path("", views.index, name="index"),
-    path("<int:pk>", views.review_detail, name="detail"),
+    path(
+        "detail/<int:restaurant_pk>/review_detail/<int:review_pk>/",
+        views.review_detail,
+        name="review_detail",
+    ),
     path("<int:pk>/review/", views.review_create, name="review_create"),
+    path(
+        "detail/<int:restaurant_pk>/delete/<int:review_pk>/",
+        views.review_delete,
+        name="review_delete",
+    ),
+    path(
+        "detail/<int:restaurant_pk>/update/<int:review_pk>",
+        views.review_update,
+        name="review_update",
+    ),
 ]
 
 if settings.DEBUG:
