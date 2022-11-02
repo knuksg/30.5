@@ -3,9 +3,11 @@
 {% load django_bootstrap5 %}
 {% block body %}
 <div class="bg-light" style="width: 200px;">
+  {% if user.profile_image %}
   <div>
     <img src="{{ user.profile_image.url }}" alt="">
   </div>
+  {% endif %}
   <div>
     <span>이름</span>
     <span>{{ user }}</span>
