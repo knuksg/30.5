@@ -57,8 +57,17 @@
           <p>리뷰쓰기</p>
         </div>
         <div class="text-center">
-          <i class="fa-regular fa-star fa-2x"></i>
-          <p>가고싶다</p>
+          {% if restaurant in request.user.like_restaurants.all %}
+          <a href="{% url 'restaurants:like' restaurant.pk %}">
+            <i class="fa-solid fa-star fa-2x"></i>
+            <p>찜한 식당</p>
+          </a>
+          {% else %}
+          <a href="{% url 'restaurants:like' restaurant.pk %}">
+            <i class="fa-regular fa-star fa-2x"></i>
+            <p>가고 싶다</p>
+          </a>
+          {% endif %}
         </div>
       </div>
     </div>

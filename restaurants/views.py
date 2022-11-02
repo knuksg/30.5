@@ -85,3 +85,12 @@ def delete(request, pk):
     restaurant = Restaurant.objects.get(pk=pk)
     restaurant.delete()
     return redirect("restaurants:main")
+
+@login_required
+def like(request, pk):
+    restaurant = Restaurant.objects.get(pk=pk)
+    if restaurant.pk in request.user.like_restaurants.all():
+        request.user.like_restaurants.remove(restaurant.pk)
+    else:
+        request.user.like_restaurants.add(restaurant.pk)
+    return redirect('restaurants:detail', pk)
