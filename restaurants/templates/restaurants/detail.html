@@ -6,7 +6,9 @@
 
 {% block body %}
   <div class='container'>
-    <h1 class='mt-4'>{{ restaurant.name }}</h1>
+    <h1 class='mt-4'>{{ restaurant.name }}
+      <a class='btn' href="{% url 'reviews:review_create' restaurant.pk%}">리뷰작성</a>
+    </h1>
     <hr>
     <p>주소 :
       {{restaurant.address }}</p>
@@ -28,5 +30,14 @@
     <div class='text-end'>
       <a class='btn btn-dark my-2' href="{% url 'restaurants:delete' restaurant.pk %}">삭제하기</a>
     </div>
-  </div>
-{% endblock body %}
+    <hr>
+    {% for review in reviews %}
+      <p>{{ review.user }}</p>
+      <p>{{ review.content }}</p>
+      {% for reviewimage in review.reviewimage_set.all %}
+        <img src="{{ reviewimage.photo1.url }}" alt="">
+        {% endfor%}
+        <p>{{ review.created_at }}</p>
+        {% endfor%}
+      </div>
+    {% endblock body %}
