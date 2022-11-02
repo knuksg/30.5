@@ -7,8 +7,10 @@ from .models import Review
 
 
 def index(request):
-    contents = Review.objects.all()
-    context = {"review": contents}
+    contents = Review.objects.all()  # Restaurant
+    context = {
+        "review": contents,
+    }
     return render(request, "reviews/index.html", context)
 
 
@@ -25,4 +27,12 @@ def review_create(request, pk):
             "content": review.content,
             "userName": review.user.username,
         }
-        return JsonResponse(context)
+        return render("restaurant/detail.html", context)
+
+
+def review_detail(request, pk):
+    review = get_object_or_404(Review, pk=pk)
+    context = {
+        "context": context,
+    }
+    return render(request, "review_detail.html", context)
