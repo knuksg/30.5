@@ -1,6 +1,7 @@
 from unicodedata import category
 from django.shortcuts import render, redirect
 from .models import Restaurant, Category
+from reviews.models import Review
 from .forms import CategoryForm, RestaurantsForm
 from django.contrib.auth.decorators import login_required
 
@@ -10,7 +11,9 @@ def main(request):
 
 
 def index(request):
-    return render(request, "restaurants/index.html")
+    restaurants = Restaurant.objects.order_by("-pk")
+    context = {"restaurants": restaurants}
+    return render(request, "restaurants/index.html", context)
 
 
 def create(request):
@@ -32,7 +35,8 @@ def create(request):
 
 def detail(request, pk):
     restaurant = Restaurant.objects.get(pk=pk)
-    context = {"restaurant": restaurant}
+    reviews = restaurant.review_set.all()
+    context = {"restaurant": restaurant, "reviews": reviews}
     return render(request, "restaurants/detail.html", context)
 
 
