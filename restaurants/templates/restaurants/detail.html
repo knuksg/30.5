@@ -47,26 +47,26 @@
             </div>
           </div>
         </div>
-
-      <div class="detail__btn d-flex">
-        <div class="text-center me-3">
-          <a href="{% url 'reviews:review_create' restaurant.pk %}">
+        <div class="detail__btn d-flex">
+          <div class="text-center me-3">
+            <a href="{% url 'reviews:review_create' restaurant.pk %}">
               <i class="fa-regular fa-pen-to-square fa-2x"></i>
               <p>리뷰쓰기</p>
             </a>
-        </div>
-        <div class="text-center">
-          {% if restaurant in request.user.like_restaurants.all %}
-          <a href="{% url 'restaurants:like' restaurant.pk %}">
-            <i class="fa-solid fa-star fa-2x"></i>
-            <p>찜한 식당</p>
-          </a>
-          {% else %}
-          <a href="{% url 'restaurants:like' restaurant.pk %}">
-            <i class="fa-regular fa-star fa-2x"></i>
-            <p>가고 싶다</p>
-          </a>
-          {% endif %}
+          </div>
+          <div class="text-center">
+            {% if restaurant in request.user.like_restaurants.all %}
+            <a href="{% url 'restaurants:like' restaurant.pk %}">
+              <i class="fa-solid fa-star fa-2x"></i>
+              <p>찜한 식당</p>
+            </a>
+            {% else %}
+            <a href="{% url 'restaurants:like' restaurant.pk %}">
+              <i class="fa-regular fa-star fa-2x"></i>
+              <p>가고 싶다</p>
+            </a>
+            {% endif %}
+          </div>
         </div>
       </div>
 
@@ -74,6 +74,7 @@
       <div class="detail-info">
         <table>
           <tbody>
+            <p></p>
             <tr>
               <th>주소</th>
               <td id="address">{{ restaurant.address }}</td>
@@ -104,8 +105,75 @@
           {{ restaurant.updated_at|date:'Y-m-d' }}</p>
       </div>
     </div>
-  </div>
 
+    <!-- Review -->
+    <div class="review">
+      {% for review in reviews %}
+      <div class="review-top">
+        <h6>리뷰 <span>({{ reviews.count }})</span></h6>
+        <div class="like-count">
+          <h6>전체 ({{ reviews.count }})</h6>
+          <h6>맛있다 ({{ upper }})</h6>
+          <h6>괜찮다 ({{ middle }})</h6>
+          <h6>별로 ({{ lower }})</h6>
+        </div>
+      </div>
+      <div class="review-content">
+        <div class="review-left">
+          <div class="review__profile">
+            {% if request.user.profile_image %}
+            <img src="{{ review.user.profile_image }}" alt="">
+            {% endif %}
+          </div>
+          <p class="m-0">{{ review.user.username }}</p>
+          <div class="user-count d-flex align-items-center">
+              <i class="fa-solid fa-pen"></i>
+              <span class="ms-1">{{ review.user.review_set.count }}</span>
+          </div>
+        </div>
+        <div class="review-center">
+          <p class="review-create">{{ review.created_at|date:'Y-m-d' }}</p>
+            <p class="mb-2">{{ review.content }}</p>
+
+            {% if review.reviewimage_set.all %}
+            {% for reviewimage in review.reviewimage_set.all %}
+              {% if reviewimage.photo1 %}
+              <img src="{{ reviewimage.photo1.url }}" alt="">
+              {% endif %}
+              {% if reviewimage.photo2 %}
+              <img src="{{ reviewimage.photo2.url }}" alt="">
+              {% endif %}
+              {% if reviewimage.photo3 %}
+              <img src="{{ reviewimage.photo3.url }}" alt="">
+              {% endif %}
+            {% endfor%}
+            {% endif %}
+              
+        </div>
+        <div class="review-right">
+          {% if review.rating > 3 %}
+          <div style="color: var(--main-color);">
+            <i class="fa-regular fa-face-grin-hearts fa-2x"></i>
+            <p>맛있다</p>
+          </div>
+          {% elif review.rating == 3 %}
+          <div style="color: var(--main-color);">
+            <i class="fa-regular fa-face-grin-wide fa-2x"></i>
+            <p>괜찮다</p>
+          </div>
+          {% else %}
+          <div style="color: var(--main-color);">
+            <i class="fa-regular fa-face-grin-beam-sweat fa-2x"></i>
+            <p>별로</p>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor%}
+      <p></p>
+    </div>
+  </div>
+</div>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8148ff6f51862625ec940e0d841516dd&libraries=services"></script>
 <script>
   var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
