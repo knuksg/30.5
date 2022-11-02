@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+{% block body %}
+<div>
+  <h1>11월 월간 망고</h1>
+</div>
+<div>
+  <p>에디터 입맛별 맛집 매거진</p>
+  <div class="row">
+    {% for story in stories %}
+    <div class="col col-12 col-sm-6">
+      <div class="card">
+        <div class="card-body">
+          <h3 class="card-title"><a href="{% url 'stories:detail' story.pk %}">{{ story.title }}</a></h3>
+          <p class="card-text">{{ story.subtitle }}</p>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock body %}
