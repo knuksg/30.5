@@ -26,6 +26,7 @@ def review_create(request, pk):
         context = {
             "content": review.content,
             "userName": review.user.username,
+            "review_form": review_form,
         }
         return render("restaurant/detail.html", context)
 
