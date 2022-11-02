@@ -3,6 +3,7 @@
 <h1>유저 목록</h1>
 {% for user in users %}
 {{ user.username }}
+<img src="{{ user.profile_image }}" alt="">
 {% endfor %}
 <h1>Navbar에 들어갈 내용들</h1>
 <div>
