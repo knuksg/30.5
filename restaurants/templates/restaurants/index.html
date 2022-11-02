@@ -1,7 +1,23 @@
 {% extends 'base.html' %}
-
-
+{% block title %}
+  식당 리스트
+{% endblock title %}
 {% block body %}
+  <h1 class='text-center mb-3'>에디터 추천 10</h1>
+  <br>
+  <div class='container'>
+    <h3 class='mb-2 d-flex justify-content-between'>맛집 리스트
+      <a class='btn btn-dark' href="{% url 'restaurants:create' %}">맛집추가</a>
+    </h3>
 
+    {% for restaurant in restaurants %}
+      <div class='container mb-3'>
+        <hr>
+        <a href="{% url 'restaurants:detail'  restaurant.pk %}">{{ restaurant.name }}</a>
+        <br>
+      </div>
+
+    {% endfor %}
+  </div>
 
 {% endblock body %}

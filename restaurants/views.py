@@ -1,6 +1,7 @@
 from unicodedata import category
 from django.shortcuts import render, redirect
 from .models import Restaurant, Category
+from reviews.models import Review
 from .forms import CategoryForm, RestaurantsForm
 from django.contrib.auth.decorators import login_required
 
@@ -10,7 +11,9 @@ def main(request):
 
 
 def index(request):
-    return render(request, "restaurants/index.html")
+    restaurants = Restaurant.objects.order_by("-pk")
+    context = {"restaurants": restaurants}
+    return render(request, "restaurants/index.html", context)
 
 
 def category(request):
@@ -25,7 +28,7 @@ def create(request):
             # 로그인한 유저 => 작성자네!
             # restaurants.user = request.user
             restaurants.save()
-            return redirect("restaurants:index")
+            return redirect("restaurants:main")
     else:
         restaurants_form = RestaurantsForm()
     context = {
@@ -36,7 +39,8 @@ def create(request):
 
 def detail(request, pk):
     restaurant = Restaurant.objects.get(pk=pk)
-    context = {"restaurant": restaurant}
+    reviews = restaurant.review_set.all()
+    context = {"restaurant": restaurant, "reviews": reviews}
     return render(request, "restaurants/detail.html", context)
 
 
@@ -72,3 +76,9 @@ def update(request, pk):
     #     # return HttpResponseForbidden()
     #     # (2) flash message 활용!
     #     return redirect('restaurants:detail', restaurant.pk)
+
+
+def delete(request, pk):
+    restaurant = Restaurant.objects.get(pk=pk)
+    restaurant.delete()
+    return redirect("restaurants:main")

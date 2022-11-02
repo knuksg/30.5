@@ -2,28 +2,46 @@
 {% load static %}
 {% load django_bootstrap5 %}
 {% block body %}
-<div class="bg-light" style="width: 200px;">
-  <div>
-    <img src="{{ user.profile_image.url }}" alt="">
+<div class="container mt-3 text-center d-flex flex-column align-items-center">
+  <div class="bg-light d-flex flex-column align-items-center" style="width: 300px;">
+    {% if user.profile_image %}
+    <div class="my-3">
+      <img src="{{ user.profile_image }}" class="rounded-circle" style="width: 50px; height: 50px;" alt="">
+    </div>
+    {% endif %}
+    <div>
+      <span class="fw-bold">이름</span>
+      <span>{{ user }}</span>
+    </div>
+    <div class="mb-3">
+      <span class="fw-bold">이메일</span>
+      <span>{{ user.email }}</span>
+    </div>
+    <div class="d-flex flex-column align-items-center my-3 gap-1">
+      <div>
+        <a href="{% url 'accounts:update' %}" class="btn btn-dark text-light">정보수정</a>
+      </div>
+      <div>
+        <!-- Modal trigger button -->
+        <a type="button" class="btn btn-dark text-white-50" data-bs-toggle="modal" data-bs-target="#modalId">
+          회원탈퇴
+        </a>
+      </div>
+      <div>
+        <a href="{% url 'accounts:logout' %}" class="btn btn-dark">로그아웃</a>
+      </div>
+    </div>
   </div>
-  <div>
-    <span>이름</span>
-    <span>{{ user }}</span>
-  </div>
-  <div>
-    <span>이메일</span>
-    <span>{{ user.email }}</span>
-  </div>
-</div>
-<div class="d-flex">
-  <div>
-    <!-- Modal trigger button -->
-    <a type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#modalId">
-      회원 탈퇴
-    </a>
-  </div>
-  <div>
-    <a href="{% url 'accounts:logout' %}" class="btn btn-dark">로그아웃</a>
+  
+  <div class="my-3">
+    <h2>찜한 식당 목록</h2>
+    {% if user.like_restaurants.all %}
+    {% for restaurant in user.like_restaurants.all %}
+    {{ restaurant.name }}
+    {% endfor %}
+    {% else %}
+    <p>찜한 식당이 없습니다...</p>
+    {% endif %}
   </div>
 </div>
 
