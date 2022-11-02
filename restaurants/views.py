@@ -13,6 +13,10 @@ def index(request):
     return render(request, "restaurants/index.html")
 
 
+def category(request):
+    return render(request, "restaurants/category.html")
+
+
 def create(request):
     if request.method == "POST":
         restaurants_form = RestaurantsForm(request.POST, request.FILES)
