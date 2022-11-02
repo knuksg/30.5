@@ -1,0 +1,131 @@
+:root {
+  /* Color */
+  --main-color: #FF7929;
+  --gray-color: #adb5bd;
+  --gray-light--color:#F7F7F7;
+  --gray-dark--color:#6c757d;
+  --gray-dark-color: #9C9C9C;
+  --green-color: #f3f7f0;
+  --dark-color: #3E3E3E;
+  --white-color: #F7F7F7;
+}
+
+
+/* Category */
+.category {
+  padding: 50px 0;
+}
+
+.category__title {
+  font-size: 28px;
+  color: var(--main-color);
+  margin-bottom: 20px;
+}
+
+.category__list {
+  display: flex;
+}
+
+.category__item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  margin-right: 10px;
+  padding: 10px 25px;
+  border: 1px solid var(--gray-color);
+  border-radius: 30px;
+}
+
+.category__item:first-child {
+  border: 1px solid var(--main-color);
+}
+
+.category__item:first-child > .category__name {
+  color: var(--main-color);
+}
+
+.category__name {
+  font-size: 18px;
+  margin: 0;
+  font-weight: 400;
+  color: var(--gray-color);
+}
+
+.category-menu__item {
+  height: 300px;
+}
+
+.menu__item__text h3,
+.menu__item__text p {
+  margin: 0;
+}
+
+
+/* Index */
+/* Restaurants */
+.cont {
+  width: 65% !important;
+}
+
+.restaurants {
+  background-color: var(--gray-light--color);
+}
+
+.restaurants p {
+  margin: 0;
+  color: var(--gray-dark-color);
+}
+
+.restaurants h1 {
+  margin: 10px 0;
+}
+
+.restaurants-top {
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid var(--gray-color);
+  background-color: var(--green-color);
+}
+
+.restaurants__item {
+  display: flex;
+  border-bottom: 1px solid var(--gray-color);
+  padding: 30px 0;
+}
+
+.restaurants__img {
+  width: 350px;
+  max-height: 250px;
+  position: relative;
+  overflow: hidden;
+  margin-right: 30px;
+}
+
+.restaurants__img img {
+  width: 100%;
+}
+
+.main-color {
+  color: var(--main-color);
+}
+
+.restaurants__content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.restaurants__content__top {
+  display: flex;
+  justify-content: space-between;
+}
+
+.restaurants__content__link {
+  text-align: end;
+  color: var(--gray-color);
+}
