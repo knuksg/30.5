@@ -55,8 +55,23 @@ def review_detail(request, restaurant_pk, review_pk):
     return render(request, "reviews/review_detail.html", context)
 
 
-def review_update(request, pk):
-    restaurant = get_object_or_404(Restaurant, pk=pk)
+def review_delete(request, restaurant_pk, review_pk):
+    review = get_object_or_404(Review, pk=review_pk)
+    restaurant = get_object_or_404(Restaurant, pk=restaurant_pk)
+    if request.user == review.user:
+        review = Review.objects.get(pk=review_pk)
+        review.delete()
+        return redirect("restaurants:detail", restaurant_pk)
+    else:
+        messages.warning(request, "권한 없음.")
+        context = {"review": review}
+        return render(
+            request, "reviews/review_detail.html", context, review.pk, restaurant_pk
+        )
+
+
+def review_update(request, review_pk):
+    restaurant = get_object_or_404(Restaurant, pk=review_pk)
     if request.user == restaurant.user:
         if request.method == "POST":
             review_form = ReviewForm(request.POST, instance=review)
@@ -76,7 +91,7 @@ def review_update(request, pk):
                 review_image.user = request.user
                 review_image.save()
                 messages.success(request, "글이 수정되었습니다.")
-                return redirect("restaurants:detail", pk)
+                return redirect("restaurants:detail", review_pk)
         else:
             review_form = ReviewForm(instance=review)
             reviewimage_form = ReviewImageForm(instance=review_image)
@@ -87,21 +102,6 @@ def review_update(request, pk):
             "reviewimage_form": reviewimage_form,
         }
         return render(request, "reviews/review_create.html", context)
-
-
-def review_delete(request, restaurant_pk, review_pk):
-    review = get_object_or_404(Review, pk=review_pk)
-    restaurant = get_object_or_404(Restaurant, pk=restaurant_pk)
-    if request.user == review.user:
-        review = Review.objects.get(pk=review_pk)
-        review.delete()
-        return redirect("restaurants:detail", restaurant_pk)
-    else:
-        messages.warning(request, "권한 없음.")
-        context = {"review": review}
-        return render(
-            request, "reviews/review_detail.html", context, review.pk, restaurant_pk
-        )
 
 
 # def review_delete(request, restaurant_pk, review_pk):

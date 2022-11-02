@@ -19,6 +19,11 @@ urlpatterns = [
         views.review_delete,
         name="review_delete",
     ),
+    path(
+        "detail/<int:restaurant_pk>/update/<int:review_pk>",
+        views.review_update,
+        name="review_update",
+    ),
 ]
 
 if settings.DEBUG:
