@@ -37,7 +37,7 @@
     <h2>찜한 식당 목록</h2>
     {% if user.like_restaurants.all %}
     {% for restaurant in user.like_restaurants.all %}
-    {{ restaurant.name }}
+    <a href="{% url 'restaurants:detail' restaurant.pk %}">{{ restaurant.name }}</a>
     {% endfor %}
     {% else %}
     <p>찜한 식당이 없습니다...</p>

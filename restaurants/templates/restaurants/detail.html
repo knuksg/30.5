@@ -51,17 +51,25 @@
           </div>
         </div>
 
-        <div class="detail__btn d-flex">
-          <div class="text-center me-3">
-            <a href="{% url 'reviews:review_create' restaurant.pk %}">
+      <div class="detail__btn d-flex">
+        <div class="text-center me-3">
+          <a href="{% url 'reviews:review_create' restaurant.pk %}">
               <i class="fa-regular fa-pen-to-square fa-2x"></i>
               <p>리뷰쓰기</p>
             </a>
-          </div>
-          <div class="text-center">
+        </div>
+        <div class="text-center">
+          {% if restaurant in request.user.like_restaurants.all %}
+          <a href="{% url 'restaurants:like' restaurant.pk %}">
+            <i class="fa-solid fa-star fa-2x"></i>
+            <p>찜한 식당</p>
+          </a>
+          {% else %}
+          <a href="{% url 'restaurants:like' restaurant.pk %}">
             <i class="fa-regular fa-star fa-2x"></i>
-            <p>가고싶다</p>
-          </div>
+            <p>가고 싶다</p>
+          </a>
+          {% endif %}
         </div>
       </div>
 
