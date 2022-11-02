@@ -6,12 +6,14 @@ from imagekit.processors import ResizeToFill
 
 # Create your models here.
 class User(AbstractUser):
-    phone = models.CharField(max_length=11, default='None')
+    phone = models.CharField(max_length=11, default="None")
     profile_image = ProcessedImageField(
-        upload_to = 'media/',
-        blank = True,
+        upload_to="media/",
+        blank=True,
         processors=[ResizeToFill(100, 100)],
-        format='JPEG',
-        options={'quality': 80}
+        format="JPEG",
+        options={"quality": 80},
     )
-    like_restaurants = models.ManyToManyField('restaurants.Restaurant', related_name='like_users')
+    like_restaurants = models.ManyToManyField(
+        "restaurants.Restaurant", related_name="like_users"
+    )
