@@ -40,7 +40,10 @@ def create(request):
 def detail(request, pk):
     restaurant = Restaurant.objects.get(pk=pk)
     reviews = restaurant.review_set.all()
-    context = {"restaurant": restaurant, "reviews": reviews}
+    context = {
+        "restaurant": restaurant,
+        "reviews": reviews,
+    }
     return render(request, "restaurants/detail.html", context)
 
 
