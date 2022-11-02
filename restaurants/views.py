@@ -40,9 +40,25 @@ def create(request):
 def detail(request, pk):
     restaurant = Restaurant.objects.get(pk=pk)
     reviews = restaurant.review_set.all()
+
+    ratings = []
+    for review in reviews:
+        ratings.append(review.rating)
+
+    upper, middle, lower = 0, 0, 0
+    for rating in ratings:
+        if int(rating) > 3:
+            upper += 1
+        elif int(rating) == 3:
+            middle += 1
+        else:
+            lower += 1
     context = {
         "restaurant": restaurant,
         "reviews": reviews,
+        "upper": upper,
+        "middle": middle,
+        "lower": lower,
     }
     return render(request, "restaurants/detail.html", context)
 
@@ -86,6 +102,7 @@ def delete(request, pk):
     restaurant.delete()
     return redirect("restaurants:main")
 
+
 @login_required
 def like(request, pk):
     restaurant = Restaurant.objects.get(pk=pk)
@@ -93,4 +110,4 @@ def like(request, pk):
         request.user.like_restaurants.remove(restaurant.pk)
     else:
         request.user.like_restaurants.add(restaurant.pk)
-    return redirect('restaurants:detail', pk)
+    return redirect("restaurants:detail", pk)
