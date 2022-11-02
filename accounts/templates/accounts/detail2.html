@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load django_bootstrap5 %}
+{% block body %}
+<div>
+  <div>
+    <img src="{{ user.profile_image.url }}" alt="">
+  </div>
+  <div>
+    <span>이름</span>
+    <span>{{ user }}</span>
+  </div>
+</div>
+<div>
+  <h1>찜한 식당 목록</h1>
+  {% for restaurant in user.like_restaurants.all %}
+  {{ restaurant.name }}
+  {% endfor %}
+</div>
+{% endblock body %}

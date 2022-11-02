@@ -1,8 +1,10 @@
 {% extends 'base.html' %}
 {% block body %}
+<h1>유저 목록</h1>
 {% for user in users %}
 {{ user.username }}
 {% endfor %}
+<h1>Navbar에 들어갈 내용들</h1>
 <div>
   {% if request.user.is_authenticated %}
     <a href="{% url 'accounts:detail' request.user.pk %}">{{ request.user }}님의 프로필</a>

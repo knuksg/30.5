@@ -14,4 +14,4 @@ class User(AbstractUser):
         format='JPEG',
         options={'quality': 80}
     )
-    # like_restaurants = models.ManyToManyField()
+    like_restaurants = models.ManyToManyField('restaurants.Restaurant', related_name='like_users')
