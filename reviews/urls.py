@@ -14,11 +14,11 @@ urlpatterns = [
         name="review_detail",
     ),
     path("<int:pk>/review/", views.review_create, name="review_create"),
-    # path(
-    #     "<int:restaurant_pk>/detail/<int:review_pk>/delete/",
-    #     views.review_delete,
-    #     name="review_delete",
-    # ),
+    path(
+        "detail/<int:restaurant_pk>/delete/<int:review_pk>/",
+        views.review_delete,
+        name="review_delete",
+    ),
 ]
 
 if settings.DEBUG:
