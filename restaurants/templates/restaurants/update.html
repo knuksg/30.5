@@ -7,10 +7,15 @@
 {% block body %}
   <div class='container'>
     <h2 class='text-center my-4'>상호 수정 하기</h2>
-    <form action="" method="POST">
-      {% csrf_token %}
-      {% bootstrap_form restaurant_form %}
-      <input class='btn btn-dark' type="submit" value='수정하기'>
-    </form>
+    <div class='container mt-5'>
+      <hr>
+      <form action="" method="POST">
+        {% csrf_token %}
+        {% bootstrap_form restaurant_form %}
+        <b>태그</b>
+        {% bootstrap_form category_form %}
+        <input class='btn btn-dark my-3' type="submit" value='수정하기'>
+      </form>
+    </div>
   </div>
 {% endblock body %}

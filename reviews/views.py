@@ -46,11 +46,13 @@ def review_create(request, pk):
 
 
 def review_detail(request, restaurant_pk, review_pk):
-    reviews = get_object_or_404(Review, pk=review_pk)
+    review = get_object_or_404(Review, pk=review_pk)
+    reviewimage = ReviewImage.objects.get(pk=review_pk)
     restaurant = get_object_or_404(Restaurant, pk=restaurant_pk)
     context = {
-        "reviews": reviews,
+        "review": review,
         "restaurant": restaurant,
+        "reviewimage": reviewimage,
     }
     return render(request, "reviews/review_detail.html", context)
 

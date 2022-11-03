@@ -3,13 +3,17 @@
 {% block title %}내 점포 등록{% endblock title %}
 
 {% block body %}
-  <div style='background: skyblue; height: 100rem;'>
-    <h2 class='text-center'>내 점포 등록 하기</h2>
+  <div class=''>
+    <h2 class='text-center mt-4'>내 점포 등록 하기</h2>
     <div class='container mt-5'>
+      <hr>
       <form action="" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {% bootstrap_form restaurants_form %}
-        <input class='btn btn-dark' type="submit" name="" id="" value='추가하기'>
+        <br>
+        <b>선택 사항</b>
+        {% bootstrap_form category_form %}
+        <input class='btn btn-dark my-3' type="submit" name="" id="" value='추가하기'>
       </form>
     </div>
   </div>
