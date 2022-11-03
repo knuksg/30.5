@@ -48,6 +48,16 @@ def update(request, pk):
         form = StoryForm(instance=story)
     context = {"form": form}
     return render(request, "stories/update.html", context)
+    
+
+def delete(request, pk):
+    story = Story.objects.get(pk=pk)
+    story.delete()
+    return redirect("stories:index")
+    context = {
+        'form': form
+    }
+    return render(request, 'stories/update.html', context)
 
 
 def search_test(request):
@@ -60,5 +70,5 @@ def search_test(request):
         ).distinct()
     paginator = Paginator(restaurant_list, 10)  # 페이지당 10개씩 보여주기
     page_obj = paginator.get_page(page)
-    context = {"restaurant_list": page_obj, "page": page, "kw": kw}
-    return render(request, "stories/search_test.html", context)
+    context = {'restaurant_list': page_obj, 'page': page, 'kw': kw}
+    return render(request, 'stories/search_test.html', context)  
