@@ -92,24 +92,24 @@ def detail(request, pk):
 
 def update(request, pk):
     restaurant = Restaurant.objects.get(pk=pk)
-    categroy = Category.objects.get(pk=pk)
+    category = Category.objects.get(restaurant_id=restaurant)
     # if request.user == restaurant.user:
     if request.method == "POST":
         # POST : input 값 가져와서, 검증하고, DB에 저장
         restaurant_form = RestaurantsForm(
             request.POST, request.FILES, instance=restaurant
         )
-        category_form = CategoryForm(request.POST, request.FILES, instance=categroy)
+        category_form = CategoryForm(request.POST, request.FILES, instance=category)
         if restaurant_form.is_valid():
             # 유효성 검사 통과하면 저장하고, 상세보기 페이지로
             restaurant_form.save()
             # messages.success(request, '글이 수정되었습니다.')
-            return redirect("restaurants:detail", restaurant.pk)
+            return redirect("restaurants:detail", pk)
         # 유효성 검사 통과하지 않으면 => context 부터해서 오류메시지 담긴 restaurant_form을 랜더링
     else:
         # GET : Form을 제공
         restaurant_form = RestaurantsForm(instance=restaurant)
-        category_form = CategoryForm(instance=categroy)
+        category_form = CategoryForm(instance=category)
     context = {
         "restaurant_form": restaurant_form,
         "category_form": category_form,

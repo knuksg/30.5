@@ -18,8 +18,8 @@ class Restaurant(models.Model):
 
 class Category(models.Model):
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
-    tag1 = models.CharField(max_length=20)
-    tag3 = models.CharField(max_length=20)
-    tag2 = models.CharField(max_length=20)
-    tag4 = models.CharField(max_length=20)
-    tag5 = models.CharField(max_length=20)
+    tag1 = models.CharField(blank=True, max_length=20)
+    tag2 = models.CharField(blank=True, max_length=20)
+    tag3 = models.CharField(blank=True, max_length=20)
+    tag4 = models.CharField(blank=True, max_length=20)
+    tag5 = models.CharField(blank=True, max_length=20)
