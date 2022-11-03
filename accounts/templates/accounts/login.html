@@ -1,14 +1,16 @@
 {% extends 'base.html' %}
 {% load django_bootstrap5 %}
+{% block title %}로그인{% endblock title %}
+
 {% block body %}
-<h1 class="my-3 text-center">로그인</h1>
-<div class="d-flex justify-content-center my-3">
-  <div class="col-12 col-sm-8 col-md-6 col-lg-4">
-    <form action="" method="POST">
-      {% csrf_token %}
-      {% bootstrap_form form %}
-      {% bootstrap_button "확인" button_type="submit" button_class="btn-primary" %}
-    </form>
+  <h1 class="my-3 text-center">로그인</h1>
+  <div class="d-flex justify-content-center my-3">
+    <div class="col-12 col-sm-8 col-md-6 col-lg-4">
+      <form action="" method="POST">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        {% bootstrap_button "확인" button_type="submit" button_class="btn-primary" %}
+      </form>
+    </div>
   </div>
-</div>
 {% endblock body %}
