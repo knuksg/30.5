@@ -93,7 +93,7 @@ def review_update(request, review_pk, restaurant_pk):
                 review_image.user = request.user
                 review_image.save()
                 messages.success(request, "글이 수정되었습니다.")
-                return redirect("reviews:review_detail", review_pk, restaurant_pk)
+                return redirect("reviews:review_detail", restaurant_pk, review_pk)
         else:
             review_form = ReviewForm(instance=review)
             reviewimage_form = ReviewImageForm(instance=reviewimage)
