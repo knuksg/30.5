@@ -37,7 +37,6 @@
 </head>
 
 <body>
-
   <!-- Nav -->
   <nav class="nav d-flex w-100 justify-content-between">
     <div class="d-flex nav-wrap">
@@ -45,7 +44,7 @@
       <form class="d-flex align-items-center" action="{% url 'stories:search_test' %}">
         <div class="">
           <i class="fa-solid fa-magnifying-glass" style="color: #adb5bd;"></i>
-          <input type="text" id="search_kw" value="{{ kw|default_if_none:'' }}" placeholder=" 지역, 식당 또는 음식" style="border: none;">
+          <input type="text" id="search_kw" name="kw" value="{{ kw|default_if_none:'' }}" placeholder=" 지역, 식당 또는 음식" style="border: none;">
         </div>
         <input type="button" id="btn_search" value="CLEAR">
       </form>
@@ -75,7 +74,6 @@
         {% else %}
         <i class="fa-regular fa-user fa-lg" style="color: #adb5bd;" data-bs-toggle="modal" data-bs-target="#modalId"></i>
         {% endif %}
-          
       </div>
     </div>
   </nav>
