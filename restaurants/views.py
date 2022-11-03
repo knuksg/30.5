@@ -63,7 +63,7 @@ def detail(request, pk):
             middle += 1
         else:
             lower += 1
-    grade = sum(ratings) / len(ratings)
+
     context = {
         "restaurant": restaurant,
         "reviews": reviews[::-1],
@@ -72,7 +72,6 @@ def detail(request, pk):
         "lower": lower,
         "reviews_count": reviews_count,
         "likes": len(likes),
-        "grade": round(grade, 1),
     }
 
     response = render(request, "restaurants/detail.html", context)
