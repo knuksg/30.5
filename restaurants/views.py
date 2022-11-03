@@ -1,8 +1,8 @@
 from unicodedata import category
 from django.shortcuts import render, redirect
-from .models import Restaurant, Category
+from .models import Restaurant, Tag
 from reviews.models import Review
-from .forms import CategoryForm, RestaurantsForm
+from .forms import RestaurantsForm, TagForm
 from django.contrib.auth.decorators import login_required
 from datetime import date, datetime, timedelta
 
@@ -24,23 +24,31 @@ def category(request):
 def create(request):
     if request.method == "POST":
         restaurants_form = RestaurantsForm(request.POST, request.FILES)
-        category_form = CategoryForm(request.POST, request.FILES)
         if restaurants_form.is_valid():
-            restaurants = restaurants_form.save(commit=False)
-            # 로그인한 유저 => 작성자네!
-            # restaurants.user = request.user
-            restaurants.save()
-            # 카테고리 세이브
-            category = category_form.save(commit=False)
-            category.restaurant = restaurants
-            category.save()
+            new_restaurant = Restaurant(
+                name = restaurants_form.cleaned_data['name'],
+                address = restaurants_form.cleaned_data['address'],
+                shop_number = restaurants_form.cleaned_data['shop_number'],
+                between_pay = restaurants_form.cleaned_data['between_pay'],
+                opening_time = restaurants_form.cleaned_data['opening_time'],
+                break_day = restaurants_form.cleaned_data['break_day'],
+            )
+            new_restaurant.save()
+            tags = restaurants_form.cleaned_data['tags'].split(',')
+            for tag in tags:
+                if not tag : 
+                    continue
+                else:
+                    tag = tag.strip()
+                    _tag, _ = Tag.objects.get_or_create(name=tag)
+                    new_restaurant.tags.add(_tag)
             return redirect("restaurants:main")
     else:
         restaurants_form = RestaurantsForm()
-        category_form = CategoryForm()
+        tag_form = TagForm()
     context = {
         "restaurants_form": restaurants_form,
-        "category_form": category_form,
+        "tag_form": tag_form,
     }
     return render(request, "restaurants/create.html", context=context)
 
