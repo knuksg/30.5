@@ -1,25 +1,27 @@
 {% extends 'base.html' %}
+{% block title %}회원리스트{% endblock title %}
+
 {% block body %}
-<h1>유저 목록</h1>
-{% for user in users %}
-<div class="card my-3" style="width: 300px;">
-  <img class="card-img-top" src="{{ user.profile_image }}" style="width: 100px; height: 100px;" alt="Title">
-  <div class="card-body">
-    <h4 class="card-title">유저 이름: {{ user.username }}</h4>
-    <p class="card-text">Text</p>
+  <h1>유저 목록</h1>
+  {% for user in users %}
+    <div class="card my-3" style="width: 300px;">
+      <img class="card-img-top" src="{{ user.profile_image }}" style="width: 100px; height: 100px;" alt="Title">
+      <div class="card-body">
+        <h4 class="card-title">유저 이름:
+          {{ user.username }}</h4>
+        <p class="card-text">Text</p>
+      </div>
+    </div>
+  {% endfor %}
+  <h1>Navbar에 들어갈 내용들</h1>
+  <div>
+    {% if request.user.is_authenticated %}
+      <a href="{% url 'accounts:detail' request.user.pk %}">{{ request.user }}님의 프로필</a>
+      <a href="{% url 'accounts:update' %}">프로필 수정하기</a>
+      <a href="{% url 'accounts:logout' %}">로그아웃</a>
+    {% else %}
+      <a href="{% url 'accounts:signup' %}">회원가입</a>
+      <a href="{% url 'accounts:login' %}">로그인</a>
+    {% endif %}
   </div>
-</div>
-{% endfor %}
-<h1>Navbar에 들어갈 내용들</h1>
-<div>
-  {% if request.user.is_authenticated %}
-    <a href="{% url 'accounts:detail' request.user.pk %}">{{ request.user }}님의 프로필</a>
-    <a href="{% url 'accounts:update' %}">프로필 수정하기</a>
-    <a href="{% url 'accounts:logout' %}">로그아웃</a>
-  {% else %}
-    <a href="{% url 'accounts:signup' %}">회원가입</a>
-    <a href="{% url 'accounts:login' %}">로그인</a>
-  {% endif %}
-</div>
 {% endblock body %}
-  

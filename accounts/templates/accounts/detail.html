@@ -1,74 +1,75 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load django_bootstrap5 %}
+{% block title %}개일프로필{% endblock title %}
+
 {% block body %}
-<div class="container mt-3 text-center d-flex flex-column align-items-center">
-  <div class="bg-light d-flex flex-column align-items-center" style="width: 300px;">
-    {% if user.profile_image %}
+  <div class="container mt-3 text-center d-flex flex-column align-items-center">
+    <div class="bg-light d-flex flex-column align-items-center" style="width: 300px;">
+      {% if user.profile_image %}
+        <div class="my-3">
+          <img src="{{ user.profile_image }}" class="rounded-circle" style="width: 50px; height: 50px;" alt="">
+        </div>
+      {% endif %}
+      <div>
+        <span class="fw-bold">이름</span>
+        <span>{{ user }}</span>
+      </div>
+      <div class="mb-3">
+        <span class="fw-bold">이메일</span>
+        <span>{{ user.email }}</span>
+      </div>
+      <div class="d-flex flex-column align-items-center my-3 gap-1">
+        <div>
+          <a href="{% url 'accounts:update' %}" class="btn btn-dark text-light">정보수정</a>
+        </div>
+        <div>
+          <!-- Modal trigger button -->
+          <a type="button" class="btn btn-dark text-white-50" data-bs-toggle="modal" data-bs-target="#modalId">
+            회원탈퇴
+          </a>
+        </div>
+        <div>
+          <a href="{% url 'accounts:logout' %}" class="btn btn-dark">로그아웃</a>
+        </div>
+      </div>
+    </div>
+
     <div class="my-3">
-      <img src="{{ user.profile_image }}" class="rounded-circle" style="width: 50px; height: 50px;" alt="">
+      <h2>찜한 식당 목록</h2>
+      {% if user.like_restaurants.all %}
+        {% for restaurant in user.like_restaurants.all %}
+          <a href="{% url 'restaurants:detail' restaurant.pk %}">{{ restaurant.name }}</a>
+        {% endfor %}
+      {% else %}
+        <p>찜한 식당이 없습니다...</p>
+      {% endif %}
     </div>
-    {% endif %}
-    <div>
-      <span class="fw-bold">이름</span>
-      <span>{{ user }}</span>
-    </div>
-    <div class="mb-3">
-      <span class="fw-bold">이메일</span>
-      <span>{{ user.email }}</span>
-    </div>
-    <div class="d-flex flex-column align-items-center my-3 gap-1">
-      <div>
-        <a href="{% url 'accounts:update' %}" class="btn btn-dark text-light">정보수정</a>
-      </div>
-      <div>
-        <!-- Modal trigger button -->
-        <a type="button" class="btn btn-dark text-white-50" data-bs-toggle="modal" data-bs-target="#modalId">
-          회원탈퇴
-        </a>
-      </div>
-      <div>
-        <a href="{% url 'accounts:logout' %}" class="btn btn-dark">로그아웃</a>
+  </div>
+
+  <!-- Modal Body -->
+  <!-- if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard -->
+  <div class="modal fade" id="modalId" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalTitleId">회원 탈퇴</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-center">
+          정말로 탈퇴하시겠습니까?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">그만두기</button>
+          <a href="{% url 'accounts:delete' %}" class="btn btn-dark">탈퇴하기</a>
+        </div>
       </div>
     </div>
   </div>
-  
-  <div class="my-3">
-    <h2>찜한 식당 목록</h2>
-    {% if user.like_restaurants.all %}
-    {% for restaurant in user.like_restaurants.all %}
-    <a href="{% url 'restaurants:detail' restaurant.pk %}">{{ restaurant.name }}</a>
-    {% endfor %}
-    {% else %}
-    <p>찜한 식당이 없습니다...</p>
-    {% endif %}
-  </div>
-</div>
 
-
-<!-- Modal Body -->
-<!-- if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard -->
-<div class="modal fade" id="modalId" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="modalTitleId">회원 탈퇴</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body text-center">
-        정말로 탈퇴하시겠습니까?
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">그만두기</button>
-        <a href="{% url 'accounts:delete' %}" class="btn btn-dark">탈퇴하기</a>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Optional: Place to the bottom of scripts -->
-<script>
-  const myModal = new bootstrap.Modal(document.getElementById('modalId'), options)
-</script>
+  <!-- Optional: Place to the bottom of scripts -->
+  <script>
+    const myModal = new bootstrap.Modal(document.getElementById('modalId'), options)
+  </script>
 
 {% endblock body %}

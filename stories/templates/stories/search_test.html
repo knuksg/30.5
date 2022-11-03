@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% block body %}
+{% if restaurant_list %}
+<div class="d-flex flex-column justify-content-center">
+  <h1 class="mx-auto mb-3">{{ kw }} 맛집 인기 검색 순위</h1>
+  <div class="row row-cols-2 mx-auto mb-3" style="width: 650px;">
+    {% for restaurant in restaurant_list %}
+    <div class="col">
+      <div class="card" style="width: 300px;">
+        {% if restaurant.reviewimage_set.all %}
+        <a href="{% url 'restaurants:detail' restaurant.pk %}">
+          <img class="card-img-top" src="{{ restaurant.reviewimage_set.all.0.photo1.url }}" style="width: 100%; height: 200px;" alt="Title">
+        </a>
+        {% else %}
+        <a href="{% url 'restaurants:detail' restaurant.pk %}">
+          <img class="card-img-top" src="https://picsum.photos/300/200" style="width: 100%; height: 200px;" alt="Title">
+        </a>
+        {% endif %}
+        <div class="card-body">
+          <h3 class="card-title">{{ restaurant.name }}</h3>
+          <p class="card-text">{{ restaurant.address }}</p>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  <!-- 페이징처리 시작 -->
+  <ul class="pagination justify-content-center">
+    <!-- 이전페이지 -->
+    {% if restaurant_list.has_previous %}
+    <li class="page-item">
+        <a class="page-link" data-page="{{ restaurant_list.previous_page_number }}"
+           href="javascript:void(0)">이전</a>
+    </li>
+    {% else %}
+    <li class="page-item disabled">
+        <a class="page-link" tabindex="-1" aria-disabled="true"
+           href="javascript:void(0)">이전</a>
+    </li>
+    {% endif %}
+    <!-- 페이지리스트 -->
+    {% for page_number in restaurant_list.paginator.page_range %}
+    {% if page_number >= restaurant_list.number|add:-5 and page_number <= restaurant_list.number|add:5 %}
+    {% if page_number == restaurant_list.number %}
+    <li class="page-item active" aria-current="page">
+        <a class="page-link" data-page="{{ page_number }}"
+           href="javascript:void(0)">{{ page_number }}</a>
+    </li>
+    {% else %}
+    <li class="page-item">
+        <a class="page-link" data-page="{{ page_number }}"
+           href="javascript:void(0)">{{ page_number }}</a>
+    </li>
+    {% endif %}
+    {% endif %}
+    {% endfor %}
+    <!-- 다음페이지 -->
+    {% if restaurant_list.has_next %}
+    <li class="page-item">
+        <a class="page-link" data-page="{{ restaurant_list.next_page_number }}"
+           href="javascript:void(0)">다음</a>
+    </li>
+    {% else %}
+    <li class="page-item disabled">
+        <a class="page-link" tabindex="-1" aria-disabled="true"
+           href="javascript:void(0)">다음</a>
+    </li>
+    {% endif %}
+  </ul>
+  <!-- 페이징처리 끝 -->
+</div>
+{% else %}
+<h1>검색 조건에 맞는 식당이 없습니다...</h1>
+{% endif %}
+
+
+
+<form id="searchForm" method="get" action="{% url 'stories:search_test' %}">
+  <input type="hidden" id="kw" name="kw" value="{{ kw|default_if_none:'' }}">
+  <input type="hidden" id="page" name="page" value="{{ page }}">
+</form>
+
+<script type='text/javascript'>
+  const page_elements = document.getElementsByClassName("page-link");
+  Array.from(page_elements).forEach(function(element) {
+      element.addEventListener('click', function() {
+          document.getElementById('page').value = this.dataset.page;
+          document.getElementById('searchForm').submit();
+      });
+  });
+  const btn_search = document.getElementById("btn_search");
+  btn_search.addEventListener('click', function() {
+      document.getElementById('kw').value = document.getElementById('search_kw').value;
+      document.getElementById('page').value = 1;  // 검색버튼을 클릭할 경우 1페이지부터 조회한다.
+      document.getElementById('searchForm').submit();
+  });
+</script>
+
+{% endblock body %}
