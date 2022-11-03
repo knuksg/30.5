@@ -10,236 +10,225 @@
     <div class="swiper mySwiper">
       <div class="swiper-wrapper">
         {% for review in reviews %}
-          {% if review.reviewimage_set.all %}
-            {% for reviewimage in review.reviewimage_set.all %}
-              {% if reviewimage.photo1 %}
-                <div class="swiper-slide">
-                  <div class="img-top__img">
-                    <img src="{{ reviewimage.photo1.url }}" alt="">
-                  </div>
-                </div>
-              {% endif %}
-              {% if reviewimage.photo2 %}
-                <div class="swiper-slide">
-                  <div class="img-top__img">
-                    <img src="{{ reviewimage.photo2.url }}" alt="">
-                  </div>
-                </div>
-              {% endif %}
-              {% if reviewimage.photo3 %}
-                <div class="swiper-slide">
-                  <div class="img-top__img">
-                    <img src="{{ reviewimage.photo3.url }}" alt="">
-                  </div>
-                </div>
-              {% endif %}
-              {% endfor%}
+        {% if review.reviewimage_set.all %}
+        {% for reviewimage in review.reviewimage_set.all %}
+          {% if reviewimage.photo1 %}
+          <div class="swiper-slide">
+            <div class="img-top__img">
+              <img src="{{ reviewimage.photo1.url }}" alt="">
+            </div>
+          </div>
+          {% endif %}
+          {% if reviewimage.photo2 %}
+          <div class="swiper-slide">
+            <div class="img-top__img">
+              <img src="{{ reviewimage.photo2.url }}" alt="">
+            </div>
+          </div>
+          {% endif %}
+          {% if reviewimage.photo3 %}
+          <div class="swiper-slide">
+            <div class="img-top__img">
+              <img src="{{ reviewimage.photo3.url }}" alt="">
+            </div>
+          </div>
+          {% endif %}
+        {% endfor%}
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Detail & Review -->
+  <div class="container cont">
+    <!-- Detail -->
+    <div class="detail">
+      <div id="map" class="my-3" style="width:100%;height:350px;"></div>
+      <!-- Detail-Top -->
+      <div class="detail-top">
+        <div class="">
+          <div class="detail__title">
+            <h2 id="restaurant_name">{{ restaurant.name }}</h2>
+            <span class="fs-2">{{ grade }}</span>
+          </div>
+          <div class="detail__count d-flex">
+            <div class="d-flex align-items-center">
+              <i class="fa-solid fa-eye me-1"></i>
+              <p class="m-0">{{ restaurant.hits }}</p>
+            </div>
+            <div class="d-flex align-items-center">
+              <i class="fa-solid fa-pen ms-3 me-1"></i>
+              <p class="m-0">{{ reviews_count }}</p>
+            </div>
+            <div class="d-flex align-items-center">
+              <i class="fa-solid fa-star ms-3 me-1"></i>
+              <p class="m-0">{{ likes }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="detail__btn d-flex">
+          <div class="text-center me-3">
+            <a href="{% url 'reviews:review_create' restaurant.pk %}">
+              <i class="fa-regular fa-pen-to-square fa-2x"></i>
+              <p>리뷰쓰기</p>
+            </a>
+          </div>
+          <div class="text-center">
+            {% if restaurant in request.user.like_restaurants.all %}
+            <a href="{% url 'restaurants:like' restaurant.pk %}">
+              <i class="fa-solid fa-star fa-2x"></i>
+              <p>찜한 식당</p>
+            </a>
+            {% else %}
+            <a href="{% url 'restaurants:like' restaurant.pk %}">
+              <i class="fa-regular fa-star fa-2x"></i>
+              <p>가고 싶다</p>
+            </a>
             {% endif %}
-          {% endfor %}
+          </div>
         </div>
       </div>
 
-      <!-- Detail & Review -->
-      <div class="container cont">
-        <!-- Detail -->
-        <div class="detail">
-          <div id="map" class="my-3" style="width:100%;height:350px;"></div>
-          <!-- Detail-Top -->
-          <div class="detail-top">
-            <div class="">
-              <div class="detail__title">
-                <h2 id="restaurant_name">{{ restaurant.name }}</h2>
-                <span>평점</span>
-              </div>
-              <div class="detail__count d-flex">
-                <div class="d-flex align-items-center">
-                  <i class="fa-solid fa-eye me-1"></i>
-                  <p class="m-0">조회수</p>
-                  <p>{{ restaurant.hits }}</p>
-                </div>
-                <div class="d-flex align-items-center">
-                  <i class="fa-solid fa-pen ms-3 me-1"></i>
-                  <p class="m-0">리뷰수</p>
-                </div>
-                <div class="d-flex align-items-center">
-                  <i class="fa-solid fa-star ms-3 me-1"></i>
-                  <p class="m-0">별점수</p>
-                </div>
-              </div>
+      <!-- Detail-Info -->
+      <div class="detail-info">
+        <table>
+          <tbody>
+            <p></p>
+            <tr>
+              <th>주소</th>
+              <td id="address">{{ restaurant.address }}</td>
+            </tr>
+            <tr>
+              <th>전화번호</th>
+              <td>{{ restaurant.shop_number }}</td>
+            </tr>
+            <tr>
+              <th>가격대</th>
+              <td>{{ restaurant.between_pay }}</td>
+            </tr>
+            <tr>
+              <th>영업시간</th>
+              <td>{{ restaurant.opening_time }}</td>
+            </tr>
+            <tr>
+              <th>쉬는시간</th>
+              <td>{{ restaurant.break_day }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Detail-Update -->
+      <div class="detail-update text-end">
+        <p>업데이트 :
+          {{ restaurant.updated_at|date:'Y-m-d' }}</p>
+      </div>
+    </div>
+
+
+    <!-- Review -->
+    <div class="review">
+      <div class="review-top">
+        <h6>리뷰 <span>({{ reviews_count }})</span></h6>
+        <div class="like-count">
+          <h6>전체 ({{ reviews_count }})</h6>
+          <h6>맛있다 ({{ upper }})</h6>
+          <h6>괜찮다 ({{ middle }})</h6>
+          <h6>별로 ({{ lower }})</h6>
+        </div>
+      </div>
+
+      {% for review in reviews %}
+      <a href="{% url 'reviews:review_detail' restaurant.pk review.pk %}" style="color: var(--dark--color);">
+        <div class="review-content">
+          <div class="review-left">
+            <div class="review__profile">
+              {% if review.user.profile_image %}
+              <img src="{{ review.user.profile_image }}" alt="">
+              {% endif %}
             </div>
-            <div class="detail__btn d-flex">
-              <div class="text-center me-3">
-                <a href="{% url 'reviews:review_create' restaurant.pk %}">
-                  <i class="fa-regular fa-pen-to-square fa-2x"></i>
-                  <p>리뷰쓰기</p>
-                </a>
-              </div>
-              <div class="text-center">
-                {% if restaurant in request.user.like_restaurants.all %}
-                  <a href="{% url 'restaurants:like' restaurant.pk %}">
-                    <i class="fa-solid fa-star fa-2x"></i>
-                    <p>찜한 식당</p>
-                  </a>
-                {% else %}
-                  <a href="{% url 'restaurants:like' restaurant.pk %}">
-                    <i class="fa-regular fa-star fa-2x"></i>
-                    <p>가고 싶다</p>
-                  </a>
+            <p class="m-0">{{ review.user.username }}</p>
+            <div class="user-count d-flex align-items-center">
+                <i class="fa-solid fa-pen"></i>
+                <span class="ms-1">{{ review.user.review_set.count }}</span>
+            </div>
+          </div>
+          <div class="review-center">
+            <p class="review-create">{{ review.created_at|date:'Y-m-d' }}</p>
+              <p class="mb-2">{{ review.content }}</p>
+
+              {% if review.reviewimage_set.all %}
+              {% for reviewimage in review.reviewimage_set.all %}
+                {% if reviewimage.photo1 %}
+                <img src="{{ reviewimage.photo1.url }}" alt="">
                 {% endif %}
-              </div>
+                {% if reviewimage.photo2 %}
+                <img src="{{ reviewimage.photo2.url }}" alt="">
+                {% endif %}
+                {% if reviewimage.photo3 %}
+                <img src="{{ reviewimage.photo3.url }}" alt="">
+                {% endif %}
+              {% endfor%}
+              {% endif %}
+                
+          </div>
+          <div class="review-right">
+            {% if review.rating > 3 %}
+            <div style="color: var(--main-color);">
+              <i class="fa-regular fa-face-grin-hearts fa-2x"></i>
+              <p>맛있다</p>
             </div>
-          </div>
-
-          <!-- Detail-Info -->
-          <div class="detail-info">
-            <table>
-              <tbody>
-                <p></p>
-                <tr>
-                  <th>주소</th>
-                  <td id="address">{{ restaurant.address }}</td>
-                </tr>
-                <tr>
-                  <th>전화번호</th>
-                  <td>{{ restaurant.shop_number }}</td>
-                </tr>
-                <tr>
-                  <th>가격대</th>
-                  <td>{{ restaurant.between_pay }}</td>
-                </tr>
-                <tr>
-                  <th>영업시간</th>
-                  <td>{{ restaurant.opening_time }}</td>
-                </tr>
-                <tr>
-                  <th>쉬는시간</th>
-                  <td>{{ restaurant.break_day }}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <!-- Detail-Update -->
-          <div class="detail-update text-end">
-            <p>업데이트 :
-              {{ restaurant.updated_at|date:'Y-m-d' }}</p>
+            {% elif review.rating == 3 %}
+            <div style="color: var(--main-color);">
+              <i class="fa-regular fa-face-grin-wide fa-2x"></i>
+              <p>괜찮다</p>
+            </div>
+            {% else %}
+            <div style="color: var(--main-color);">
+              <i class="fa-regular fa-face-grin-beam-sweat fa-2x"></i>
+              <p>별로</p>
+            </div>
+            {% endif %}
           </div>
         </div>
-        <!-- Review -->
+      </a>
+      {% endfor%}
+      <p></p>
+    </div>
+  </div>
+</div>
 
-        <div class="review">
-          <div class="review-top">
-            <h6>리뷰
-              <span>({{ reviews.count }})</span></h6>
-            <div class="like-count">
-              <h6>전체 ({{ reviews.count }})</h6>
-              <h6>맛있다 ({{ upper }})</h6>
-              <h6>괜찮다 ({{ middle }})</h6>
-              <h6>별로 ({{ lower }})</h6>
-            </div>
-          </div>
-          {% for review in reviews %}
-            <a style='color: black;' href="{% url 'reviews:review_detail' restaurant.pk review.pk %}">
-              <div class="review-content">
-                <div class="review-left">
-                  <div class="review__profile">
-                    {% if review.user.profile_image %}
-                      <img src="{{ review.user.profile_image }}" alt="">
-                    {% endif %}
-                  </div>
-                  <p class="m-0">{{ review.user.username }}</p>
-                  <div class="user-count d-flex align-items-center">
-                    <i class="fa-solid fa-pen"></i>
-                    <span class="ms-1">{{ review.user.review_set.count }}</span>
-                  </div>
-                </div>
-                <div class="review-center">
-                  <p class="review-create">{{ review.created_at|date:'Y-m-d' }}</p>
-                  <p class="mb-2">{{ review.content }}</p>
 
-                  {% if review.reviewimage_set.all %}
-                    {% for reviewimage in review.reviewimage_set.all %}
-                      {% if reviewimage.photo1 %}
-                        <img src="{{ reviewimage.photo1.url }}" alt="">
-                      {% endif %}
-                      {% if reviewimage.photo2 %}
-                        <img src="{{ reviewimage.photo2.url }}" alt="">
-                      {% endif %}
-                      {% if reviewimage.photo3 %}
-                        <img src="{{ reviewimage.photo3.url }}" alt="">
-                      {% endif %}
-                      {% endfor%}
-                    {% endif %}
+<!-- Script -->
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8148ff6f51862625ec940e0d841516dd&libraries=services"></script>
+<script>
+  var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+      mapOption = {
+          center: new kakao.maps.LatLng(37.4882, 127.0412), // 지도의 중심좌표
+          level: 3 // 지도의 확대 레벨
+      };  
 
-                  </div>
-                  <div class="review-right">
-                    {% if review.rating > 3 %}
-                      <div style="color: var(--main-color);">
-                        <i class="fa-regular fa-face-grin-hearts fa-2x"></i>
-                        <p>맛있다</p>
-                      </div>
-                    {% elif review.rating == 3 %}
-                      <div style="color: var(--main-color);">
-                        <i class="fa-regular fa-face-grin-wide fa-2x"></i>
-                        <p>괜찮다</p>
-                      </div>
-                    {% else %}
-                      <div style="color: var(--main-color);">
-                        <i class="fa-regular fa-face-grin-beam-sweat fa-2x"></i>
-                        <p>별로</p>
-                      </div>
-                    {% endif %}
-                  </div>
-                </div>
-                {% endfor%}
-                <p></p>
-              </div>
-            </div>
-          </a>
-        </div>
+  // 지도를 생성합니다    
+  var map = new kakao.maps.Map(mapContainer, mapOption); 
 
-        <!-- Script -->
-        <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8148ff6f51862625ec940e0d841516dd&libraries=services"></script>
-        <script>
-          var mapContainer = document.getElementById('map'), // 지도를 표시할 div
-            mapOption = {
-              center: new kakao
-                .maps
-                .LatLng(37.4882, 127.0412), // 지도의 중심좌표
-              level: 3 // 지도의 확대 레벨
-            };
+  // 주소-좌표 변환 객체를 생성합니다
+  var geocoder = new kakao.maps.services.Geocoder();
 
-          // 지도를 생성합니다
-          var map = new kakao
-            .maps
-            .Map(mapContainer, mapOption);
+  // 주소로 좌표를 검색합니다
+  var address = document.querySelector('#address').innerText
+  console.log(address)
+  geocoder.addressSearch(address, function(result, status) {
 
-          // 주소-좌표 변환 객체를 생성합니다
-          var geocoder = new kakao
-            .maps
-            .services
-            .Geocoder();
+      // 정상적으로 검색이 완료됐으면 
+      if (status === kakao.maps.services.Status.OK) {
 
-          // 주소로 좌표를 검색합니다
-          var address = document
-            .querySelector('#address')
-            .innerText
-            console
-            .log(address)
-          geocoder.addressSearch(address, function (result, status) {
+          var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
 
-            // 정상적으로 검색이 완료됐으면
-            if (status === kakao.maps.services.Status.OK) {
-
-              var coords = new kakao
-                .maps
-                .LatLng(result[0].y, result[0].x);
-
-              // 결과값으로 받은 위치를 마커로 표시합니다
-              var marker = new kakao
-                .maps
-                .Marker({map: map, position: coords});
-
+          // 결과값으로 받은 위치를 마커로 표시합니다
+          var marker = new kakao.maps.Marker({
+              map: map,
+              position: coords
+          });
               // 인포윈도우로 장소에 대한 설명을 표시합니다
               var restaurant_name = document
                 .querySelector('#restaurant_name')
@@ -254,6 +243,6 @@
               // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
               map.setCenter(coords);
             }
-          });
-        </script>
-      {% endblock body %}
+    });
+  </script>
+{% endblock body %}

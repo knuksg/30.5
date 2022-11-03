@@ -48,6 +48,8 @@ def create(request):
 def detail(request, pk):
     restaurant = Restaurant.objects.get(pk=pk)
     reviews = restaurant.review_set.all()
+    reviews_count = len(reviews)
+    likes = restaurant.like_users.all()
 
     ratings = []
     for review in reviews:
@@ -61,12 +63,16 @@ def detail(request, pk):
             middle += 1
         else:
             lower += 1
+    grade = sum(ratings) / len(ratings)
     context = {
         "restaurant": restaurant,
         "reviews": reviews[::-1],
         "upper": upper,
         "middle": middle,
         "lower": lower,
+        "reviews_count": reviews_count,
+        "likes": len(likes),
+        "grade": round(grade, 1),
     }
 
     response = render(request, "restaurants/detail.html", context)
