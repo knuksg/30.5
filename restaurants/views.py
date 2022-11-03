@@ -41,7 +41,8 @@ def create(request):
 def detail(request, pk):
     restaurant = Restaurant.objects.get(pk=pk)
     reviews = restaurant.review_set.all()
-
+    reviews_count = len(reviews)
+    likes = restaurant.like_users.all()
 
     ratings = []
     for review in reviews:
@@ -55,12 +56,16 @@ def detail(request, pk):
             middle += 1
         else:
             lower += 1
+    grade = sum(ratings) / len(ratings)
     context = {
         "restaurant": restaurant,
         "reviews": reviews[::-1],
         "upper": upper,
         "middle": middle,
         "lower": lower,
+        "reviews_count": reviews_count,
+        "likes": len(likes),
+        "grade": round(grade, 1),
     }
 
     response = render(request, "restaurants/detail.html", context)
@@ -70,12 +75,14 @@ def detail(request, pk):
     expire_date = expire_date.replace(hour=0, minute=0, second=0, microsecond=0)
     expire_date -= now
     max_age = expire_date.total_seconds()
-    
-    cookie_value = request.COOKIES.get('hitboard', '_')
 
-    if f'_{pk}_' not in cookie_value:
-        cookie_value += f'_{pk}_'
-        response.set_cookie('hitboard', value=cookie_value, max_age=max_age, httponly=True)
+    cookie_value = request.COOKIES.get("hitboard", "_")
+
+    if f"_{pk}_" not in cookie_value:
+        cookie_value += f"_{pk}_"
+        response.set_cookie(
+            "hitboard", value=cookie_value, max_age=max_age, httponly=True
+        )
         restaurant.hits += 1
         restaurant.save()
 
