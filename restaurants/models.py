@@ -12,6 +12,7 @@ class Restaurant(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     hits = models.IntegerField(default=0)
+    tags = models.ManyToManyField('restaurants.Tag', related_name='restaurants')
 
     def __str__(self):
         return self.name
@@ -27,14 +28,5 @@ class Restaurant(models.Model):
         else:
             return 0
 
-
-
-
-
-class Category(models.Model):
-    restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
-    tag1 = models.CharField(blank=True, max_length=20)
-    tag2 = models.CharField(blank=True, max_length=20)
-    tag3 = models.CharField(blank=True, max_length=20)
-    tag4 = models.CharField(blank=True, max_length=20)
-    tag5 = models.CharField(blank=True, max_length=20)
+class Tag(models.Model):
+    name = models.CharField(max_length=30)
