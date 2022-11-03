@@ -5,6 +5,7 @@ from reviews.models import Review
 from .forms import CategoryForm, RestaurantsForm
 from django.contrib.auth.decorators import login_required
 from datetime import date, datetime, timedelta
+from django.http import JsonResponse
 
 
 def main(request):
@@ -140,9 +141,26 @@ def delete(request, pk):
 
 @login_required
 def like(request, pk):
-    restaurant = Restaurant.objects.get(pk=pk)
-    if restaurant in request.user.like_restaurants.all():
-        request.user.like_restaurants.remove(restaurant.pk)
+    print(request.POST)
+    if request.user.is_authenticated:
+        restaurant = Restaurant.objects.get(pk=pk)
+        if restaurant.like_users.filter(pk=request.user.pk).exists():
+            restaurant.like_users.remove(request.user)
+            is_liked = False
+        else:
+            restaurant.like_users.add(request.user)
+            is_liked = True
     else:
-        request.user.like_restaurants.add(restaurant.pk)
-    return redirect("restaurants:detail", pk)
+        return redirect("restaurants:detail", pk)
+    return JsonResponse(
+        {
+            "is_liked": is_liked,
+            "like_count": restaurant.like_users.count(),
+        }
+    )
+
+    # if restaurant in request.user.like_restaurants.all():
+    #     request.user.like_restaurants.remove(restaurant.pk)
+    # else:
+    #     request.user.like_restaurants.add(restaurant.pk)
+    # return redirect("restaurants:detail", pk)
