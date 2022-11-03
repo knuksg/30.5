@@ -48,7 +48,7 @@ def update(request, pk):
         form = StoryForm(instance=story)
     context = {"form": form}
     return render(request, "stories/update.html", context)
-
+    
 
 def delete(request, pk):
     story = Story.objects.get(pk=pk)
@@ -59,17 +59,16 @@ def delete(request, pk):
     }
     return render(request, 'stories/update.html', context)
 
+
 def search_test(request):
-    page = request.GET.get('page', '1')  # 페이지
-    kw = request.GET.get('kw', '')  # 검색어
-    restaurant_list = Restaurant.objects.order_by('-created_at')
+    page = request.GET.get("page", "1")  # 페이지
+    kw = request.GET.get("kw", "")  # 검색어
+    restaurant_list = Restaurant.objects.order_by("-created_at")
     if kw:
         restaurant_list = restaurant_list.filter(
-            Q(name__icontains=kw) |  # 이름 검색
-            Q(address__icontains=kw)  # 주소 검색
+            Q(name__icontains=kw) | Q(address__icontains=kw)  # 이름 검색  # 주소 검색
         ).distinct()
     paginator = Paginator(restaurant_list, 10)  # 페이지당 10개씩 보여주기
     page_obj = paginator.get_page(page)
     context = {'restaurant_list': page_obj, 'page': page, 'kw': kw}
     return render(request, 'stories/search_test.html', context)  
-
