@@ -112,6 +112,58 @@ input[type=button]{
   background-color: var(--gray-color);
 }
 
+.toggle-btn {
+  display: none;
+}
+
+/* Nav-Toggle */
+@media screen and (max-width: 1010px) {
+  .nav__list {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 55px;
+    right: 0;
+    background-color: #fff;
+  }
+  .nav-toggle {
+    display: none;
+  }
+  .nav-toggle.open {
+    display: block;
+  }
+  .toggle-btn {
+    align-self: flex-end;
+    display: initial;
+    position: absolute;
+    top: 12px;
+    right: 70px;
+    cursor: pointer;
+  }
+  .Navbar__ToggleShow {
+    display: flex;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .nav-wrap form {
+    width: 350px;
+  }
+}
+
+@media screen and (min-width: 600px) {
+  .nav-wrap form {
+    width: 380px;
+  }
+}
+
+@media screen and (min-width: 720px) {
+  .nav-wrap form {
+    width: 580px;
+  }
+}
+
+
 
 /* Main */
 .visual {

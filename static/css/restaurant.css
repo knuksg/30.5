@@ -46,7 +46,7 @@
 }
 
 .category__name {
-  font-size: 18px;
+  font-size: 1rem;
   margin: 0;
   font-weight: 400;
   color: var(--gray-color);
@@ -135,24 +135,18 @@
 /* Img-Top */
 .img-top {
   width: 100%;
-  overflow: auto;
-}
-
-.img-top__list {
-  display: flex;
-  overflow: auto;
+  overflow: hidden;
 }
 
 .img-top__img {
-  width: 350px;
+  width: 450px;
   max-height: 350px;
-  position: relative;
   overflow: hidden;
-  margin-right: 10px;
 }
 
 .img-top__img img {
   width: 100%;
+  height: auto;
 }
 
 
@@ -213,4 +207,31 @@ table td {
 .detail-update p {
   color: var(--gray-dark-color);
   font-size: 12px;
+}
+
+
+/* Swiper */
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: #fff;
+
+/* Center slide text vertically */
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
 }
