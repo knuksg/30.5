@@ -125,7 +125,7 @@ def delete(request, pk):
 @login_required
 def like(request, pk):
     restaurant = Restaurant.objects.get(pk=pk)
-    if restaurant.pk in request.user.like_restaurants.all():
+    if restaurant in request.user.like_restaurants.all():
         request.user.like_restaurants.remove(restaurant.pk)
     else:
         request.user.like_restaurants.add(restaurant.pk)
