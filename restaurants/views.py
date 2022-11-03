@@ -57,7 +57,7 @@ def detail(request, pk):
             lower += 1
     context = {
         "restaurant": restaurant,
-        "reviews": reviews,
+        "reviews": reviews[::-1],
         "upper": upper,
         "middle": middle,
         "lower": lower,

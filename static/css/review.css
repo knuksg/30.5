@@ -45,7 +45,7 @@
 
 .review-content {
   display: flex;
-  padding-bottom: 40px;
+  padding-bottom: 20px;
   border-bottom: 1px solid var(--gray-color);
 }
 
@@ -55,7 +55,7 @@
 }
 
 .review-left {
-  padding-top: 20px;
+  padding-top: 30px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -81,13 +81,14 @@
 
 .review-center {
   width: 68%;
-  padding: 0 30px;
+  padding: 20px;
 }
 
 .review-center img {
   width: 120px;
   height: 120px;
-  margin-right: 10px;
+  border-radius: 10px;
+  margin: 0 5px 5px 0;
 }
 
 .review-create {

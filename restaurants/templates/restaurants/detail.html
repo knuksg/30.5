@@ -3,24 +3,43 @@
   상세보기
 {% endblock title %}
 {% block body %}
+  
   <!-- Img-Top -->
   <div class="img-top">
-    <div class="img-top__list">
-      <div class="img-top__img">
-        <img src="https://i.pinimg.com/564x/f1/13/66/f11366925ead8740dac733b2a0b1912c.jpg" alt="">
-      </div>
-      <div class="img-top__img">
-        <img src="https://i.pinimg.com/564x/f1/13/66/f11366925ead8740dac733b2a0b1912c.jpg" alt="">
-      </div>
-      <div class="img-top__img">
-        <img src="https://i.pinimg.com/564x/f1/13/66/f11366925ead8740dac733b2a0b1912c.jpg" alt="">
-      </div>
-      <div class="img-top__img">
-        <img src="https://i.pinimg.com/564x/f1/13/66/f11366925ead8740dac733b2a0b1912c.jpg" alt="">
-      </div>
+    <!-- Swiper -->
+    <div class="swiper mySwiper">
+      <div class="swiper-wrapper">
+        {% for review in reviews %}
+        {% if review.reviewimage_set.all %}
+        {% for reviewimage in review.reviewimage_set.all %}
+          {% if reviewimage.photo1 %}
+          <div class="swiper-slide">
+            <div class="img-top__img">
+              <img src="{{ reviewimage.photo1.url }}" alt="">
+            </div>
+          </div>
+          {% endif %}
+          {% if reviewimage.photo2 %}
+          <div class="swiper-slide">
+            <div class="img-top__img">
+              <img src="{{ reviewimage.photo2.url }}" alt="">
+            </div>
+          </div>
+          {% endif %}
+          {% if reviewimage.photo3 %}
+          <div class="swiper-slide">
+            <div class="img-top__img">
+              <img src="{{ reviewimage.photo3.url }}" alt="">
+            </div>
+          </div>
+          {% endif %}
+        {% endfor%}
+        {% endif %}
+      {% endfor %}
     </div>
   </div>
 
+  <!-- Detail & Review -->
   <div class="container cont">
     <!-- Detail -->
     <div class="detail">
@@ -106,10 +125,8 @@
           {{ restaurant.updated_at|date:'Y-m-d' }}</p>
       </div>
     </div>
-
     <!-- Review -->
     <div class="review">
-      {% for review in reviews %}
       <div class="review-top">
         <h6>리뷰 <span>({{ reviews.count }})</span></h6>
         <div class="like-count">
@@ -119,10 +136,11 @@
           <h6>별로 ({{ lower }})</h6>
         </div>
       </div>
+      {% for review in reviews %}
       <div class="review-content">
         <div class="review-left">
           <div class="review__profile">
-            {% if request.user.profile_image %}
+            {% if review.user.profile_image %}
             <img src="{{ review.user.profile_image }}" alt="">
             {% endif %}
           </div>
@@ -175,6 +193,8 @@
     </div>
   </div>
 </div>
+
+<!-- Script -->
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8148ff6f51862625ec940e0d841516dd&libraries=services"></script>
 <script>
   var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
