@@ -19,13 +19,13 @@
     <a href="{% url 'stories:create' %}">작성하기</a>
   {% endif %}
   <div>
-    <p>에디터 입맛별 맛집 매거진</p>
+    <h3 class="select_area mt-3">에디터 입맛별 맛집 매거진</h3>
     <div class="row">
       {% for story in stories %}
         <div class="col col-12 col-sm-6 my-4">
           <div class="card mx-2">
           {% if story.main_image %}
-            <img src="{{ story.main_image.url }}" class="card-img-top" alt="...">
+            <img src="{{ story.main_image.url }}" class="card-img-top img-fluid" alt="...">
           {% else %}
             <img src="https://dummyimage.com/1200x960/000000/c4c4c4" class="card-img-top">
           {% endif %}
