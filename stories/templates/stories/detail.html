@@ -3,10 +3,12 @@
 {% block body %}
   <div class="container mt-3">
     <div class="row">
-      <div class="col-4">
-        <img src="{{ story.main_image.url }}" alt="">
-        <h1>{{ story.title }}</h1>
-        <p>{{ story.subtitle }}</p>
+      <div class="col-4 container mx-0">
+        <img src="{{ story.main_image.url }}" class="img-fluid rounded" width="100%" alt="">
+        <p class="text-muted fst-italic fw-light mt-5">Editor.{{ user.username }}</p>
+        <h1 class="fw-bold">{{ story.title }}</h1>
+        <h6>{{ story.subtitle }}</h6>
+        <p class="fw-light fs-6 text-secondary">{{ story.created_at|date:'Y-m-d' }}</p>
         <a href="{% url 'stories:update' story.pk %}">수정하기</a>
         <a href="{% url 'stories:delete' story.pk %}">삭제하기</a>
       </div>
