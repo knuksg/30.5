@@ -9,6 +9,9 @@
       <form action="" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {% bootstrap_form restaurants_form %}
+        <br>
+        <b>선택 사항</b>
+        {% bootstrap_form category_form %}
         <input class='btn btn-dark' type="submit" name="" id="" value='추가하기'>
       </form>
     </div>
