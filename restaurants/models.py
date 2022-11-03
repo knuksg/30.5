@@ -1,4 +1,5 @@
 from django.db import models
+from reviews.models import Review
 
 # Create your models here.
 class Restaurant(models.Model):
@@ -14,6 +15,20 @@ class Restaurant(models.Model):
 
     def __str__(self):
         return self.name
+
+    @property
+    def grade(self):
+        reviews = Review.objects.filter(restaurant=self)
+        if reviews:
+            ratings = []
+            for review in reviews:
+                ratings.append(review.rating)
+            return sum(ratings) / len(ratings)
+        else:
+            return 0
+
+
+
 
 
 class Category(models.Model):
