@@ -47,10 +47,12 @@ def review_create(request, pk):
 
 def review_detail(request, restaurant_pk, review_pk):
     reviews = get_object_or_404(Review, pk=review_pk)
+    reviewimage = ReviewImage.objects.get(pk=review_pk)
     restaurant = get_object_or_404(Restaurant, pk=restaurant_pk)
     context = {
         "reviews": reviews,
         "restaurant": restaurant,
+        "reviewimage": reviewimage,
     }
     return render(request, "reviews/review_detail.html", context)
 
@@ -93,7 +95,7 @@ def review_update(request, review_pk, restaurant_pk):
                 review_image.user = request.user
                 review_image.save()
                 messages.success(request, "글이 수정되었습니다.")
-                return redirect("reviews:review_detail", review_pk, restaurant_pk)
+                return redirect("reviews:review_detail", restaurant_pk, review_pk)
         else:
             review_form = ReviewForm(instance=review)
             reviewimage_form = ReviewImageForm(instance=reviewimage)

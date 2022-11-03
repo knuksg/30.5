@@ -24,16 +24,23 @@ def category(request):
 def create(request):
     if request.method == "POST":
         restaurants_form = RestaurantsForm(request.POST, request.FILES)
+        category_form = CategoryForm(request.POST, request.FILES)
         if restaurants_form.is_valid():
             restaurants = restaurants_form.save(commit=False)
             # 로그인한 유저 => 작성자네!
             # restaurants.user = request.user
             restaurants.save()
+            # 카테고리 세이브
+            category = category_form.save(commit=False)
+            category.restaurant = restaurants
+            category.save()
             return redirect("restaurants:main")
     else:
         restaurants_form = RestaurantsForm()
+        category_form = CategoryForm()
     context = {
         "restaurants_form": restaurants_form,
+        "category_form": category_form,
     }
     return render(request, "restaurants/create.html", context=context)
 
@@ -41,7 +48,6 @@ def create(request):
 def detail(request, pk):
     restaurant = Restaurant.objects.get(pk=pk)
     reviews = restaurant.review_set.all()
-
 
     ratings = []
     for review in reviews:
@@ -70,12 +76,14 @@ def detail(request, pk):
     expire_date = expire_date.replace(hour=0, minute=0, second=0, microsecond=0)
     expire_date -= now
     max_age = expire_date.total_seconds()
-    
-    cookie_value = request.COOKIES.get('hitboard', '_')
 
-    if f'_{pk}_' not in cookie_value:
-        cookie_value += f'_{pk}_'
-        response.set_cookie('hitboard', value=cookie_value, max_age=max_age, httponly=True)
+    cookie_value = request.COOKIES.get("hitboard", "_")
+
+    if f"_{pk}_" not in cookie_value:
+        cookie_value += f"_{pk}_"
+        response.set_cookie(
+            "hitboard", value=cookie_value, max_age=max_age, httponly=True
+        )
         restaurant.hits += 1
         restaurant.save()
 

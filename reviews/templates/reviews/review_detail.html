@@ -12,7 +12,9 @@
       {{ reviews.content }}</p>
     <p>별점 :
       {{ reviews.rating }}</p>
-    <a class='btn btn-dark my-3' href="{% url 'reviews:review_update' restaurant.pk reviews.pk %}">수정하기</a>
-    <a class='btn btn-dark my-3' href="{% url 'reviews:review_delete' restaurant.pk reviews.pk %}">삭제하기</a>
+    <div class='d-flex justify-content-between'>
+      <a class='btn btn-dark my-3' href="{% url 'reviews:review_update' restaurant.pk reviews.pk %}">수정하기</a>
+      <a class='btn btn-dark my-3' href="{% url 'reviews:review_delete' restaurant.pk reviews.pk %}">삭제하기</a>
+    </div>
   </div>
 {% endblock body %}
