@@ -113,23 +113,23 @@
       </div>
     </div>
     <!-- Category-menu-Form -->
-    <form id="form-01" method="post" action="{% url 'restaurants:tag' %}">
+    <form id="form-01" method="post" action="{% url 'restaurants:index' %}">
       {% csrf_token %}
       <input type="hidden" id="tag" name="tag" value="한식">
     </form>
-    <form id="form-02" method="post" action="{% url 'restaurants:tag' %}">
+    <form id="form-02" method="post" action="{% url 'restaurants:index' %}">
       {% csrf_token %}
       <input type="hidden" id="tag" name="tag" value="중식">
     </form>
-    <form id="form-03" method="post" action="{% url 'restaurants:tag' %}">
+    <form id="form-03" method="post" action="{% url 'restaurants:index' %}">
       {% csrf_token %}
       <input type="hidden" id="tag" name="tag" value="일식">
     </form>
-    <form id="form-04" method="post" action="{% url 'restaurants:tag' %}">
+    <form id="form-04" method="post" action="{% url 'restaurants:index' %}">
       {% csrf_token %}
       <input type="hidden" id="tag" name="tag" value="양식">
     </form>
-    <form id="form-05" method="post" action="{% url 'restaurants:tag' %}">
+    <form id="form-05" method="post" action="{% url 'restaurants:index' %}">
       {% csrf_token %}
       <input type="hidden" id="tag" name="tag" value="분식">
     </form>

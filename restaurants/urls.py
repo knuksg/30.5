@@ -7,7 +7,6 @@ urlpatterns = [
     path("", views.main, name="main"),
     path("category/", views.category, name="category"),
     path("restaurants/", views.index, name="index"),
-    path("restaurants/tag/", views.tag, name="tag"),
     path("restaurants/korea/", views.korea, name="korea"),
     path("restaurants/china/", views.china, name="china"),
     path("restaurants/japan/", views.japan, name="japan"),
