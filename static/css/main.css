@@ -353,7 +353,7 @@ input[type=button]{
 }
 
 
-/* Story */
+/* Main-Story */
 .story__item {
   height: 400px;
 }
@@ -375,11 +375,86 @@ input[type=button]{
   justify-content: center;
   align-items: center;
 }
+.profile-dot-page {
+  position: absolute;
+  top: 5px;
+  right: -5px;
+  width: 30px; 
+  height: 30px; 
+  background-color: var(--main-color); 
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 .profile-dot p {
   font-size: 12px;
   margin: 0;
   color: var(--white-color);
+}
+.profile-dot-page p {
+  font-size: 16px;
+  margin: 0;
+  color: var(--white-color);
+}
+
+/* Story-Page */
+.card-top {
+  position: relative;
+}
+
+.story__profile {
+  position: absolute;
+  bottom: -60px;
+  left: 30px;
+  z-index: 9;
+}
+
+.story__profile > p {
+  margin: 0;
+  text-align: center;
+  font-size: 18px;
+}
+
+.story-text {
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.story-name {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.card-wrap {
+  position: relative;
+}
+
+.card-title {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--white-color);
+  z-index: 2;
+}
+
+.card-cover {
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  opacity: .1;
+  position: absolute;
+  z-index: 1;
+}
+
+.card-back__comment {
+  position: absolute;
+  top: -50px;
+  left: -50px;
 }
 
 
