@@ -20,6 +20,18 @@ def index(request):
     return render(request, "restaurants/index.html", context)
 
 
+def tag(request):
+    print(request.POST)
+    tag_name = request.POST.get("tag")
+    return render(
+        request,
+        "restaurants/index.html",
+        {
+            "tag_name": tag_name,
+        },
+    )
+
+
 def korea(request):
     restaurants = Restaurant.objects.order_by("-pk")
     context = {
