@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
+{% load restaurants_tags %}
 {% block title %}식당 리스트{% endblock title %}
-
 {% block body %}
 
   <div class="restaurants">
@@ -31,9 +31,8 @@
             </div>
             {% if restaurant.review_set.all %}
             <div class="restaurants__content__comment">
-              <img src="{{ restaurant.review_set.all.0.user.profile_image }}" style="width: 50px; height: 50px;" alt="">
-              <p>{{ restaurant.review_set.all.0.user }} <span>{{ restaurant.review_set.all.0.content }}</span></p>
-              
+              <img src="{{ restaurant|latest_image }}" style="width: 50px; height: 50px;" alt="">
+              <p>{{ restaurant|latest_user }} <span>{{ restaurant|latest_content|truncatechars:200 }}</span></p>
             </div>
             {% endif %}
             <div class="restaurants__content__link">
