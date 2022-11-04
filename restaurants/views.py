@@ -14,7 +14,9 @@ def main(request):
 
 def index(request):
     restaurants = Restaurant.objects.order_by("-pk")
-    context = {"restaurants": restaurants}
+    context = {
+        "restaurants": restaurants,
+    }
     return render(request, "restaurants/index.html", context)
 
 
@@ -27,17 +29,17 @@ def create(request):
         restaurants_form = RestaurantsForm(request.POST, request.FILES)
         if restaurants_form.is_valid():
             new_restaurant = Restaurant(
-                name = restaurants_form.cleaned_data['name'],
-                address = restaurants_form.cleaned_data['address'],
-                shop_number = restaurants_form.cleaned_data['shop_number'],
-                between_pay = restaurants_form.cleaned_data['between_pay'],
-                opening_time = restaurants_form.cleaned_data['opening_time'],
-                break_day = restaurants_form.cleaned_data['break_day'],
+                name=restaurants_form.cleaned_data["name"],
+                address=restaurants_form.cleaned_data["address"],
+                shop_number=restaurants_form.cleaned_data["shop_number"],
+                between_pay=restaurants_form.cleaned_data["between_pay"],
+                opening_time=restaurants_form.cleaned_data["opening_time"],
+                break_day=restaurants_form.cleaned_data["break_day"],
             )
             new_restaurant.save()
-            tags = restaurants_form.cleaned_data['tags'].split(',')
+            tags = restaurants_form.cleaned_data["tags"].split(",")
             for tag in tags:
-                if not tag : 
+                if not tag:
                     continue
                 else:
                     tag = tag.strip()
