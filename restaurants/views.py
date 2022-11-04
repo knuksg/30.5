@@ -22,19 +22,22 @@ def main(request):
         },
     )
 
+
 def index(request):
     print(request.POST)
-    tags = request.POST.get("tag").replace(' ', '').split(',')
+    tags = request.POST.get("tag").replace(" ", "").split(",")
     print(tags)
 
     if len(tags) == 1:
         restaurants = Restaurant.objects.filter(tags__name=tags[0])
-        restaurants = sorted(restaurants, key=lambda a: -a.grade)[:5] #임의로 5개씩 보여줌.
+        restaurants = sorted(restaurants, key=lambda a: -a.grade)[:5]  # 임의로 5개씩 보여줌.
         tags = tags[0]
     elif len(tags) == 2:
-        restaurants = Restaurant.objects.filter(tags__name=tags[0]).filter(tags__name=tags[1])
-        restaurants = sorted(restaurants, key=lambda a: -a.grade)[:5] #임의로 5개씩 보여줌.
-        tags = f'{tags[0]} {tags[1]}'
+        restaurants = Restaurant.objects.filter(tags__name=tags[0]).filter(
+            tags__name=tags[1]
+        )
+        restaurants = sorted(restaurants, key=lambda a: -a.grade)[:5]  # 임의로 5개씩 보여줌.
+        tags = f"{tags[0]} {tags[1]}"
     total_hits = 0
     for restaurant in restaurants:
         total_hits += restaurant.hits
@@ -44,7 +47,7 @@ def index(request):
         "tags": tags,
         "total_hits": total_hits,
     }
-    return render(request, "restaurants/index.html", context)   
+    return render(request, "restaurants/index.html", context)
 
 
 def korea(request):
@@ -123,7 +126,7 @@ def create(request):
 
 def detail(request, pk):
     restaurant = Restaurant.objects.get(pk=pk)
-    reviews = restaurant.review_set.all()
+    reviews = restaurant.reviews.all()
     reviews_count = len(reviews)
     likes = restaurant.like_users.all()
 

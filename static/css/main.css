@@ -404,6 +404,11 @@ input[type=button]{
   position: relative;
 }
 
+.story-position {
+  position: sticky;
+  top: 80px;
+}
+
 .story__profile {
   position: absolute;
   bottom: -60px;
@@ -457,6 +462,19 @@ input[type=button]{
   left: -50px;
 }
 
+.story-right-card {
+  position: relative;
+}
+
+.story-right-card p {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  margin: 0;
+  color: var(--white-color);
+  font-size: 21px;
+  font-weight: 700;
+}
 
 /* Footer */
 .footer {
