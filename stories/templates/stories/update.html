@@ -1,11 +1,17 @@
 {% extends 'base.html' %}
 {% load django_bootstrap5 %}
+{% block title %} 스토리 수정하기 {% endblock title %}
+
 {% block body %}
+<h1 class='text-center my-5'>망고 스토리 수정하기</h1>
+<hr>
+<div class='container mt-3 d-flex justify-content-center'>
 <form action="" method="POST" enctype="multipart/form-data">
   {% csrf_token %}
   {% bootstrap_form form %}
-  {% bootstrap_button "확인" button_type="submit" button_class="btn-primary" %}
+  {% bootstrap_button "확인" button_type="submit" button_class="btn-primary mb-4" %}
 </form>
+</div>
 
 {% comment %} summernote 사진 크기 조절 {% endcomment %}
 <script>

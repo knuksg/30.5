@@ -12,19 +12,24 @@ from django.db.models import Q
 def main(request):
     return render(request, "restaurants/main.html")
 
+
 def index(request):
     print(request.POST)
-    tags = request.POST.get("tag").replace(' ', '').split(',')
+    tags = request.POST.get("tag").replace(" ", "").split(",")
     print(tags)
     if len(tags) == 1:
         restaurants = Restaurant.objects.filter(tags__name=tags[0]).order_by("-pk")
     elif len(tags) == 2:
-        restaurants = Restaurant.objects.filter(tags__name=tags[0]).filter(tags__name=tags[1]).order_by("-pk")
+        restaurants = (
+            Restaurant.objects.filter(tags__name=tags[0])
+            .filter(tags__name=tags[1])
+            .order_by("-pk")
+        )
     context = {
         "restaurants": restaurants,
         "tag_name": tags,
     }
-    return render(request, "restaurants/index.html", context)   
+    return render(request, "restaurants/index.html", context)
 
 
 def korea(request):
