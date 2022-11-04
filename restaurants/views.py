@@ -6,16 +6,65 @@ from .forms import RestaurantsForm, TagForm
 from django.contrib.auth.decorators import login_required
 from datetime import date, datetime, timedelta
 from django.http import JsonResponse
+from django.db.models import Q
 
 
 def main(request):
     return render(request, "restaurants/main.html")
 
-
 def index(request):
+    print(request.POST)
+    tags = request.POST.get("tag").replace(' ', '').split(',')
+    print(tags)
+    if len(tags) == 1:
+        restaurants = Restaurant.objects.filter(tags__name=tags[0]).order_by("-pk")
+    elif len(tags) == 2:
+        restaurants = Restaurant.objects.filter(tags__name=tags[0]).filter(tags__name=tags[1]).order_by("-pk")
+    context = {
+        "restaurants": restaurants,
+        "tag_name": tags,
+    }
+    return render(request, "restaurants/index.html", context)   
+
+
+def korea(request):
     restaurants = Restaurant.objects.order_by("-pk")
-    context = {"restaurants": restaurants}
-    return render(request, "restaurants/index.html", context)
+    context = {
+        "restaurants": restaurants,
+    }
+    return render(request, "restaurants/korea.html", context)
+
+
+def china(request):
+    restaurants = Restaurant.objects.order_by("-pk")
+    context = {
+        "restaurants": restaurants,
+    }
+    return render(request, "restaurants/china.html", context)
+
+
+def japan(request):
+    restaurants = Restaurant.objects.order_by("-pk")
+    context = {
+        "restaurants": restaurants,
+    }
+    return render(request, "restaurants/japan.html", context)
+
+
+def western(request):
+    restaurants = Restaurant.objects.order_by("-pk")
+    context = {
+        "restaurants": restaurants,
+    }
+    return render(request, "restaurants/western.html", context)
+
+
+def school(request):
+    restaurants = Restaurant.objects.order_by("-pk")
+    context = {
+        "restaurants": restaurants,
+    }
+    return render(request, "restaurants/school.html", context)
 
 
 def category(request):
