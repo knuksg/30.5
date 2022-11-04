@@ -30,8 +30,10 @@ def create(request):
 
 
 def detail(request, pk):
+    stories = Story.objects.exclude(pk=pk).order_by("-pk")
     story = get_object_or_404(Story, pk=pk)
     context = {
+        "stories": stories[:6],
         "story": story,
     }
     return render(request, "stories/detail.html", context)
@@ -48,31 +50,29 @@ def update(request, pk):
         form = StoryForm(instance=story)
     context = {"form": form}
     return render(request, "stories/update.html", context)
-    
+
 
 def delete(request, pk):
     story = Story.objects.get(pk=pk)
     story.delete()
     return redirect("stories:index")
-    context = {
-        'form': form
-    }
-    return render(request, 'stories/update.html', context)
+    context = {"form": form}
+    return render(request, "stories/update.html", context)
 
 
 def search_test(request):
-    page = request.GET.get('page', '1')  # 페이지
-    kw = request.GET.get('kw', '')  # 검색어
-    restaurant_list = Restaurant.objects.order_by('-created_at')
+    page = request.GET.get("page", "1")  # 페이지
+    kw = request.GET.get("kw", "")  # 검색어
+    restaurant_list = Restaurant.objects.order_by("-created_at")
     tag = Tag.objects.filter(name__icontains=kw)
     if kw:
         restaurant_list = restaurant_list.filter(
-            Q(name__icontains=kw) |  # 이름 검색
-            Q(address__icontains=kw) |  # 주소 검색
-            Q(tags__in=tag)  # 태그 검색
+            Q(name__icontains=kw)
+            | Q(address__icontains=kw)  # 이름 검색
+            | Q(tags__in=tag)  # 주소 검색  # 태그 검색
         ).distinct()
 
     paginator = Paginator(restaurant_list, 10)  # 페이지당 10개씩 보여주기
     page_obj = paginator.get_page(page)
-    context = {'restaurant_list': page_obj, 'page': page, 'kw': kw}
-    return render(request, 'stories/search_test.html', context)  
+    context = {"restaurant_list": page_obj, "page": page, "kw": kw}
+    return render(request, "stories/search_test.html", context)

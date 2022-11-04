@@ -1,20 +1,53 @@
 {% extends 'base.html' %}
 {% load django_bootstrap5 %}
+
 {% block body %}
-  <div class="container mt-3">
-    <div class="row">
-      <div class="col-4 container mx-0">
-        <img src="{{ story.main_image.url }}" class="img-fluid rounded" width="100%" alt="">
+
+<div class="container mt-3">
+  <div class="row justify-content-center">
+    <!-- Story-left -->
+    <div class="col-4 container mx-0">
+      <img src="{{ story.main_image.url }}" class="img-fluid rounded" width="100%" alt="">
+      <div class="story-position">
         <p class="text-muted fst-italic fw-light mt-5">Editor.{{ user.username }}</p>
         <h1 class="fw-bold">{{ story.title }}</h1>
         <h6>{{ story.subtitle }}</h6>
         <p class="fw-light fs-6 text-secondary">{{ story.created_at|date:'Y-m-d' }}</p>
-        <a href="{% url 'stories:update' story.pk %}">수정하기</a>
-        <a href="{% url 'stories:delete' story.pk %}">삭제하기</a>
+        {% if request.user == story.user %}
+        <a href="{% url 'stories:update' story.pk %}">수정</a>
+        <a href="{% url 'stories:delete' story.pk %}">삭제</a>
+        {% endif %}
       </div>
-      <div class="col-6">
+    </div>
+
+    <!-- Story-right -->
+    <div class="col-6">
+      <div class="">
         {{ story.content | safe }}
+      </div>
+      <hr>
+
+      <div class="mt-5 mb-5">
+        <h3 class="mb-3 ms-2" style="color: var(--gray-dark--color); font-weight: 700;">다른 스토리 더보기</h3>
+        <div class="">
+          <div class="row row-cols-1 row-cols-lg-2">
+            {% for story in stories %}
+              <a href="{% url 'stories:detail' story.pk %}">
+                <div class="col mb-3 mx-3">
+                  <div class="card story-right-card" style="width: 100%; border-radius: 15px; border: none;">
+                    <img src="{{ story.main_image.url }}" class="card-img-top" alt="..." width="180" height="180" style="border-radius: 15px;">
+                    <p>{{ story.title }}</p>
+                  </div>
+                </div>
+              </a>
+            {% endfor %}
+          </div>
+        </div>
       </div>
     </div>
   </div>
+</div>
+
+
+{% include 'footer.html' %}
 {% endblock body %}
