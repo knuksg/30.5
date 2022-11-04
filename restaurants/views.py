@@ -20,6 +20,46 @@ def index(request):
     return render(request, "restaurants/index.html", context)
 
 
+def korea(request):
+    restaurants = Restaurant.objects.order_by("-pk")
+    context = {
+        "restaurants": restaurants,
+    }
+    return render(request, "restaurants/korea.html", context)
+
+
+def china(request):
+    restaurants = Restaurant.objects.order_by("-pk")
+    context = {
+        "restaurants": restaurants,
+    }
+    return render(request, "restaurants/china.html", context)
+
+
+def japan(request):
+    restaurants = Restaurant.objects.order_by("-pk")
+    context = {
+        "restaurants": restaurants,
+    }
+    return render(request, "restaurants/japan.html", context)
+
+
+def western(request):
+    restaurants = Restaurant.objects.order_by("-pk")
+    context = {
+        "restaurants": restaurants,
+    }
+    return render(request, "restaurants/western.html", context)
+
+
+def school(request):
+    restaurants = Restaurant.objects.order_by("-pk")
+    context = {
+        "restaurants": restaurants,
+    }
+    return render(request, "restaurants/school.html", context)
+
+
 def category(request):
     return render(request, "restaurants/category.html")
 
