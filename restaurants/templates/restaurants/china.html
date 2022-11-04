@@ -13,7 +13,7 @@
       <div class="category__list">
         <div class="category__item">
           <a href="{% url 'restaurants:category' %}">
-            <h5 class="category__name""># 전체</h5>
+            <h5 class="category__name"># 전체</h5>
           </a>
         </div>
         <div class="category__item">
@@ -65,7 +65,7 @@
       </div>
     </div>
     <!-- Category-menu-Form -->
-    <form id="form-01" method="post" action="{% url 'restaurants:tag' %}">
+    <form id="form-01" method="post" action="{% url 'restaurants:index' %}">
       {% csrf_token %}
       <input type="hidden" id="tag" name="tag" value="중식, 짜장면">
     </form>
