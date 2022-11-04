@@ -1,21 +1,18 @@
 {% extends 'base.html' %}
 {% load django_bootstrap5 %}
-{% block title %}
-  수정하기
-{% endblock title %}
-
+{% block title %}수정{% endblock title %}
 {% block body %}
-  <div class='container'>
-    <h2 class='text-center my-4'>상호 수정 하기</h2>
+  <div class=''>
+    <h2 class='text-center mt-4'>수정 하기</h2>
     <div class='container mt-5'>
       <hr>
-      <form action="" method="POST">
+      <form action="" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-        {% bootstrap_form restaurant_form %}
-        <b>태그</b>
-        {% bootstrap_form category_form %}
+        {% bootstrap_form restaurants_form %}
         <input class='btn btn-dark my-3' type="submit" value='수정하기'>
       </form>
     </div>
   </div>
 {% endblock body %}
+
+

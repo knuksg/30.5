@@ -7,13 +7,14 @@
     <!-- Restaurants-top -->
     <div class="restaurants-top">
       <p>클릭수 | 날짜</p>
-      <h1>{{ tag_name }} 베스트 (카운트)곳</h1>
-      <p>"얼큰이 부대찌개에 라면사리는 국룰이지"</p>
+      <h1>한식 맛집 베스트 5곳</h1>
+      <p>"한국인은 한식이지"</p>
     </div>
 
     <!-- Restaurants-list -->
     <div class="restaurants-list">
       <div class="container px-5 cont">
+        {% for restaurant in restaurants %}
         <div class="restaurants__item">
           <div class="restaurants__img">
             <img src="https://i.pinimg.com/564x/be/66/20/be6620ae5749890854f3d467402c8b10.jpg" alt="">
@@ -22,9 +23,9 @@
             <div class="restaurants__content__top">
               <div class="">
                 <a href="#" style="color: var(--dark-color);">
-                  <h3>식당 이름<span class="main-color">(평점)</span></h3>
+                  <h3>{{ restaurant.name }}<span class="main-color">{{ restaurant.grade }}</span></h3>
                 </a>
-                <p>식당 주소</p>
+                <p>{{ restaurant.address }}</p>
               </div>
               <i class="fa-regular fa-star fa-2x" style="color: var(--gray-color);"></i>
             </div>
@@ -36,6 +37,7 @@
             </div>
           </div>
         </div>
+        {% endfor %}
       </div>
     </div>
   </div>

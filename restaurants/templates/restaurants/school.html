@@ -65,7 +65,7 @@
       </div>
     </div>
     <!-- Category-menu-Form -->
-    <form id="form-01" method="post" action="{% url 'restaurants:tag' %}">
+    <form id="form-01" method="post" action="{% url 'restaurants:index' %}">
       {% csrf_token %}
       <input type="hidden" id="tag" name="tag" value="분식, 떡볶이">
     </form>

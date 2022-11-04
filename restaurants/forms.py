@@ -1,12 +1,12 @@
 from django import forms
-from .models import Restaurant, Tag
+from .models import Restaurant
 
 class RestaurantsForm(forms.ModelForm):
     tags = forms.CharField(required = False, label = "태그")
 
     class Meta:
         model = Restaurant
-        fields = ['name', 'address', 'shop_number','between_pay','opening_time','break_day', ]
+        fields = ['name', 'address', 'shop_number','between_pay','opening_time','break_day', 'tags']
         labels = {
             'name' : '상호명',
             'address': '주소',
@@ -15,9 +15,3 @@ class RestaurantsForm(forms.ModelForm):
             'opening_time' : '영업 시간',
             'break_day' : '휴무일',
         }
-
-class TagForm(forms.ModelForm):
-
-    class Meta:
-        model = Tag
-        fields = ['name', ]

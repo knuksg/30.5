@@ -7,6 +7,7 @@ from .forms import RestaurantsForm, TagForm
 from django.contrib.auth.decorators import login_required
 from datetime import date, datetime, timedelta
 from django.http import JsonResponse
+from django.db.models import Q
 
 
 def main(request):
@@ -23,23 +24,22 @@ def main(request):
 
 
 def index(request):
-    restaurants = Restaurant.objects.order_by("-pk")
+    print(request.POST)
+    tags = request.POST.get("tag").replace(" ", "").split(",")
+    print(tags)
+    if len(tags) == 1:
+        restaurants = Restaurant.objects.filter(tags__name=tags[0]).order_by("-pk")
+    elif len(tags) == 2:
+        restaurants = (
+            Restaurant.objects.filter(tags__name=tags[0])
+            .filter(tags__name=tags[1])
+            .order_by("-pk")
+        )
     context = {
         "restaurants": restaurants,
+        "tag_name": tags,
     }
     return render(request, "restaurants/index.html", context)
-
-
-def tag(request):
-    print(request.POST)
-    tag_name = request.POST.get("tag")
-    return render(
-        request,
-        "restaurants/index.html",
-        {
-            "tag_name": tag_name,
-        },
-    )
 
 
 def korea(request):
@@ -110,10 +110,8 @@ def create(request):
             return redirect("restaurants:main")
     else:
         restaurants_form = RestaurantsForm()
-        tag_form = TagForm()
     context = {
         "restaurants_form": restaurants_form,
-        "tag_form": tag_form,
     }
     return render(request, "restaurants/create.html", context=context)
 
@@ -170,39 +168,30 @@ def detail(request, pk):
 
 def update(request, pk):
     restaurant = Restaurant.objects.get(pk=pk)
-    category = Category.objects.get(restaurant_id=restaurant)
-    # if request.user == restaurant.user:
     if request.method == "POST":
-        # POST : input 값 가져와서, 검증하고, DB에 저장
-        restaurant_form = RestaurantsForm(
-            request.POST, request.FILES, instance=restaurant
-        )
-        category_form = CategoryForm(request.POST, request.FILES, instance=category)
-        if restaurant_form.is_valid():
-            # 유효성 검사 통과하면 저장하고, 상세보기 페이지로
-            restaurants = restaurant_form.save(commit=False)
+        restaurants_form = RestaurantsForm(request.POST, request.FILES, instance=restaurant)
+        if restaurants_form.is_valid():
+            restaurant.tags.all().delete()
+            tags = restaurants_form.cleaned_data["tags"].split(",")
+            for tag in tags:
+                if not tag:
+                    continue
+                else:
+                    tag = tag.strip()
+                    _tag, _ = Tag.objects.get_or_create(name=tag)
+                    restaurant.tags.add(_tag)
+            restaurants = restaurants_form.save(commit=False)
             restaurants.save()
-            categorys = category_form.save(commit=False)
-            categorys.save()
-            # messages.success(request, '글이 수정되었습니다.')
             return redirect("restaurants:detail", pk)
-        # 유효성 검사 통과하지 않으면 => context 부터해서 오류메시지 담긴 restaurant_form을 랜더링
     else:
-        # GET : Form을 제공
-        restaurant_form = RestaurantsForm(instance=restaurant)
-        category_form = CategoryForm(instance=category)
+        print(restaurant.tags.all())
+        restaurants_form = RestaurantsForm(instance=restaurant)
+        restaurants_form.tags = restaurant.tags.all()
+
     context = {
-        "restaurant_form": restaurant_form,
-        "category_form": category_form,
+        "restaurants_form": restaurants_form,
     }
-    return render(request, "restaurants/update.html", context)
-    # else:
-    #     # 작성자가 아닐 때
-    #     # (1) 403 에러메시지를 던져버린다.
-    #     # from django.http import HttpResponseForbidden
-    #     # return HttpResponseForbidden()
-    #     # (2) flash message 활용!
-    #     return redirect('restaurants:detail', restaurant.pk)
+    return render(request, "restaurants/update.html", context=context)
 
 
 def delete(request, pk):
