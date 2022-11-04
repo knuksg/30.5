@@ -22,24 +22,29 @@ def main(request):
         },
     )
 
-
 def index(request):
     print(request.POST)
-    tags = request.POST.get("tag").replace(" ", "").split(",")
+    tags = request.POST.get("tag").replace(' ', '').split(',')
     print(tags)
+
     if len(tags) == 1:
-        restaurants = Restaurant.objects.filter(tags__name=tags[0]).order_by("-pk")
+        restaurants = Restaurant.objects.filter(tags__name=tags[0])
+        restaurants = sorted(restaurants, key=lambda a: -a.grade)[:5] #임의로 5개씩 보여줌.
+        tags = tags[0]
     elif len(tags) == 2:
-        restaurants = (
-            Restaurant.objects.filter(tags__name=tags[0])
-            .filter(tags__name=tags[1])
-            .order_by("-pk")
-        )
+        restaurants = Restaurant.objects.filter(tags__name=tags[0]).filter(tags__name=tags[1])
+        restaurants = sorted(restaurants, key=lambda a: -a.grade)[:5] #임의로 5개씩 보여줌.
+        tags = f'{tags[0]} {tags[1]}'
+    total_hits = 0
+    for restaurant in restaurants:
+        total_hits += restaurant.hits
+
     context = {
         "restaurants": restaurants,
-        "tag_name": tags,
+        "tags": tags,
+        "total_hits": total_hits,
     }
-    return render(request, "restaurants/index.html", context)
+    return render(request, "restaurants/index.html", context)   
 
 
 def korea(request):
@@ -186,9 +191,7 @@ def update(request, pk):
             restaurants.save()
             return redirect("restaurants:detail", pk)
     else:
-        print(restaurant.tags.all())
         restaurants_form = RestaurantsForm(instance=restaurant)
-        restaurants_form.tags = restaurant.tags.all()
 
     context = {
         "restaurants_form": restaurants_form,

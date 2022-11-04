@@ -6,8 +6,8 @@
   <div class="restaurants">
     <!-- Restaurants-top -->
     <div class="restaurants-top">
-      <p>클릭수 | 날짜</p>
-      <h1>한식 맛집 베스트 5곳</h1>
+      <p>{{ total_hits }} 클릭 | 2022-11-04</p>
+      <h1>{{ tags }} 맛집 베스트 5곳</h1>
       <p>"한국인은 한식이지"</p>
     </div>
 
@@ -22,16 +22,22 @@
           <div class="restaurants__content">
             <div class="restaurants__content__top">
               <div class="">
-                <a href="#" style="color: var(--dark-color);">
-                  <h3>{{ restaurant.name }}<span class="main-color">{{ restaurant.grade }}</span></h3>
+                <a href="{% url 'restaurants:detail' restaurant.pk %}" style="color: var(--dark-color);">
+                  <h3>{{ restaurant.name }} <span class="main-color">{{ restaurant.grade }}</span></h3>
                 </a>
                 <p>{{ restaurant.address }}</p>
               </div>
               <i class="fa-regular fa-star fa-2x" style="color: var(--gray-color);"></i>
             </div>
-            <div class="restaurants__content__comment">(작성자 사진, 이름) 댓글</div>
+            {% if restaurant.review_set.all %}
+            <div class="restaurants__content__comment">
+              <img src="{{ restaurant.review_set.all.0.user.profile_image }}" style="width: 50px; height: 50px;" alt="">
+              <p>{{ restaurant.review_set.all.0.user }} <span>{{ restaurant.review_set.all.0.content }}</span></p>
+              
+            </div>
+            {% endif %}
             <div class="restaurants__content__link">
-              <a href="#">(식당 이름) 더보기
+              <a href="{% url 'restaurants:detail' restaurant.pk %}">{{ restaurant.name }} 더보기
                 <i class="fa-solid fa-chevron-right"></i>
               </a>
             </div>
