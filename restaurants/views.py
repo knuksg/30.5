@@ -2,7 +2,7 @@ from unicodedata import category
 from django.shortcuts import render, redirect
 from .models import Restaurant, Tag
 from reviews.models import Review
-from .forms import RestaurantsForm, TagForm
+from .forms import RestaurantsForm
 from django.contrib.auth.decorators import login_required
 from datetime import date, datetime, timedelta
 from django.http import JsonResponse
@@ -100,10 +100,8 @@ def create(request):
             return redirect("restaurants:main")
     else:
         restaurants_form = RestaurantsForm()
-        tag_form = TagForm()
     context = {
         "restaurants_form": restaurants_form,
-        "tag_form": tag_form,
     }
     return render(request, "restaurants/create.html", context=context)
 
@@ -160,13 +158,10 @@ def detail(request, pk):
 
 def update(request, pk):
     restaurant = Restaurant.objects.get(pk=pk)
-    tag_all = restaurant.tags.all()
-    # tag_get = Tag.objects.get(pk=restaurant.tags).restaurants_set.all()
     if request.method == "POST":
-        restaurants_form = RestaurantsForm(
-            request.POST, request.FILES, instance=restaurant
-        )
+        restaurants_form = RestaurantsForm(request.POST, request.FILES, instance=restaurant)
         if restaurants_form.is_valid():
+            restaurant.tags.all().delete()
             tags = restaurants_form.cleaned_data["tags"].split(",")
             for tag in tags:
                 if not tag:
@@ -174,53 +169,19 @@ def update(request, pk):
                 else:
                     tag = tag.strip()
                     _tag, _ = Tag.objects.get_or_create(name=tag)
-                    new_restaurant.tags.add(_tag)
+                    restaurant.tags.add(_tag)
             restaurants = restaurants_form.save(commit=False)
             restaurants.save()
-            return redirect("restaurants:main")
+            return redirect("restaurants:detail", pk)
     else:
+        print(restaurant.tags.all())
         restaurants_form = RestaurantsForm(instance=restaurant)
+        restaurants_form.tags = restaurant.tags.all()
+
     context = {
         "restaurants_form": restaurants_form,
     }
     return render(request, "restaurants/update.html", context=context)
-
-
-# def update(request, pk):
-#     restaurant = Restaurant.objects.get(pk=pk)
-#     tag = Tag.objects.get(restaurant_id=restaurants)
-#     # if request.user == restaurant.user:
-#     if request.method == "POST":
-#         # POST : input 값 가져와서, 검증하고, DB에 저장
-#         restaurant_form = RestaurantsForm(
-#             request.POST, request.FILES, instance=restaurant
-#         )
-#         tag_form = TagForm(request.POST, request.FILES, instance=tag)
-#         if restaurant_form.is_valid():
-#             # 유효성 검사 통과하면 저장하고, 상세보기 페이지로
-#             restaurants = restaurant_form.save(commit=False)
-#             restaurants.save()
-#             tags = tag_form.save(commit=False)
-#             tags.save()
-#             # messages.success(request, '글이 수정되었습니다.')
-#             return redirect("restaurants:detail", pk)
-#         # 유효성 검사 통과하지 않으면 => context 부터해서 오류메시지 담긴 restaurant_form을 랜더링
-#     else:
-#         # GET : Form을 제공
-#         restaurant_form = RestaurantsForm(instance=restaurant)
-#         tag_form = TagForm(instance=tag)
-#     context = {
-#         "restaurant_form": restaurant_form,
-#         "tag_form": tag_form,
-#     }
-#     return render(request, "restaurants/update.html", context)
-#     # else:
-#     #     # 작성자가 아닐 때
-#     #     # (1) 403 에러메시지를 던져버린다.
-#     #     # from django.http import HttpResponseForbidden
-#     #     # return HttpResponseForbidden()
-#     #     # (2) flash message 활용!
-#     #     return redirect('restaurants:detail', restaurant.pk)
 
 
 def delete(request, pk):
