@@ -14,20 +14,17 @@
       {% for restaurant in restaurant_list %}
         <div class="col">
           <!-- Card -->
+          <a href="{% url 'restaurants:detail' restaurant.pk %}">
           <div class="card m-auto mb-3 border-0 rounded-0" style="width: 21rem;">
             {% if restaurant.reviewimage_set.all.photo1 %}
-            <a href="{% url 'restaurants:detail' restaurant.pk %}">
               <img class="card-img-top rounded-0" src="{{ restaurant.reviewimage_set.all.photo1.url }}" style="width: 100%; height: 200px;" alt="Title">
-            </a>
             {% else %}
-            <a href="{% url 'restaurants:detail' restaurant.pk %}">
               <img class="card-img-top rounded-0" src="https://picsum.photos/300/200" style="width: 100%; height: 200px;" alt="Title">
-            </a>
             {% endif %}
             <div class="card-body d-flex p-0 py-2">
               <div class="detail__title d-flex flex-column align-items-start m-0">
                 <div class="d-flex align-items-center">
-                  <h4 class="card-title m-0 me-2">{{ restaurant.name }}</h4>
+                  <h4 class="card-title m-0 me-2" style="color: var(--dark-color);">{{ restaurant.name }}</h4>
                   <span class="fs-3">{{ restaurant.grade }}</span>
                 </div>
                 <div class="">
@@ -40,6 +37,7 @@
               </div>
             </div>
           </div>
+          </a> 
           <!-- Card-End -->
         </div>
         {% endfor %}
