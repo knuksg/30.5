@@ -11,31 +11,33 @@
     <div class="category-top">
       <h1 class="category__title">믿고 보는 맛집 리스트</h1>
       <div class="category__list">
-        <div class="category__item">
-          <h5 class="category__name"># 전체</h5>
+        <div class="category__item" style="border: 1px solid var(--main-color);">
+          <a href="{% url 'restaurants:category' %}" style="color: var(--main-color);">
+            <h5 class="category__name" style="color: var(--main-color);"># 전체</h5>
+          </a>
         </div>
         <div class="category__item">
-          <a href="{% url 'restaurants:index' %}">
+          <a href="{% url 'restaurants:korea' %}">
             <h5 class="category__name"># 한식</h5>
           </a>
         </div>
         <div class="category__item">
-          <a href="{% url 'restaurants:index' %}">
+          <a href="{% url 'restaurants:china' %}">
             <h5 class="category__name"># 중식</h5>
           </a>
         </div>
         <div class="category__item">
-          <a href="{% url 'restaurants:index' %}">
+          <a href="{% url 'restaurants:japan' %}">
             <h5 class="category__name"># 일식</h5>
           </a>
         </div>
         <div class="category__item">
-          <a href="{% url 'restaurants:index' %}">
+          <a href="{% url 'restaurants:western' %}">
             <h5 class="category__name"># 양식</h5>
           </a>
         </div>
         <div class="category__item">
-          <a href="{% url 'restaurants:index' %}">
+          <a href="{% url 'restaurants:school' %}">
             <h5 class="category__name"># 분식</h5>
           </a>
         </div>
@@ -46,47 +48,95 @@
     <div class="category-menu">
       <div class="container text-center">
         <div class="row row-cols-sm-1 row-cols-md-2 gx-5 test">
-          <a href="#" class="category-link" style="padding: 0;">
-            <div class="category-menu__item col p-3">
-              <div class="menu__item__wrap">
-                <div class="menu__item__img"></div>
-                <div class="menu__item__cover"></div>
-                <div class="menu__item__text">
-                  <h3>제천 / 단양 맛집 베스트 7곳</h3>
-                  <p>"볼거리, 먹거리 많은 제천/단양으로 출발~"</p>
-                </div>
-              </div>
-            </div>
-          </a>
-          <a href="#" class="category-link" style="padding: 0;">
-            <div class="category-menu__item col p-3">
-              <div class="menu__item__wrap">
-                <div class="menu__item__img"></div>
-                <div class="menu__item__cover"></div>
-                <div class="menu__item__text">
-                  <h3>제천 / 단양 맛집 베스트 7곳</h3>
-                  <p>"볼거리, 먹거리 많은 제천/단양으로 출발~"</p>
-                </div>
-              </div>
-            </div>
-          </a>
-          <a href="#" class="category-link" style="padding: 0;">
-            <div class="category-menu__item col p-3">
-              <div class="menu__item__wrap">
-                <div class="menu__item__img"></div>
-                <div class="menu__item__cover"></div>
-                <div class="menu__item__text">
-                  <h3>제천 / 단양 맛집 베스트 7곳</h3>
-                  <p>"볼거리, 먹거리 많은 제천/단양으로 출발~"</p>
-                </div>
-              </div>
-            </div>
-          </a>
           <!-- Menu-item -->
+          <a href="#" onclick="document.forms['form-01'].submit();">
+            <div class="category-menu__item col p-3">
+              <div class="menu__item__wrap">
+                <div class="category__img category__img-01"></div>
+                <div class="menu__item__cover"></div>
+                <div class="menu__item__text">
+                  <h3>한식 맛집 베스트 (카운트)곳</h3>
+                  <p>"한식~"</p>
+                </div>
+              </div>
+            </div>
+          </a>
+          <a href="#" onclick="document.forms['form-02'].submit();">
+            <div class="category-menu__item col p-3">
+              <div class="menu__item__wrap">
+                <div class="category__img category__img-02"></div>
+                <div class="menu__item__cover"></div>
+                <div class="menu__item__text">
+                  <h3>중식 맛집 베스트 (카운트)곳</h3>
+                  <p>"중식~"</p>
+                </div>
+              </div>
+            </div>
+          </a>
+          <a href="#" onclick="document.forms['form-03'].submit();">
+            <div class="category-menu__item col p-3">
+              <div class="menu__item__wrap">
+                <div class="category__img category__img-03"></div>
+                <div class="menu__item__cover"></div>
+                <div class="menu__item__text">
+                  <h3>일식 맛집 베스트 (카운트)곳</h3>
+                  <p>"일식~"</p>
+                </div>
+              </div>
+            </div>
+          </a>
+          <a href="#" onclick="document.forms['form-04'].submit();">
+            <div class="category-menu__item col p-3">
+              <div class="menu__item__wrap">
+                <div class="category__img category__img-04"></div>
+                <div class="menu__item__cover"></div>
+                <div class="menu__item__text">
+                  <h3>양식 맛집 베스트 (카운트)곳</h3>
+                  <p>"양식~"</p>
+                </div>
+              </div>
+            </div>
+          </a>
+          <a href="#" onclick="document.forms['form-05'].submit();">
+            <div class="category-menu__item col p-3">
+              <div class="menu__item__wrap">
+                <div class="category__img category__img-05"></div>
+                <div class="menu__item__cover"></div>
+                <div class="menu__item__text">
+                  <h3>분식 맛집 베스트 (카운트)곳</h3>
+                  <p>"분식~"</p>
+                </div>
+              </div>
+            </div>
+          </a>
         </div>
       </div>
     </div>
+    <!-- Category-menu-Form -->
+    <form id="form-01" method="post" action="{% url 'restaurants:tag' %}">
+      {% csrf_token %}
+      <input type="hidden" id="tag" name="tag" value="한식">
+    </form>
+    <form id="form-02" method="post" action="{% url 'restaurants:tag' %}">
+      {% csrf_token %}
+      <input type="hidden" id="tag" name="tag" value="중식">
+    </form>
+    <form id="form-03" method="post" action="{% url 'restaurants:tag' %}">
+      {% csrf_token %}
+      <input type="hidden" id="tag" name="tag" value="일식">
+    </form>
+    <form id="form-04" method="post" action="{% url 'restaurants:tag' %}">
+      {% csrf_token %}
+      <input type="hidden" id="tag" name="tag" value="양식">
+    </form>
+    <form id="form-05" method="post" action="{% url 'restaurants:tag' %}">
+      {% csrf_token %}
+      <input type="hidden" id="tag" name="tag" value="분식">
+    </form>
+    <!-- Category-menu--Form-End -->
+    <!-- Category-menu-End -->
   </div>
+</div>
 </div>
 
 {% include 'footer.html' %}

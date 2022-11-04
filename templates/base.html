@@ -41,6 +41,7 @@
   <nav class="nav d-flex w-100 justify-content-between">
     <div class="d-flex nav-wrap">
       <div class="nav__logo p-3 me-3 d-flex align-items-center"><a href="{% url 'restaurants:main' %}" style="color: var(--main-color);">30.5</a></div>
+      <!-- Nav-Search -->
       <form class="d-flex align-items-center" action="{% url 'stories:search_test' %}">
         <div class="">
           <i class="fa-solid fa-magnifying-glass" style="color: #adb5bd;"></i>
@@ -129,6 +130,11 @@
   <!-- Block -->
   {% block body %}
   {% endblock body %}
+
+  <!-- Script -->
+  {% block script %}
+  {% endblock script %}
+    
 
 </body>
 
