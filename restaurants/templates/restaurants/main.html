@@ -35,7 +35,7 @@
       <div class="menu__top">
         <h2 class="fs-3">믿고 보는 맛집 리스트</h2>
         <div class="menu__link">
-          <a href="#">리스트 더보기
+          <a href="{% url 'restaurants:category' %}">리스트 더보기
             <i class="fa-solid fa-chevron-right"></i>
           </a>
         </div>
@@ -43,70 +43,89 @@
       <div class="menu__list">
         <div class="container text-center">
           <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 gx-5">
-            <div class="menu__item col p-3">
-              <div class="menu__item__wrap">
-                <div class="menu__item__img"></div>
-                <div class="menu__item__cover"></div>
-                <div class="menu__item__text">
-                  <h3>제천 / 단양 맛집 베스트 7곳</h3>
-                  <p>"볼거리, 먹거리 많은 제천/단양으로 출발~"</p>
-                </div>
-              </div>
-            </div>
-            <div class="menu__item col p-3">
-              <div class="menu__item__wrap">
-                <div class="menu__item__img"></div>
-                <div class="menu__item__cover"></div>
-                <div class="menu__item__text">
-                  <h3>제천 / 단양 맛집 베스트 7곳</h3>
-                  <p>"볼거리, 먹거리 많은 제천/단양으로 출발~"</p>
-                </div>
-              </div>
-            </div>
-            <div class="menu__item col p-3">
-              <div class="menu__item__wrap">
-                <div class="menu__item__img"></div>
-                <div class="menu__item__cover"></div>
-                <div class="menu__item__text">
-                  <h3>제천 / 단양 맛집 베스트 7곳</h3>
-                  <p>"볼거리, 먹거리 많은 제천/단양으로 출발~"</p>
-                </div>
-              </div>
-            </div>
-            <div class="menu__item col p-3">
-              <div class="menu__item__wrap">
-                <div class="menu__item__img"></div>
-                <div class="menu__item__cover"></div>
-                <div class="menu__item__text">
-                  <h3>제천 / 단양 맛집 베스트 7곳</h3>
-                  <p>"볼거리, 먹거리 많은 제천/단양으로 출발~"</p>
-                </div>
-              </div>
-            </div>
-            <div class="menu__item col p-3">
-              <div class="menu__item__wrap">
-                <div class="menu__item__img"></div>
-                <div class="menu__item__cover"></div>
-                <div class="menu__item__text">
-                  <h3>제천 / 단양 맛집 베스트 7곳</h3>
-                  <p>"볼거리, 먹거리 많은 제천/단양으로 출발~"</p>
-                </div>
-              </div>
-            </div>
-            <div class="menu__item col p-3">
-              <div class="menu__item__wrap">
-                <div class="menu__item__img"></div>
-                <div class="menu__item__cover"></div>
-                <div class="menu__item__text">
-                  <h3>제천 / 단양 맛집 베스트 7곳</h3>
-                  <p>"볼거리, 먹거리 많은 제천/단양으로 출발~"</p>
-                </div>
-              </div>
-            </div>
             <!-- Menu-item -->
+            <a href="{% url 'restaurants:category' %}"">
+              <div class="menu__item col p-3">
+                <div class="menu__item__wrap">
+                  <div class="category__img category__img-01"></div>
+                  <div class="menu__item__cover"></div>
+                  <div class="menu__item__text">
+                    <h4>맛집 리스트 더보기</h4>
+                    <p>"전체~"</p>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a href="{% url 'restaurants:korea' %}" onclick="document.forms['form-01'].submit();">
+              <div class="menu__item col p-3">
+                <div class="menu__item__wrap">
+                  <div class="category__img category__img-01"></div>
+                  <div class="menu__item__cover"></div>
+                  <div class="menu__item__text">
+                    <h4>한식 맛집 베스트 (카운트)곳</h4>
+                    <p>"한식~"</p>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a href="{% url 'restaurants:china' %}" onclick="document.forms['form-02'].submit();">
+              <div class="menu__item col p-3">
+                <div class="menu__item__wrap">
+                  <div class="category__img category__img-02"></div>
+                  <div class="menu__item__cover"></div>
+                  <div class="menu__item__text">
+                    <h4>중식 맛집 베스트 (카운트)곳</h4>
+                    <p>"중식~"</p>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a href="{% url 'restaurants:japan' %}" onclick="document.forms['form-03'].submit();">
+              <div class="menu__item col p-3">
+                <div class="menu__item__wrap">
+                  <div class="category__img category__img-03"></div>
+                  <div class="menu__item__cover"></div>
+                  <div class="menu__item__text">
+                    <h4>일식 맛집 베스트 (카운트)곳</h4>
+                    <p>"일식~"</p>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a href="{% url 'restaurants:western' %}" onclick="document.forms['form-04'].submit();">
+              <div class="menu__item col p-3">
+                <div class="menu__item__wrap">
+                  <div class="category__img category__img-04"></div>
+                  <div class="menu__item__cover"></div>
+                  <div class="menu__item__text">
+                    <h4>양식 맛집 베스트 (카운트)곳</h4>
+                    <p>"양식~"</p>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a href="{% url 'restaurants:school' %}" onclick="document.forms['form-05'].submit();">
+              <div class="menu__item col p-3">
+                <div class="menu__item__wrap">
+                  <div class="category__img category__img-05"></div>
+                  <div class="menu__item__cover"></div>
+                  <div class="menu__item__text">
+                    <h4>분식 맛집 베스트 (카운트)곳</h4>
+                    <p>"분식~"</p>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <!-- Menu-item-End -->
           </div>
         </div>
       </div>
+      <!-- Menu-item-Form-End -->
+      <form id="form-01" method="post" action="{% url 'restaurants:tag' %}">
+        {% csrf_token %}
+        <input type="hidden" id="tag" name="tag" value="한식">
+      </form>
+      <!-- Nenu-list-End -->
     </div>
   </section>
 
@@ -118,75 +137,41 @@
       <div class="menu__top">
         <h2 class="fs-3">맛집 스토리</h2>
         <div class="menu__link">
-          <a href="#">리스트 더보기
+          <a href="{% url 'stories:index' %}">리스트 더보기
             <i class="fa-solid fa-chevron-right"></i>
           </a>
         </div>
       </div>
       <div class="menu__list">
         <div class="container text-center">
-          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 gx-5">
-            <div class="menu__item col p-3">
-              <div class="menu__item__wrap">
-                <div class="menu__item__img"></div>
-                <div class="menu__item__cover"></div>
-                <div class="menu__item__text">
-                  <h3>제천 / 단양 맛집 베스트 7곳</h3>
-                  <p>"볼거리, 먹거리 많은 제천/단양으로 출발~"</p>
+          <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3 gx-5">
+            <!-- Story-item -->
+            {% for story in stories %}
+              <a href="{% url 'stories:detail' story.pk %}">
+                <div class="story__item col p-3">
+                  <div class="menu__item__wrap">
+                    <div class="menu__item__img" style="background-image: url({{ story.main_image.url }});"></div>
+                    <div class="menu__item__cover"></div>
+                    <div class="menu__item__text d-flex flex-column">
+                      <div class="">
+                        <h3 style="font-weight: 400; border-bottom: 3px solid; padding-bottom: 10px;">{{ story.title }}</h3>
+                        <p style="color: var(--gray-color); padding-top: 10px;">{{ story.subtitle }}</p>
+                      </div>
+                    </div>
+                    <!-- Profile-Img -->
+                    <div class="main-story__profile pt-3">
+                      <div class="profile-dot"">
+                        <p>MP</p>
+                      </div>
+                      <img src="{{ story.user.profile_image }}" width="65" height="65" style="border-radius: 50%; border: 2px solid var(--main-color);" alt="">
+                      <p style="color: var(--main-color);">{{ story.user.username }}</p>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-            <div class="menu__item col p-3">
-              <div class="menu__item__wrap">
-                <div class="menu__item__img"></div>
-                <div class="menu__item__cover"></div>
-                <div class="menu__item__text">
-                  <h3>제천 / 단양 맛집 베스트 7곳</h3>
-                  <p>"볼거리, 먹거리 많은 제천/단양으로 출발~"</p>
-                </div>
-              </div>
-            </div>
-            <div class="menu__item col p-3">
-              <div class="menu__item__wrap">
-                <div class="menu__item__img"></div>
-                <div class="menu__item__cover"></div>
-                <div class="menu__item__text">
-                  <h3>제천 / 단양 맛집 베스트 7곳</h3>
-                  <p>"볼거리, 먹거리 많은 제천/단양으로 출발~"</p>
-                </div>
-              </div>
-            </div>
-            <div class="menu__item col p-3">
-              <div class="menu__item__wrap">
-                <div class="menu__item__img"></div>
-                <div class="menu__item__cover"></div>
-                <div class="menu__item__text">
-                  <h3>제천 / 단양 맛집 베스트 7곳</h3>
-                  <p>"볼거리, 먹거리 많은 제천/단양으로 출발~"</p>
-                </div>
-              </div>
-            </div>
-            <div class="menu__item col p-3">
-              <div class="menu__item__wrap">
-                <div class="menu__item__img"></div>
-                <div class="menu__item__cover"></div>
-                <div class="menu__item__text">
-                  <h3>제천 / 단양 맛집 베스트 7곳</h3>
-                  <p>"볼거리, 먹거리 많은 제천/단양으로 출발~"</p>
-                </div>
-              </div>
-            </div>
-            <div class="menu__item col p-3">
-              <div class="menu__item__wrap">
-                <div class="menu__item__img"></div>
-                <div class="menu__item__cover"></div>
-                <div class="menu__item__text">
-                  <h3>제천 / 단양 맛집 베스트 7곳</h3>
-                  <p>"볼거리, 먹거리 많은 제천/단양으로 출발~"</p>
-                </div>
-              </div>
-            </div>
-            <!-- Menu-item -->
+              </a>
+            {% endfor %}
+              
+            <!-- Menu-item-End -->
           </div>
         </div>
       </div>
@@ -203,67 +188,26 @@
     </div>
     <div class="menu__list">
       <div class="container text-center">
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 gx-5">
-          <div class="menu__item col p-3">
-            <div class="menu__item__wrap">
-              <div class="menu__item__img"></div>
-              <div class="menu__item__cover"></div>
-              <div class="menu__item__text">
-                <h3>제천 / 단양 맛집 베스트 7곳</h3>
-                <p>"볼거리, 먹거리 많은 제천/단양으로 출발~"</p>
+        <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-4 gx-5 justify-content-center">
+          {% for restaurant in restaurants %}
+            <div class="card p-0 mx-3 border-0" style="width: 18rem;">
+              {% if restaurant.reviewImage_set.photo1 %}
+              <img src="{{ restaurant.reviewImage_set.photo1.url }}" class="card-img-top" alt="...">
+              {% else %}
+              <a href="{% url 'restaurants:detail' restaurant.pk %}">
+                <img class="card-img-top rounded-0" src="https://picsum.photos/300/200" style="width: 100%; height: 200px;" alt="Title">
+              </a>
+              {% endif %}
+              <div class="card-body text-start p-0 py-3">
+                <div class="d-flex align-items-center">
+                  <h5 class="card-title m-0 me-2 fs-2">{{ restaurant.name }}</h5>
+                  <p class="card-text fs-2" style="color: var(--main-color);">{{ restaurant.grade }}</p>
+                </div>
+                <p class="card-text" style="color: var(--gray-color);">{{ restaurant.address }}</p>
               </div>
             </div>
-          </div>
-          <div class="menu__item col p-3">
-            <div class="menu__item__wrap">
-              <div class="menu__item__img"></div>
-              <div class="menu__item__cover"></div>
-              <div class="menu__item__text">
-                <h3>제천 / 단양 맛집 베스트 7곳</h3>
-                <p>"볼거리, 먹거리 많은 제천/단양으로 출발~"</p>
-              </div>
-            </div>
-          </div>
-          <div class="menu__item col p-3">
-            <div class="menu__item__wrap">
-              <div class="menu__item__img"></div>
-              <div class="menu__item__cover"></div>
-              <div class="menu__item__text">
-                <h3>제천 / 단양 맛집 베스트 7곳</h3>
-                <p>"볼거리, 먹거리 많은 제천/단양으로 출발~"</p>
-              </div>
-            </div>
-          </div>
-          <div class="menu__item col p-3">
-            <div class="menu__item__wrap">
-              <div class="menu__item__img"></div>
-              <div class="menu__item__cover"></div>
-              <div class="menu__item__text">
-                <h3>제천 / 단양 맛집 베스트 7곳</h3>
-                <p>"볼거리, 먹거리 많은 제천/단양으로 출발~"</p>
-              </div>
-            </div>
-          </div>
-          <div class="menu__item col p-3">
-            <div class="menu__item__wrap">
-              <div class="menu__item__img"></div>
-              <div class="menu__item__cover"></div>
-              <div class="menu__item__text">
-                <h3>제천 / 단양 맛집 베스트 7곳</h3>
-                <p>"볼거리, 먹거리 많은 제천/단양으로 출발~"</p>
-              </div>
-            </div>
-          </div>
-          <div class="menu__item col p-3">
-            <div class="menu__item__wrap">
-              <div class="menu__item__img"></div>
-              <div class="menu__item__cover"></div>
-              <div class="menu__item__text">
-                <h3>제천 / 단양 맛집 베스트 7곳</h3>
-                <p>"볼거리, 먹거리 많은 제천/단양으로 출발~"</p>
-              </div>
-            </div>
-          </div>
+          {% endfor %}
+            
           <!-- Menu-item -->
         </div>
       </div>
@@ -272,3 +216,14 @@
 
 {% include 'footer.html' %}
 {% endblock body %}
+
+<div class="menu__item col p-3">
+  <div class="menu__item__wrap">
+    <div class="menu__item__img"></div>
+    <div class="menu__item__cover"></div>
+    <div class="menu__item__text">
+      <h3>제천 / 단양 맛집 베스트 7곳</h3>
+      <p>"볼거리, 먹거리 많은 제천/단양으로 출발~"</p>
+    </div>
+  </div>
+</div>

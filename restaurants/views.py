@@ -2,7 +2,8 @@ from unicodedata import category
 from django.shortcuts import render, redirect
 from .models import Restaurant, Tag
 from reviews.models import Review
-from .forms import RestaurantsForm
+from stories.models import Story
+from .forms import RestaurantsForm, TagForm
 from django.contrib.auth.decorators import login_required
 from datetime import date, datetime, timedelta
 from django.http import JsonResponse
@@ -10,7 +11,16 @@ from django.db.models import Q
 
 
 def main(request):
-    return render(request, "restaurants/main.html")
+    restaurants = sorted(Restaurant.objects.all(), key=lambda a: a.grade)
+    stories = Story.objects.order_by("-pk")[:3]
+    return render(
+        request,
+        "restaurants/main.html",
+        {
+            "stories": stories,
+            "restaurants": restaurants[::-1][:8],
+        },
+    )
 
 
 def index(request):
