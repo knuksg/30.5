@@ -57,6 +57,9 @@
   position: absolute;
   top: 0;
 }
+.category__img-00 {
+  background-image: url(https://i.pinimg.com/564x/82/f8/76/82f876eac280e80bc666acb3e0febe3f.jpg);
+}
 .category__img-01 {
   background-image: url(https://i.pinimg.com/564x/e2/09/50/e209508297c0f6e8caac28b4885b5c9b.jpg);
 }

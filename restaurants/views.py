@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from .models import Restaurant, Tag
 from reviews.models import Review
 from stories.models import Story
-from .forms import RestaurantsForm, TagForm
+from .forms import RestaurantsForm
 from django.contrib.auth.decorators import login_required
 from datetime import date, datetime, timedelta
 from django.http import JsonResponse
@@ -169,7 +169,9 @@ def detail(request, pk):
 def update(request, pk):
     restaurant = Restaurant.objects.get(pk=pk)
     if request.method == "POST":
-        restaurants_form = RestaurantsForm(request.POST, request.FILES, instance=restaurant)
+        restaurants_form = RestaurantsForm(
+            request.POST, request.FILES, instance=restaurant
+        )
         if restaurants_form.is_valid():
             restaurant.tags.all().delete()
             tags = restaurants_form.cleaned_data["tags"].split(",")
