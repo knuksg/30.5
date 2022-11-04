@@ -155,39 +155,67 @@ def detail(request, pk):
 
 def update(request, pk):
     restaurant = Restaurant.objects.get(pk=pk)
-    category = Category.objects.get(restaurant_id=restaurant)
-    # if request.user == restaurant.user:
+    tag_all = restaurant.tags.all()
+    # tag_get = Tag.objects.get(pk=restaurant.tags).restaurants_set.all()
     if request.method == "POST":
-        # POST : input 값 가져와서, 검증하고, DB에 저장
-        restaurant_form = RestaurantsForm(
+        restaurants_form = RestaurantsForm(
             request.POST, request.FILES, instance=restaurant
         )
-        category_form = CategoryForm(request.POST, request.FILES, instance=category)
-        if restaurant_form.is_valid():
-            # 유효성 검사 통과하면 저장하고, 상세보기 페이지로
-            restaurants = restaurant_form.save(commit=False)
+        if restaurants_form.is_valid():
+            tags = restaurants_form.cleaned_data["tags"].split(",")
+            for tag in tags:
+                if not tag:
+                    continue
+                else:
+                    tag = tag.strip()
+                    _tag, _ = Tag.objects.get_or_create(name=tag)
+                    new_restaurant.tags.add(_tag)
+            restaurants = restaurants_form.save(commit=False)
             restaurants.save()
-            categorys = category_form.save(commit=False)
-            categorys.save()
-            # messages.success(request, '글이 수정되었습니다.')
-            return redirect("restaurants:detail", pk)
-        # 유효성 검사 통과하지 않으면 => context 부터해서 오류메시지 담긴 restaurant_form을 랜더링
+            return redirect("restaurants:main")
     else:
-        # GET : Form을 제공
-        restaurant_form = RestaurantsForm(instance=restaurant)
-        category_form = CategoryForm(instance=category)
+        restaurants_form = RestaurantsForm(instance=restaurant)
     context = {
-        "restaurant_form": restaurant_form,
-        "category_form": category_form,
+        "restaurants_form": restaurants_form,
     }
-    return render(request, "restaurants/update.html", context)
-    # else:
-    #     # 작성자가 아닐 때
-    #     # (1) 403 에러메시지를 던져버린다.
-    #     # from django.http import HttpResponseForbidden
-    #     # return HttpResponseForbidden()
-    #     # (2) flash message 활용!
-    #     return redirect('restaurants:detail', restaurant.pk)
+    return render(request, "restaurants/update.html", context=context)
+
+
+# def update(request, pk):
+#     restaurant = Restaurant.objects.get(pk=pk)
+#     tag = Tag.objects.get(restaurant_id=restaurants)
+#     # if request.user == restaurant.user:
+#     if request.method == "POST":
+#         # POST : input 값 가져와서, 검증하고, DB에 저장
+#         restaurant_form = RestaurantsForm(
+#             request.POST, request.FILES, instance=restaurant
+#         )
+#         tag_form = TagForm(request.POST, request.FILES, instance=tag)
+#         if restaurant_form.is_valid():
+#             # 유효성 검사 통과하면 저장하고, 상세보기 페이지로
+#             restaurants = restaurant_form.save(commit=False)
+#             restaurants.save()
+#             tags = tag_form.save(commit=False)
+#             tags.save()
+#             # messages.success(request, '글이 수정되었습니다.')
+#             return redirect("restaurants:detail", pk)
+#         # 유효성 검사 통과하지 않으면 => context 부터해서 오류메시지 담긴 restaurant_form을 랜더링
+#     else:
+#         # GET : Form을 제공
+#         restaurant_form = RestaurantsForm(instance=restaurant)
+#         tag_form = TagForm(instance=tag)
+#     context = {
+#         "restaurant_form": restaurant_form,
+#         "tag_form": tag_form,
+#     }
+#     return render(request, "restaurants/update.html", context)
+#     # else:
+#     #     # 작성자가 아닐 때
+#     #     # (1) 403 에러메시지를 던져버린다.
+#     #     # from django.http import HttpResponseForbidden
+#     #     # return HttpResponseForbidden()
+#     #     # (2) flash message 활용!
+#     #     return redirect('restaurants:detail', restaurant.pk)
 
 
 def delete(request, pk):
