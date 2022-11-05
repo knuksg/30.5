@@ -1,4 +1,3 @@
-from unicodedata import category
 from django.shortcuts import render, redirect
 from .models import Restaurant, Tag
 from reviews.models import Review
@@ -9,24 +8,11 @@ from datetime import date, datetime, timedelta
 from django.http import JsonResponse
 from django.db.models import Q
 
+def top_lists(request):
+    return render(request, 'restaurants/top_lists.html')
 
-def main(request):
-    restaurants = sorted(Restaurant.objects.all(), key=lambda a: a.grade)
-    stories = Story.objects.order_by("-pk")[:3]
-    return render(
-        request,
-        "restaurants/main.html",
-        {
-            "stories": stories,
-            "restaurants": restaurants[::-1][:8],
-        },
-    )
-
-
-def index(request):
-    print(request.POST)
+def list(request):
     tags = request.POST.get("tag").replace(" ", "").split(",")
-    print(tags)
 
     if len(tags) == 1:
         restaurants = Restaurant.objects.filter(tags__name=tags[0])
@@ -47,7 +33,7 @@ def index(request):
         "tags": tags,
         "total_hits": total_hits,
     }
-    return render(request, "restaurants/index.html", context)
+    return render(request, "restaurants/list.html", context)
 
 
 def korea(request):
@@ -89,11 +75,6 @@ def school(request):
     }
     return render(request, "restaurants/school.html", context)
 
-
-def category(request):
-    return render(request, "restaurants/category.html")
-
-
 def create(request):
     if request.method == "POST":
         restaurants_form = RestaurantsForm(request.POST, request.FILES)
@@ -115,7 +96,7 @@ def create(request):
                     tag = tag.strip()
                     _tag, _ = Tag.objects.get_or_create(name=tag)
                     new_restaurant.tags.add(_tag)
-            return redirect("restaurants:main")
+            return redirect("main:index")
     else:
         restaurants_form = RestaurantsForm()
     context = {
@@ -205,7 +186,7 @@ def update(request, pk):
 def delete(request, pk):
     restaurant = Restaurant.objects.get(pk=pk)
     restaurant.delete()
-    return redirect("restaurants:main")
+    return redirect("main:index")
 
 
 @login_required
@@ -227,9 +208,3 @@ def like(request, pk):
             "like_count": restaurant.like_users.count(),
         }
     )
-
-    # if restaurant in request.user.like_restaurants.all():
-    #     request.user.like_restaurants.remove(restaurant.pk)
-    # else:
-    #     request.user.like_restaurants.add(restaurant.pk)
-    # return redirect("restaurants:detail", pk)
