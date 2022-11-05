@@ -115,6 +115,19 @@
   color: #01376A;
 }
 
+/* Detail-Modal-Hover */
+.accounts-modal p:hover {
+  background-color: var(--gray-light--color);
+}
+.accounts-modal a:first-child p:hover {
+  background-color: var(--gray-light--color);
+  border-radius: 10px 10px 0 0;
+}
+.accounts-modal a:last-child p:hover {
+  background-color: var(--gray-light--color);
+  border-radius: 0 0 10px 10px;
+}
+
 .like-outbox {
   width: 100%;
   height: auto;
