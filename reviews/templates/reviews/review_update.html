@@ -3,15 +3,24 @@
 {% block title %}리뷰 수정 하기{% endblock title %}
 
 {% block body %}
-  <div class='container my-3 cont'>
-    <h1 class='text-center my-3'>리뷰 수정</h1>
-    <hr>
+  <div class='container my-3 cont mt-5'>
+    <h6 class='rc-title my-3'>
+      <span>{{ restaurant.name }}</span>
+      에 대한 솔직한 리뷰를 써주세요.
+    </h6>
+
     <form action="" method="POST" enctype='multipart/form-data'>
       {% csrf_token %}
       {% bootstrap_form review_form %}
       {% bootstrap_form reviewimage_form %}
-      <input class='btn btn-dark' type="submit" value="리뷰수정">
-
     </form>
+    <div class="text-end">
+      <a href="{% url 'restaurants:detail' restaurant.pk %}">
+        <button class="rc__button-back">취소</button>
+      </a>
+      <a href="#" onclick="document.forms['review-create'].submit();">
+        <button class="rc__button-submit">리뷰 올리기</button>
+      </a>
+    </div>
   </div>
 {% endblock body %}

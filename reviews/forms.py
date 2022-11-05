@@ -14,7 +14,7 @@ class ReviewForm(forms.ModelForm):
         widgets = {
             "content": Textarea(
                 attrs={
-                    "style": "color: #adb5bd;",
+                    "style": "color: #3E3E3E;",
                     "placeholder": "주문하신 메뉴는 어떠셨나요? 식당의 분위기와 서비스도 궁금해요!",
                 }
             )

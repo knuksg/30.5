@@ -71,9 +71,10 @@
             <p class="m-0 py-2" style="color: var(--gray-color); font-size:14px;">{{ review.updated_at|date:'Y-m-d' }}</p>
             
             {% if request.user == review.user %}
-            <div class="">
-              <a class="me-2" href="{% url 'reviews:review_update' restaurant.pk review.pk %}"><i class="fa-solid fa-pen"></i></a>
-              <a href="{% url 'reviews:review_delete' restaurant.pk review.pk %}"><i class="fa-solid fa-trash-can"></i></a>
+            <div class="py-3">
+              <a class="" href="{% url 'reviews:review_update' restaurant.pk review.pk %}">수정</a>
+              <span style="color: var(--gray-color);">・</span>
+              <a href="{% url 'reviews:review_delete' restaurant.pk review.pk %}">삭제</a>
             </div>
             {% endif %}
               
