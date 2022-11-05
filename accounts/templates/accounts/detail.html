@@ -17,12 +17,53 @@
       <div class="pd__info-top">
         <div class="pd__info__username">
           <h3>{{ request.user.username }}</h3>
-          <i class="fa-solid fa-square-check mx-3"></i>
+          <p class="mx-3">✅</p>
         </div>
         <div class="pd__info__btn">
           <span class="pd__info__btn-follow"><i class="fa-solid fa-user"></i></span>
           <span class="pd__info__btn-arrow"><i class="fa-solid fa-chevron-down"></i></span>
-          <i class="fa-solid fa-ellipsis fa-lg"></i>
+          
+          <!-- Button trigger modal -->
+          <button data-bs-toggle="modal" data-bs-target="#exampleModal" style="background: none; border: 0;">
+            <i class="fa-solid fa-ellipsis fa-lg"></i>
+          </button>
+
+          <!-- Modal -->
+          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-accounts-detail">
+              <div class="container cont">
+                <div class="modal-content text-center">
+                  <!-- Modal-Body -->
+                  <div class="modal-body p-0 accounts-modal">
+                    <a href="#" class="fw-bold text-danger">
+                      <p class="m-0 text-danger" style="padding: 12px">차단</p>
+                    </a>
+                    <hr class="m-0">
+                    <a href="#" class="fw-bold text-danger">
+                      <p class="m-0 text-danger" style="padding: 12px">제한</p>
+                    </a>
+                    <hr class="m-0">
+                    <a href="#" class="fw-bold text-danger">
+                      <p class="m-0 text-danger" style="padding: 12px">신고</p>
+                    </a>
+                    <hr class="m-0">
+                    <a href="{% url 'accounts:update' %}" style="color: var(--dark-color);">
+                      <p class="m-0" style="padding: 12px">정보수정</p>
+                    </a>
+                    <hr class="m-0">
+                    <a href="{% url 'accounts:delete' %}" style="color: var(--dark-color);">
+                      <p class="m-0" style="padding: 12px">회원탈퇴</p>
+                    </a>
+                    <hr class="m-0">
+                    <a href="{% url 'accounts:detail' user.pk %}" style="color: var(--dark-color);">
+                      <p class="m-0" style="padding: 12px">취소</p>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Modal-End -->
         </div>
       </div>
       <div class="pd__info-bottom my-3">
@@ -123,17 +164,6 @@
     </div>
   </div>
 
-  <div class="my-3">
-    <h2>찜한 식당 목록</h2>
-    {% if user.like_restaurants.all %}
-      {% for restaurant in user.like_restaurants.all %}
-        <a href="{% url 'restaurants:detail' restaurant.pk %}">{{ restaurant.name }}</a>
-      {% endfor %}
-    {% else %}
-      <p>찜한 식당이 없습니다...</p>
-    {% endif %}
-  </div>
-</div>
 
 <!-- Modal Body -->
 <!-- if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard -->

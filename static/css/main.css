@@ -88,6 +88,8 @@ input[type=button]{
   padding: 0 10px;
 }
 
+
+/* Nav-Modal */
 .modal-info {
   display: flex;
   flex-direction: column;
@@ -361,7 +363,7 @@ input[type=button]{
 
 .main-story__profile {
   position: relative;
-  z-index: 9;
+  z-index: 6;
 }
 
 .profile-dot {
@@ -414,7 +416,7 @@ input[type=button]{
   position: absolute;
   bottom: -60px;
   left: 30px;
-  z-index: 9;
+  z-index: 6;
 }
 
 .story__profile > p {

@@ -1,7 +1,32 @@
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.contrib.auth.forms import AuthenticationForm, UsernameField
 from django.contrib.auth import get_user_model
 from django import forms
 from django.forms import Textarea, TextInput
+
+
+class CustomAuthenticationForm(AuthenticationForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    username = UsernameField(
+        widget=forms.TextInput(
+            attrs={
+                "class": "form-control",
+                "placeholder": "아이디",
+            }
+        ),
+        label="",
+    )
+    password = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={
+                "class": "form-control",
+                "placeholder": "비밀번호",
+            }
+        ),
+        label="",
+    )
 
 
 class CustomUserCreationForm(UserCreationForm):
