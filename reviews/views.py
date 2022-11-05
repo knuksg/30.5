@@ -16,6 +16,7 @@ def index(request):
 
 @login_required
 def review_create(request, pk):
+    restaurant = Restaurant.objects.get(pk=pk)
     if request.method == "POST":
         restaurant = get_object_or_404(Restaurant, pk=pk)
         review_form = ReviewForm(request.POST)
@@ -37,10 +38,9 @@ def review_create(request, pk):
         review_form = ReviewForm()
         reviewimage_form = ReviewImageForm()
     context = {
-        # "content": review.content,
-        # "userName": review.user.username,
         "review_form": review_form,
         "reviewimage_form": reviewimage_form,
+        "restaurant": restaurant,
     }
     return render(request, "reviews/review_create.html", context)
 

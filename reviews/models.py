@@ -10,7 +10,14 @@ class Review(models.Model):
     )
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     content = models.TextField(max_length=500, null=True)
-    rating = models.IntegerField("숫자", default=0, help_text="0~5사이 값으로 입력하세요")
+    RATING = (
+        (1, "🍚"),
+        (2, "🍚☕️"),
+        (3, "🍚☕️🍷"),
+        (4, "🍚☕️🍷🍰"),
+        (5, "🍚☕️🍷🍰🍔"),
+    )
+    rating = models.IntegerField(choices=RATING, default=None)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

@@ -162,3 +162,46 @@
   height: 180px;
   margin: 0 5px 5px 0;
 }
+
+
+/* Review-Create */
+.rc-title {
+  color: var(--gray-dark--color);
+}
+
+.rc-title span {
+  color: var(--main-color);
+  font-size: 24px;
+}
+
+.rc__button-back,
+.rc__button-submit {
+  width: 120px;
+  height: 50px;
+  background: none;
+  border: 0;
+  border-radius: 40px;
+}
+
+.rc__button-back {
+  border: 1px solid var(--dark-color);
+  margin-right: 10px;
+  color: var(--dark-color);
+}
+
+.rc__button-submit {
+  border: 1px solid var(--gray-color);
+  background-color: var(--gray-color);
+  color: var(--white-color);
+  opacity: .3;
+}
+
+.rc__button-submit:hover {
+  background-color: var(--main-color);
+  border: 1px solid var(--main-color);
+  opacity: 1;
+}
+
+#image_field::file-selector-button {
+  display: none;
+}
