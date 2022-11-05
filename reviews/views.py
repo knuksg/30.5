@@ -106,9 +106,3 @@ def review_update(request, review_pk, restaurant_pk):
             "reviewimage_form": reviewimage_form,
         }
         return render(request, "reviews/review_update.html", context)
-
-
-# def review_delete(request, restaurant_pk, review_pk):
-#     review = ReviewForm.objects.get(pk=review_pk)
-#     review.delete()
-#     return redirect("restaurants:detail", restaurant_pk)

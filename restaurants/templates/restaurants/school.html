@@ -1,7 +1,4 @@
 {% extends 'base.html' %}
-
-
-
 {% block body %}
 
 <!-- Category -->
@@ -12,7 +9,7 @@
       <h1 class="category__title">믿고 보는 맛집 리스트</h1>
       <div class="category__list">
         <div class="category__item">
-          <a href="{% url 'restaurants:category' %}">
+          <a href="{% url 'restaurants:top_lists' %}">
             <h5 class="category__name"># 전체</h5>
           </a>
         </div>
@@ -65,7 +62,7 @@
       </div>
     </div>
     <!-- Category-menu-Form -->
-    <form id="form-01" method="post" action="{% url 'restaurants:index' %}">
+    <form id="form-01" method="post" action="{% url 'restaurants:list' %}">
       {% csrf_token %}
       <input type="hidden" id="tag" name="tag" value="분식, 떡볶이">
     </form>
