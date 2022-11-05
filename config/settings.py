@@ -35,9 +35,10 @@ ALLOWED_HOSTS = ["127.0.0.1", "localhost", ".herokuapp.com"]
 # Application definition
 
 INSTALLED_APPS = [
+    "main",
+    "accounts",
     "restaurants",
     "reviews",
-    "accounts",
     "stories",
     "django_bootstrap5",
     "django_summernote",
