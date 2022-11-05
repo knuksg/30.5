@@ -13,7 +13,11 @@ urlpatterns = [
         views.review_detail,
         name="review_detail",
     ),
-    path("<int:pk>/review/", views.review_create, name="review_create"),
+    path(
+        "<int:pk>/review/",
+        views.review_create,
+        name="review_create",
+    ),
     path(
         "detail/<int:restaurant_pk>/delete/<int:review_pk>/",
         views.review_delete,

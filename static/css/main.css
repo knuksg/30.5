@@ -480,3 +480,9 @@ input[type=button]{
 .footer {
   background-color: var(--dark-color);
 }
+
+.footer__link a i,
+.footer__link a p,
+.footer__link a:hover {
+  color: var(--gray-color);
+}
