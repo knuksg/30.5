@@ -19,7 +19,7 @@ def signup(request):
         if form.is_valid():
             user = form.save()
             auth_login(request, user)
-            return redirect("restaurants:main")
+            return redirect("main:index")
     else:
         form = CustomUserCreationForm()
     context = {"form": form}
@@ -50,7 +50,7 @@ def update(request):
 def delete(request):
     request.user.delete()
     auth_logout(request)
-    return redirect("restaurants:main")
+    return redirect("main:index")
 
 
 def login(request):
@@ -58,7 +58,7 @@ def login(request):
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
             auth_login(request, form.get_user())
-            return redirect(request.GET.get("next") or "restaurants:main")
+            return redirect(request.GET.get("next") or "main:index")
     else:
         form = AuthenticationForm()
     context = {"form": form}
@@ -67,4 +67,4 @@ def login(request):
 
 def logout(request):
     auth_logout(request)
-    return redirect("restaurants:main")
+    return redirect("main:index")

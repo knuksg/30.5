@@ -65,7 +65,7 @@
         {% if request.user.is_authenticated %}
         <!-- Profile -->
         <div class="profile">
-          <!-- Modal-btn -->
+          <!-- Modal Btn -->
           {% if request.user.profile_image %}
           <a href="#" data-bs-toggle="modal" data-bs-target="#modalId">
             <img src="{{ request.user.profile_image }}" alt="" class="w-100">
@@ -100,7 +100,7 @@
             <h3 class="m-0 mt-3">이름 {{ user }}</h3>
             <p class="m-0 mt-1">정보 수정은 내정보에서 가능합니다.</p>
           </div>
-          <div class="d-flex justify-content-around mt-3">
+          <div class="d-flex justify-content-evenly mt-3">
             <a href="{% url 'accounts:detail' user.pk %}" class="modal-btn">내정보</a>
             <div class="btn-line"></div>
             <a href="{% url 'accounts:logout' %}" class="modal-btn" style="color: var(--main-color);">로그아웃</a>
@@ -126,6 +126,7 @@
       </div>
     </div>
   </div>
+
 
   <!-- Block -->
   {% block body %}

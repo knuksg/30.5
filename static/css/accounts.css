@@ -1,0 +1,60 @@
+:root {
+  /* Color */
+  --main-color: #FF7929;
+  --gray-color: #adb5bd;
+  --gray-light--color:#F7F7F7;
+  --gray-dark--color:#6c757d;
+  --dark-color: #3E3E3E;
+  --white-color: #F7F7F7;
+}
+
+
+/* Login */
+.login-form {
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  z-index: 21;
+  margin-top: 50px;
+}
+
+.login-wrap {
+  background-color: #fff;
+  padding: 100px 40px;
+  border-radius: 20px;
+  position: relative;
+}
+
+.login-wrap h3 {
+  font-weight: 700;
+}
+
+.login-wrap p {
+  color: var(--gray-dark--color);
+}
+
+.login-back {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  opacity: .3;
+  transition: all ease-in-out .3s;
+}
+
+.login-back:hover {
+    opacity: 1;
+    transform: rotateZ(90deg)
+    
+}
+
+.login-cover {
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  opacity: .5;
+  position: absolute;
+  top: 0;
+  z-index: 20;
+}
