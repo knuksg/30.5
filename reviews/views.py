@@ -100,9 +100,8 @@ def review_update(request, review_pk, restaurant_pk):
             review_form = ReviewForm(instance=review)
             reviewimage_form = ReviewImageForm(instance=reviewimage)
         context = {
-            # "content": review.content,
-            # "userName": review.user.username,
             "review_form": review_form,
             "reviewimage_form": reviewimage_form,
+            "restaurant": restaurant,
         }
         return render(request, "reviews/review_update.html", context)
