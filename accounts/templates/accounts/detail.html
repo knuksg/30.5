@@ -83,7 +83,7 @@
     <div class="like-outbox">
       {% for restaurant in user.like_restaurants.all %}
       <a href="{% url 'restaurants:detail' restaurant.pk %}">
-        <div class="like-box">
+        <div class="like-box sa sa-up">
           <div class="like-box__item">
             {% if restaurant.review_images.all.first.photo1 %}
             <img src="{{ restaurant.review_images.all.first.photo1.url }}" alt="like-restaurant-image">

@@ -57,61 +57,61 @@
                 </div>
               </div>
             </a>
-            <a href="{% url 'restaurants:korea' %}" onclick="document.forms['form-01'].submit();">
+            <a href="#" onclick="document.forms['form-01'].submit();">
               <div class="menu__item col p-3">
                 <div class="menu__item__wrap">
                   <div class="category__img category__img-01"></div>
                   <div class="menu__item__cover"></div>
                   <div class="menu__item__text">
-                    <h4>한식 맛집 베스트 (카운트)곳</h4>
+                    <h4>한식 맛집 베스트 {{ korea_restaurants }}곳</h4>
                     <p>"한식~"</p>
                   </div>
                 </div>
               </div>
             </a>
-            <a href="{% url 'restaurants:china' %}" onclick="document.forms['form-02'].submit();">
+            <a href="#" onclick="document.forms['form-02'].submit();">
               <div class="menu__item col p-3">
                 <div class="menu__item__wrap">
                   <div class="category__img category__img-02"></div>
                   <div class="menu__item__cover"></div>
                   <div class="menu__item__text">
-                    <h4>중식 맛집 베스트 (카운트)곳</h4>
+                    <h4>중식 맛집 베스트 {{ china_restaurants }}곳</h4>
                     <p>"중식~"</p>
                   </div>
                 </div>
               </div>
             </a>
-            <a href="{% url 'restaurants:japan' %}" onclick="document.forms['form-03'].submit();">
+            <a href="#" onclick="document.forms['form-03'].submit();">
               <div class="menu__item col p-3">
                 <div class="menu__item__wrap">
                   <div class="category__img category__img-03"></div>
                   <div class="menu__item__cover"></div>
                   <div class="menu__item__text">
-                    <h4>일식 맛집 베스트 (카운트)곳</h4>
+                    <h4>일식 맛집 베스트 {{ japan_restaurants }}곳</h4>
                     <p>"일식~"</p>
                   </div>
                 </div>
               </div>
             </a>
-            <a href="{% url 'restaurants:western' %}" onclick="document.forms['form-04'].submit();">
+            <a href="#" onclick="document.forms['form-04'].submit();">
               <div class="menu__item col p-3">
                 <div class="menu__item__wrap">
                   <div class="category__img category__img-04"></div>
                   <div class="menu__item__cover"></div>
                   <div class="menu__item__text">
-                    <h4>양식 맛집 베스트 (카운트)곳</h4>
+                    <h4>양식 맛집 베스트 {{ western_restaurants }}곳</h4>
                     <p>"양식~"</p>
                   </div>
                 </div>
               </div>
             </a>
-            <a href="{% url 'restaurants:school' %}" onclick="document.forms['form-05'].submit();">
+            <a href="#" onclick="document.forms['form-05'].submit();">
               <div class="menu__item col p-3">
                 <div class="menu__item__wrap">
                   <div class="category__img category__img-05"></div>
                   <div class="menu__item__cover"></div>
                   <div class="menu__item__text">
-                    <h4>분식 맛집 베스트 (카운트)곳</h4>
+                    <h4>분식 맛집 베스트 {{ school_restaurants }}곳</h4>
                     <p>"분식~"</p>
                   </div>
                 </div>
@@ -122,23 +122,23 @@
         </div>
       </div>
       <!-- Menu-item-Form -->
-      <form id="form-01" method="post" action="{% url 'restaurants:top_lists' %}">
+      <form id="form-01" method="post" action="{% url 'restaurants:list' %}">
         {% csrf_token %}
         <input type="hidden" id="tag" name="tag" value="한식">
       </form>
-      <form id="form-02" method="post" action="{% url 'restaurants:top_lists' %}">
+      <form id="form-02" method="post" action="{% url 'restaurants:list' %}">
         {% csrf_token %}
         <input type="hidden" id="tag" name="tag" value="중식">
       </form>
-      <form id="form-03" method="post" action="{% url 'restaurants:top_lists' %}">
+      <form id="form-03" method="post" action="{% url 'restaurants:list' %}">
         {% csrf_token %}
         <input type="hidden" id="tag" name="tag" value="일식">
       </form>
-      <form id="form-04" method="post" action="{% url 'restaurants:top_lists' %}">
+      <form id="form-04" method="post" action="{% url 'restaurants:list' %}">
         {% csrf_token %}
         <input type="hidden" id="tag" name="tag" value="양식">
       </form>
-      <form id="form-05" method="post" action="{% url 'restaurants:top_lists' %}">
+      <form id="form-05" method="post" action="{% url 'restaurants:list' %}">
         {% csrf_token %}
         <input type="hidden" id="tag" name="tag" value="분식">
       </form>
@@ -208,7 +208,7 @@
         <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-4 gx-5 justify-content-center">
           {% for restaurant in restaurants %}
           {% if restaurant.grade != 0 %}
-          <div class="card p-0 mx-3 border-0" style="width: 18rem;">
+          <div class="sa sa-up card p-0 mx-3 border-0" style="width: 18rem;">
             {% if restaurant.review_images.first.photo1 %}
             <a href="{% url 'restaurants:detail' restaurant.pk %}">
               <img src="{{ restaurant.review_images.first.photo1.url }}" class="card-img-top rounded-0" style="width: 100%; height: 200px;" alt="...">
