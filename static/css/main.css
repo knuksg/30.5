@@ -55,6 +55,19 @@ input[type=button]{
   box-sizing: border-box;
 }
 
+/* Scroll Animation */
+.sa {
+  opacity: 0;
+  transition: all .5s ease;
+}
+.sa-up {
+  transform: translate(0, 100px);
+}
+.sa.show {
+  opacity: 1;
+  transform: none;
+}
+
 
 /* Nav */
 .nav {
@@ -154,25 +167,21 @@ input[type=button]{
     display: flex;
   }
 }
-
 @media screen and (max-width: 600px) {
   .nav-wrap form {
     width: 320px;
   }
 }
-
 @media screen and (min-width: 600px) {
   .nav-wrap form {
     width: 380px;
   }
 }
-
 @media screen and (min-width: 740px) {
   .nav-wrap form {
     width: 580px;
   }
 }
-
 
 
 /* Main */
@@ -221,6 +230,7 @@ input[type=button]{
   color: var(--white-color);
   text-align: center;
 }
+
 
 /* Search */
 .search {
@@ -402,6 +412,7 @@ input[type=button]{
   color: var(--white-color);
 }
 
+
 /* Story-Page */
 .card-top {
   position: relative;
@@ -478,6 +489,7 @@ input[type=button]{
   font-size: 21px;
   font-weight: 700;
 }
+
 
 /* Footer */
 .footer {

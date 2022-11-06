@@ -10,7 +10,22 @@ from django.db.models import Q
 
 
 def top_lists(request):
-    return render(request, "restaurants/top_lists.html")
+    korea_restaurants = Tag.objects.filter(name="한식")
+    china_restaurants = Tag.objects.filter(name="중식")
+    japan_restaurants = Tag.objects.filter(name="일식")
+    western_restaurants = Tag.objects.filter(name="양식")
+    school_restaurants = Tag.objects.filter(name="분식")
+    return render(
+        request,
+        "restaurants/top_lists.html",
+        {
+            "korea_restaurants": korea_restaurants.count(),
+            "china_restaurants": china_restaurants.count(),
+            "japan_restaurants": japan_restaurants.count(),
+            "western_restaurants": western_restaurants.count(),
+            "school_restaurants": school_restaurants.count(),
+        },
+    )
 
 
 def list(request):
@@ -40,41 +55,51 @@ def list(request):
 
 
 def korea(request):
+    korea_restaurants = Tag.objects.filter(name="한식")
     restaurants = Restaurant.objects.order_by("-pk")
     context = {
         "restaurants": restaurants,
+        "korea_restaurants": korea_restaurants.count(),
     }
     return render(request, "restaurants/korea.html", context)
 
 
 def china(request):
+    china_restaurants = Tag.objects.filter(name="중식")
     restaurants = Restaurant.objects.order_by("-pk")
     context = {
         "restaurants": restaurants,
+        "china_restaurants": china_restaurants.count(),
     }
     return render(request, "restaurants/china.html", context)
 
 
 def japan(request):
+    japan_restaurants = Tag.objects.filter(name="일식")
     restaurants = Restaurant.objects.order_by("-pk")
     context = {
         "restaurants": restaurants,
+        "japan_restaurants": japan_restaurants.count(),
     }
     return render(request, "restaurants/japan.html", context)
 
 
 def western(request):
+    western_restaurants = Tag.objects.filter(name="양식")
     restaurants = Restaurant.objects.order_by("-pk")
     context = {
         "restaurants": restaurants,
+        "western_restaurants": western_restaurants.count(),
     }
     return render(request, "restaurants/western.html", context)
 
 
 def school(request):
+    school_restaurants = Tag.objects.filter(name="분식")
     restaurants = Restaurant.objects.order_by("-pk")
     context = {
         "restaurants": restaurants,
+        "school_restaurants": school_restaurants.count(),
     }
     return render(request, "restaurants/school.html", context)
 
