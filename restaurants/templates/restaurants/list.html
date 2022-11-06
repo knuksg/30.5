@@ -6,9 +6,9 @@
   <div class="restaurants">
     <!-- Restaurants-top -->
     <div class="restaurants-top">
-      <p>{{ total_hits }} 클릭 | 2022-11-04</p>
-      <h1>{{ tags }} 맛집 베스트 5곳</h1>
-      <p>"한국인은 한식이지"</p>
+      <p>{{ total_hits }} 클릭 | {{ restaurants.0.created_at|date:'Y-m-d' }}</p>
+      <h1>{{ tags }} 맛집 베스트 {{ restaurants_count }}곳</h1>
+      <p>"{{ tags }} 맛집 몽땅 모았다!"</p>
     </div>
 
     <!-- Restaurants-list -->
@@ -16,9 +16,15 @@
       <div class="container px-5 cont">
         {% for restaurant in restaurants %}
         <div class="restaurants__item">
+          <!-- restaurant-image -->
           <div class="restaurants__img">
-            <img src="https://i.pinimg.com/564x/be/66/20/be6620ae5749890854f3d467402c8b10.jpg" alt="">
+            {% if restaurant.review_images.last.photo1 %}
+            <img src="{{ restaurant.review_images.last.photo1.url }}" alt="">
+            {% else %}
+            <img class="card-img-top rounded-0" src="https://picsum.photos/300/200" style="width: 100%; height: 200px;" alt="..">
+            {% endif %}
           </div>
+          <!-- restaurant-content -->
           <div class="restaurants__content">
             <div class="restaurants__content__top">
               <div class="">
@@ -27,7 +33,7 @@
                 </a>
                 <p>{{ restaurant.address }}</p>
               </div>
-              <!-- Likes -->
+              <!-- Restaurants-list-Likes -->
               {% if request.user.is_authenticated %}
               <form class="like-forms" data-restaurant-id="{{ restaurant.pk }}">
                 {% csrf_token %}
@@ -43,10 +49,20 @@
               </form>
               {% endif %}
             </div>
-            {% if restaurant.review_set.all %}
-            <div class="restaurants__content__comment">
-              <img src="{{ restaurant|latest_image }}" style="width: 50px; height: 50px;" alt="">
-              <p>{{ restaurant|latest_user }} <span>{{ restaurant|latest_content|truncatechars:200 }}</span></p>
+            <!-- Restaurants-list-Review -->
+            {% if restaurant.reviews.last.user %}
+            <div class="restaurants__content__comment d-flex">
+              <div class="me-3">
+                {% if restaurant.reviews.last.user.profile_image %}
+                <img src="{{ restaurant.reviews.last.user.profile_image }}" style="width: 50px; height: 50px; border-radius: 50%;" alt="">
+                {% else %}
+                <img src="https://postfiles.pstatic.net/MjAyMDExMDFfMTA1/MDAxNjA0MjI4ODc1Mzk0.05ODadJdsa3Std55y7vd2Vm8kxU1qScjh5-3eVJ9T-4g.h7lHansSdReVq7IggiFAc44t2W_ZPTPoZWihfRMB_TYg.JPEG.gambasg/%EC%9C%A0%ED%8A%9C%EB%B8%8C_%EA%B8%B0%EB%B3%B8%ED%94%84%EB%A1%9C%ED%95%84_%ED%8C%8C%EB%9E%91.jpg?type=w773" style="width: 50px; height: 50px; border-radius: 50%;" alt="">
+                {% endif %}
+              </div>
+              <div class="txt-line" style="color: var(--dark-color);">
+                <span class="fw-bold fs-5 me-1">{{ restaurant.reviews.last.user.username }}</span>
+                <span>{{ restaurant.reviews.last.content }}</span>
+              </div>
             </div>
             {% endif %}
             <div class="restaurants__content__link">

@@ -8,8 +8,10 @@ from datetime import date, datetime, timedelta
 from django.http import JsonResponse
 from django.db.models import Q
 
+
 def top_lists(request):
-    return render(request, 'restaurants/top_lists.html')
+    return render(request, "restaurants/top_lists.html")
+
 
 def list(request):
     tags = request.POST.get("tag").replace(" ", "").split(",")
@@ -30,6 +32,7 @@ def list(request):
 
     context = {
         "restaurants": restaurants,
+        "restaurants_count": len(restaurants),
         "tags": tags,
         "total_hits": total_hits,
     }
@@ -74,6 +77,7 @@ def school(request):
         "restaurants": restaurants,
     }
     return render(request, "restaurants/school.html", context)
+
 
 def create(request):
     if request.method == "POST":
