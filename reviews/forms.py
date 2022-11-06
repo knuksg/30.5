@@ -30,7 +30,7 @@ class ReviewImageForm(forms.ModelForm):
             "photo3",
         ]
         labels = {
-            "photo1": "이미지 추가",
+            "photo1": "",
             "photo2": "",
             "photo3": "",
         }
@@ -38,19 +38,22 @@ class ReviewImageForm(forms.ModelForm):
             "photo1": FileInput(
                 attrs={
                     "id": "image_field",
-                    "style": "height: 100px; width: 100px; border: 1px dashed #adb5bd; color: #adb5bd;",
+                    "style": "height: 100px; width: 100px; border: 1px dashed #adb5bd; color: #adb5bd; margin-right: 10px;",
+                    "onchange": "showPreview1(event)",
                 }
             ),
             "photo2": FileInput(
                 attrs={
                     "id": "image_field",
-                    "style": "height: 100px; width: 100px; border: 1px dashed #adb5bd; color: #adb5bd;",
+                    "style": "height: 100px; width: 100px; border: 1px dashed #adb5bd; color: #adb5bd; margin-right: 10px;",
+                    "onchange": "showPreview2(event)",
                 }
             ),
             "photo3": FileInput(
                 attrs={
                     "id": "image_field",
                     "style": "height: 100px; width: 100px; border: 1px dashed #adb5bd; color: #adb5bd;",
+                    "onchange": "showPreview3(event)",
                 }
             ),
         }

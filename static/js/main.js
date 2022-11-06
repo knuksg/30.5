@@ -55,3 +55,30 @@ const saFunc = function() {
 }
 window.addEventListener('load', saFunc);
 window.addEventListener('scroll', saFunc);
+
+
+// ImageForm Preview
+function showPreview1(event){
+    if(event.target.files.length > 0){
+        let src = URL.createObjectURL(event.target.files[0]);
+        let preview = document.querySelector("#preview-01");
+        preview.src = src;
+        preview.style.display = "block";
+    }
+}
+function showPreview2(event){
+    if(event.target.files.length > 0){
+        let src = URL.createObjectURL(event.target.files[0]);
+        let preview = document.querySelector("#preview-02");
+        preview.src = src;
+        preview.style.display = "block";
+    }
+}
+function showPreview3(event){
+    if(event.target.files.length > 0){
+        let src = URL.createObjectURL(event.target.files[0]);
+        let preview = document.querySelector("#preview-03");
+        preview.src = src;
+        preview.style.display = "block";
+    }
+}
