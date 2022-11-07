@@ -4,10 +4,10 @@
 {% endblock title %}
 {% block body %}
 
-  <!-- Img-Top -->
-  <div class="img-top">
-    <!-- Swiper -->
-    <div class="swiper mySwiper">
+<!-- Img-Top -->
+<div class="img-top">
+  <!-- Swiper -->
+  <div class="swiper mySwiper">
       <div class="swiper-wrapper">
         {% for review in reviews %}
         {% if review.reviewimage_set.all %}
@@ -154,7 +154,7 @@
           <div class="review-left">
             <div class="review__profile">
               {% if review.user.profile_image %}
-              <img src="{{ review.user.profile_image }}" alt="">
+              <img src="{{ review.user.profile_image }}" style="width: 100%;" alt="">
               {% endif %}
             </div>
             <p class="m-0">{{ review.user.username }}</p>
