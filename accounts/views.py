@@ -9,6 +9,7 @@ from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
 
 
 def index(request):
@@ -72,3 +73,26 @@ def login(request):
 def logout(request):
     auth_logout(request)
     return redirect("main:index")
+
+
+@login_required
+def follow(request, user_pk):
+    user = get_user_model().objects.get(pk=user_pk)
+    if user != request.user:
+        if user.followings.filter(pk=request.user.pk).exists():
+            user.followings.remove(request.user)
+            # 팔로우 여부를 확인할 변수 생성💡
+            is_followed = False
+        else:
+            user.followings.add(request.user)
+            # 팔로우 여부를 확인할 변수 생성💡
+            is_followed = True
+        # json response💡
+        return JsonResponse(
+            {
+                "is_followed": is_followed,
+                "followers_count": user.followings.count(),
+                "followings_count": user.followers.count(),
+            }
+        )
+    return redirect("accounts:detail", user_pk)

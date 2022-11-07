@@ -3,148 +3,152 @@
 <!DOCTYPE html>
 <html lang="ko">
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>
-    {% block title %}{% endblock title %}
-  </title>
-  <!-- Swiper -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/css/swiper.css" integrity="sha512-rVfXYRlhHtd3C4PzoBxSaKhI/uYEi0/5K69RwK/cdxQld57PC6mZ7tkutR+KD96WrXZ6E/96qYeY4CVun7a0/w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <script defer src="https://unpkg.com/swiper/swiper-bundle.js"></script>
-  <!-- Fontawesome -->
-  <script defer="defer" src="https://kit.fontawesome.com/3ef4088aa9.js" crossorigin="anonymous"></script>
-  <!-- Bootstrap -->
-  <script defet="defet" src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" />
-  <!-- Main CSS & JS -->
-  <link rel="stylesheet" href="{% static 'css/main.css' %}" />
-  <script defer src="{% static 'js/main.js' %}"></script>
-  {% bootstrap_css %}
-  <!-- Modal-Style -->
-  <style>
-    /* Modal-Position */
-    .modal-dialog-nav {
-      position: fixed;
-      margin: auto;
-      width: 320px;
-      height: 100%;
-      top: 10px;
-      right: 10px;
-    }
-    .modal-dialog-accounts-detail {
-      margin-top: 0;
-      margin-bottom: 0;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-  </style>
-</head>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+      {% block title %}{% endblock title %}
+    </title>
+    <!-- Swiper -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/css/swiper.css" integrity="sha512-rVfXYRlhHtd3C4PzoBxSaKhI/uYEi0/5K69RwK/cdxQld57PC6mZ7tkutR+KD96WrXZ6E/96qYeY4CVun7a0/w==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <script defer="defer" src="https://unpkg.com/swiper/swiper-bundle.js"></script>
+    <!-- Fontawesome -->
+    <script defer="defer" src="https://kit.fontawesome.com/3ef4088aa9.js" crossorigin="anonymous"></script>
+    <!-- Bootstrap -->
+    <script defet="defet" src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <!-- Main CSS & JS -->
+    <link rel="stylesheet" href="{% static 'css/main.css' %}"/>
+    <script defer="defer" src="{% static 'js/main.js' %}"></script>
+    {% bootstrap_css %}
+    <!-- Modal-Style -->
+    <style>
+      /* Modal-Position */
+      .modal-dialog-nav {
+        position: fixed;
+        margin: auto;
+        width: 320px;
+        height: 100%;
+        top: 10px;
+        right: 10px;
+      }
 
-<body>
-  <!-- Nav -->
-  <nav class="nav d-flex w-100 justify-content-between">
-    <div class="d-flex nav-wrap">
-      <div class="nav__logo p-3 me-3 d-flex align-items-center"><a href="{% url 'main:index' %}" style="color: var(--main-color);"><span style="color: var(--main-color);">30.5</span></a></div>
-      <!-- Nav-Search -->
-      <form class="d-flex align-items-center" action="{% url 'main:search' %}">
-        <div class="">
-          <i class="fa-solid fa-magnifying-glass" style="color: #adb5bd;"></i>
-          <input type="text" id="search_kw" name="kw" value="{{ kw|default_if_none:'' }}" placeholder=" 지역, 식당 또는 음식" style="border: none;">
+      .modal-dialog-accounts-detail {
+        margin-top: 0;
+        margin-bottom: 0;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Nav -->
+    <nav class="nav d-flex w-100 justify-content-between">
+      <div class="d-flex nav-wrap">
+        <div class="nav__logo p-3 me-3 d-flex align-items-center">
+          <a href="{% url 'main:index' %}" style="color: var(--main-color);">
+            <span style="color: var(--main-color);">30.5</span></a>
         </div>
-        <input type="button" id="btn_search" value="CLEAR" style="opacity: 0; cursor: default;">
-      </form>
-    </div>
-    <div class="d-flex">
-      <div class="nav-toggle">
-        <ul class="nav__list d-flex m-0 p-0">
-          <li class="nav__item p-3 border-start d-flex align-items-center"><a href="{% url 'restaurants:top_lists' %}">맛집 리스트</a></li>
-          <li class="nav__item p-3 border-start d-flex align-items-center"><a href="{% url 'stories:index' %}">망고 스토리</a></li>
-        </ul>
+        <!-- Nav-Search -->
+        <form class="d-flex align-items-center" action="{% url 'main:search' %}">
+          <div class="">
+            <i class="fa-solid fa-magnifying-glass" style="color: #adb5bd;"></i>
+            <input type="text" id="search_kw" name="kw" value="{{ kw|default_if_none:'' }}" placeholder=" 지역, 식당 또는 음식" style="border: none;">
+          </div>
+          <input type="button" id="btn_search" value="CLEAR" style="opacity: 0; cursor: default;">
+        </form>
       </div>
-      <!-- Nav-Toggle -->
-      <div class="toggle-btn">
-        <i class="fa-solid fa-bars fa-2x" style="color: var(--gray-color);"></i>
-      </div>
-      <div class="nav__profile border-start px-3">
-        {% if request.user.is_authenticated %}
-        <!-- Profile -->
-        <div class="profile">
-          <!-- Modal Btn -->
-          {% if request.user.profile_image %}
-          <a href="#" data-bs-toggle="modal" data-bs-target="#modalId">
-            <img src="{{ request.user.profile_image }}" alt="" class="w-100">
-          </a>
+      <div class="d-flex">
+        <div class="nav-toggle">
+          <ul class="nav__list d-flex m-0 p-0">
+            <li class="nav__item p-3 border-start d-flex align-items-center">
+              <a href="{% url 'restaurants:top_lists' %}">맛집 리스트</a>
+            </li>
+            <li class="nav__item p-3 border-start d-flex align-items-center">
+              <a href="{% url 'stories:index' %}">망고 스토리</a>
+            </li>
+          </ul>
+        </div>
+        <!-- Nav-Toggle -->
+        <div class="toggle-btn">
+          <i class="fa-solid fa-bars fa-2x" style="color: var(--gray-color);"></i>
+        </div>
+        <div class="nav__profile border-start px-3">
+          {% if request.user.is_authenticated %}
+            <!-- Profile -->
+            <div class="profile">
+              <!-- Modal Btn -->
+              {% if request.user.profile_image %}
+                <a href="#" data-bs-toggle="modal" data-bs-target="#modalId">
+                  <img src="{{ request.user.profile_image }}" alt="" class="w-100">
+                </a>
+              {% endif %}
+            </div>
+          {% else %}
+            <i class="fa-regular fa-user fa-lg" style="color: #adb5bd;" data-bs-toggle="modal" data-bs-target="#modalId"></i>
           {% endif %}
         </div>
-        {% else %}
-        <i class="fa-regular fa-user fa-lg" style="color: #adb5bd;" data-bs-toggle="modal" data-bs-target="#modalId"></i>
-        {% endif %}
+      </div>
+    </nav>
+
+    <!-- Modal Body -->
+    <!-- if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard -->
+    <div class="modal fade" id="modalId" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-nav modal-dialog-scrollable modal-sm" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+
+          {% if request.user.is_authenticated %}
+            <div class="modal-body">
+              <div class="modal-info bg-light">
+                <div class="modal-info__img">
+                  {% if user.profile_image %}
+                    <img src="{{ user.profile_image }}" style="width: 80px; height: 80px; border-radius: 50%;" alt="">
+                  {% endif %}
+                </div>
+                <h3 class="m-0 mt-3">이름
+                  {{ request.user }}</h3>
+                <p class="m-0 mt-1">정보 수정은 내정보에서 가능합니다.</p>
+              </div>
+              <div class="d-flex justify-content-evenly mt-3">
+                <a href="{% url 'accounts:detail' request.user.pk %}" class="modal-btn">내정보</a>
+                <div class="btn-line"></div>
+                <a href="{% url 'accounts:logout' %}" class="modal-btn" style="color: var(--main-color);">로그아웃</a>
+              </div>
+            </div>
+          {% else %}
+            <div class="modal-body">
+              <div class="modal-info bg-light">
+                <div class="modal-info__img">
+                  {% if user.profile_image %}
+                    <img src="{{ user.profile_image.url }}" style="width: 80px; height: 80px; border-radius: 50%;" alt="">
+                  {% endif %}
+                </div>
+                <p class="m-0 mt-1">로그인 이후 이용이 가능합니다.</p>
+              </div>
+              <div class="d-flex justify-content-around mt-3">
+                <a href="{% url 'accounts:login' %}" class="modal-btn-login" style="color: var(--main-color);">로그인</a>
+                <a href="{% url 'accounts:signup' %}" class="modal-btn-login" style="color: var(--main-color);">회원가입</a>
+              </div>
+            </div>
+          {% endif %}
+
+        </div>
       </div>
     </div>
-  </nav>
 
-  <!-- Modal Body -->
-  <!-- if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard -->
-  <div class="modal fade" id="modalId" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog"
-    aria-labelledby="modalTitleId" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-nav modal-dialog-scrollable modal-sm" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        
-        {% if request.user.is_authenticated %}
-        <div class="modal-body">
-          <div class="modal-info bg-light">
-            <div class="modal-info__img">
-              {% if user.profile_image %}
-              <img src="{{ user.profile_image }}" style="width: 80px; height: 80px; border-radius: 50%;" alt="">
-              {% endif %}
-            </div>
-            <h3 class="m-0 mt-3">이름 {{ user }}</h3>
-            <p class="m-0 mt-1">정보 수정은 내정보에서 가능합니다.</p>
-          </div>
-          <div class="d-flex justify-content-evenly mt-3">
-            <a href="{% url 'accounts:detail' user.pk %}" class="modal-btn">내정보</a>
-            <div class="btn-line"></div>
-            <a href="{% url 'accounts:logout' %}" class="modal-btn" style="color: var(--main-color);">로그아웃</a>
-          </div>
-        </div>
-        {% else %}
-        <div class="modal-body">
-          <div class="modal-info bg-light">
-            <div class="modal-info__img">
-              {% if user.profile_image %}
-              <img src="{{ user.profile_image.url }}" style="width: 80px; height: 80px; border-radius: 50%;" alt="">
-              {% endif %}
-            </div>
-            <p class="m-0 mt-1">로그인 이후 이용이 가능합니다.</p>
-          </div>
-          <div class="d-flex justify-content-around mt-3">
-            <a href="{% url 'accounts:login' %}" class="modal-btn-login" style="color: var(--main-color);">로그인</a>
-            <a href="{% url 'accounts:signup' %}" class="modal-btn-login" style="color: var(--main-color);">회원가입</a>
-          </div>
-        </div>
-        {% endif %}
-          
-      </div>
-    </div>
-  </div>
+    <!-- Block -->
+    {% block body %}{% endblock body %}
 
+    <!-- Script -->
+    {% block script %}{% endblock script %}
 
-  <!-- Block -->
-  {% block body %}
-  {% endblock body %}
-
-  <!-- Script -->
-  {% block script %}
-  {% endblock script %}
-    
-
-</body>
+  </body>
 
 </html>
