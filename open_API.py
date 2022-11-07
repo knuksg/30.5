@@ -22,7 +22,7 @@ data = content_dict['data']
 # print(data[0]['FD_CS'])
 # print(data[0]['SMPL_DESC'])
 
-for i in range(101):
+for i in range(100):
     pay = data[i]['MNU'].replace(',', '')
     pay_str = ''
     for j in range(len(pay)):

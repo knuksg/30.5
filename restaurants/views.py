@@ -14,36 +14,41 @@ def top_lists(request):
             Q(tags__name="한식") |
             Q(name__icontains="한식") |
             Q(subtext__icontains="한식")
-            )[:5] # 5개까지만 보여줌.
+            )
+    korea_restaurants = sorted(korea_restaurants, key=lambda a: -a.grade)[:5]
     china_restaurants = Restaurant.objects.filter(
             Q(tags__name="중식") |
             Q(name__icontains="중식") |
             Q(subtext__icontains="중식")
-            )[:5] # 5개까지만 보여줌.
+            )
+    china_restaurants = sorted(china_restaurants, key=lambda a: -a.grade)[:5]
     japan_restaurants = Restaurant.objects.filter(
             Q(tags__name="일식") |
             Q(name__icontains="일식") |
             Q(subtext__icontains="일식")
-            )[:5] # 5개까지만 보여줌.
+            )
+    japan_restaurants = sorted(japan_restaurants, key=lambda a: -a.grade)[:5]
     western_restaurants = Restaurant.objects.filter(
             Q(tags__name="양식") |
             Q(name__icontains="양식") |
             Q(subtext__icontains="양식")
-            )[:5] # 5개까지만 보여줌.
+            )
+    western_restaurants = sorted(western_restaurants, key=lambda a: -a.grade)[:5]
     school_restaurants = Restaurant.objects.filter(
             Q(tags__name="분식") |
             Q(name__icontains="분식") |
             Q(subtext__icontains="분식")
-            )[:5] # 5개까지만 보여줌.
+            )
+    school_restaurants = sorted(school_restaurants, key=lambda a: -a.grade)[:5]
     return render(
         request,
         "restaurants/top_lists.html",
         {
-            "korea_restaurants": korea_restaurants.count(),
-            "china_restaurants": china_restaurants.count(),
-            "japan_restaurants": japan_restaurants.count(),
-            "western_restaurants": western_restaurants.count(),
-            "school_restaurants": school_restaurants.count(),
+            "korea_restaurants": len(korea_restaurants),
+            "china_restaurants": len(china_restaurants),
+            "japan_restaurants": len(japan_restaurants),
+            "western_restaurants": len(western_restaurants),
+            "school_restaurants": len(school_restaurants),
         },
     )
 
@@ -89,7 +94,8 @@ def korea(request):
             Q(tags__name="한식") |
             Q(name__icontains="한식") |
             Q(subtext__icontains="한식")
-            )[:5] # 5개까지만 보여줌.
+            )
+    korea_restaurants = sorted(korea_restaurants, key=lambda a: -a.grade)[:5]
     restaurants = Restaurant.objects.order_by("-pk")
     context = {
         "restaurants": restaurants,
@@ -103,7 +109,8 @@ def china(request):
             Q(tags__name="중식") |
             Q(name__icontains="중식") |
             Q(subtext__icontains="중식")
-            )[:5] # 5개까지만 보여줌.
+            )
+    china_restaurants = sorted(china_restaurants, key=lambda a: -a.grade)[:5]
     restaurants = Restaurant.objects.order_by("-pk")
     context = {
         "restaurants": restaurants,
@@ -117,7 +124,8 @@ def japan(request):
             Q(tags__name="일식") |
             Q(name__icontains="일식") |
             Q(subtext__icontains="일식")
-            )[:5] # 5개까지만 보여줌.
+            )
+    japan_restaurants = sorted(japan_restaurants, key=lambda a: -a.grade)[:5]
     restaurants = Restaurant.objects.order_by("-pk")
     context = {
         "restaurants": restaurants,
@@ -131,7 +139,8 @@ def western(request):
             Q(tags__name="양식") |
             Q(name__icontains="양식") |
             Q(subtext__icontains="양식")
-            )[:5] # 5개까지만 보여줌.
+            )
+    western_restaurants = sorted(western_restaurants, key=lambda a: -a.grade)[:5]
     restaurants = Restaurant.objects.order_by("-pk")
     context = {
         "restaurants": restaurants,
@@ -145,7 +154,8 @@ def school(request):
             Q(tags__name="분식") |
             Q(name__icontains="분식") |
             Q(subtext__icontains="분식")
-            )[:5] # 5개까지만 보여줌.
+            )
+    school_restaurants = sorted(school_restaurants, key=lambda a: -a.grade)[:5]
     restaurants = Restaurant.objects.order_by("-pk")
     context = {
         "restaurants": restaurants,

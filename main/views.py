@@ -57,6 +57,7 @@ def search(request):
             Q(subtext__icontains=kw) | # 서브 텍스트 검색
             Q(tags__in=tag) # 태그 검색
         ).distinct()
+        restaurant_list = sorted(restaurant_list, key=lambda a: -a.grade) # 평점순 정렬
 
     paginator = Paginator(restaurant_list, 9)  # 페이지당 10개씩 보여주기
     page_obj = paginator.get_page(page)
