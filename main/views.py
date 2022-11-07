@@ -41,3 +41,6 @@ def search(request):
     page_obj = paginator.get_page(page)
     context = {"restaurant_list": page_obj, "page": page, "kw": kw}
     return render(request, "main/search.html", context)
+
+def test(request):
+    return render(request, 'main/test.html')

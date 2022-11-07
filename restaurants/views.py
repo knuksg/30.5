@@ -32,12 +32,22 @@ def list(request):
     tags = request.POST.get("tag").replace(" ", "").split(",")
 
     if len(tags) == 1:
-        restaurants = Restaurant.objects.filter(tags__name=tags[0])
+        restaurants = Restaurant.objects.filter(
+            Q(tags__name=tags[0]) |
+            Q(name__icontains=tags[0]) |
+            Q(subtext__icontains=tags[0])
+            )
         restaurants = sorted(restaurants, key=lambda a: -a.grade)[:5]  # 임의로 5개씩 보여줌.
         tags = tags[0]
     elif len(tags) == 2:
-        restaurants = Restaurant.objects.filter(tags__name=tags[0]).filter(
-            tags__name=tags[1]
+        restaurants = Restaurant.objects.filter(
+            Q(tags__name=tags[0]) |
+            Q(name__icontains=tags[0]) |
+            Q(subtext__icontains=tags[0])
+            ).filter(
+            Q(tags__name=tags[1]) |
+            Q(name__icontains=tags[1]) |
+            Q(subtext__icontains=tags[1])
         )
         restaurants = sorted(restaurants, key=lambda a: -a.grade)[:5]  # 임의로 5개씩 보여줌.
         tags = f"{tags[0]} {tags[1]}"
