@@ -10,11 +10,31 @@ from django.db.models import Q
 
 
 def top_lists(request):
-    korea_restaurants = Tag.objects.filter(name="한식")
-    china_restaurants = Tag.objects.filter(name="중식")
-    japan_restaurants = Tag.objects.filter(name="일식")
-    western_restaurants = Tag.objects.filter(name="양식")
-    school_restaurants = Tag.objects.filter(name="분식")
+    korea_restaurants = Restaurant.objects.filter(
+            Q(tags__name="한식") |
+            Q(name__icontains="한식") |
+            Q(subtext__icontains="한식")
+            )[:5] # 5개까지만 보여줌.
+    china_restaurants = Restaurant.objects.filter(
+            Q(tags__name="중식") |
+            Q(name__icontains="중식") |
+            Q(subtext__icontains="중식")
+            )[:5] # 5개까지만 보여줌.
+    japan_restaurants = Restaurant.objects.filter(
+            Q(tags__name="일식") |
+            Q(name__icontains="일식") |
+            Q(subtext__icontains="일식")
+            )[:5] # 5개까지만 보여줌.
+    western_restaurants = Restaurant.objects.filter(
+            Q(tags__name="양식") |
+            Q(name__icontains="양식") |
+            Q(subtext__icontains="양식")
+            )[:5] # 5개까지만 보여줌.
+    school_restaurants = Restaurant.objects.filter(
+            Q(tags__name="분식") |
+            Q(name__icontains="분식") |
+            Q(subtext__icontains="분식")
+            )[:5] # 5개까지만 보여줌.
     return render(
         request,
         "restaurants/top_lists.html",
@@ -49,7 +69,7 @@ def list(request):
             Q(name__icontains=tags[1]) |
             Q(subtext__icontains=tags[1])
         )
-        restaurants = sorted(restaurants, key=lambda a: -a.grade)[:5]  # 임의로 5개씩 보여줌.
+        restaurants = sorted(restaurants, key=lambda a: -a.grade)[:5]  # 임의로 5개까지 보여줌.
         tags = f"{tags[0]} {tags[1]}"
     total_hits = 0
     for restaurant in restaurants:
@@ -65,7 +85,11 @@ def list(request):
 
 
 def korea(request):
-    korea_restaurants = Tag.objects.filter(name="한식")
+    korea_restaurants = Restaurant.objects.filter(
+            Q(tags__name="한식") |
+            Q(name__icontains="한식") |
+            Q(subtext__icontains="한식")
+            )[:5] # 5개까지만 보여줌.
     restaurants = Restaurant.objects.order_by("-pk")
     context = {
         "restaurants": restaurants,
@@ -75,7 +99,11 @@ def korea(request):
 
 
 def china(request):
-    china_restaurants = Tag.objects.filter(name="중식")
+    china_restaurants = Restaurant.objects.filter(
+            Q(tags__name="중식") |
+            Q(name__icontains="중식") |
+            Q(subtext__icontains="중식")
+            )[:5] # 5개까지만 보여줌.
     restaurants = Restaurant.objects.order_by("-pk")
     context = {
         "restaurants": restaurants,
@@ -85,7 +113,11 @@ def china(request):
 
 
 def japan(request):
-    japan_restaurants = Tag.objects.filter(name="일식")
+    japan_restaurants = Restaurant.objects.filter(
+            Q(tags__name="일식") |
+            Q(name__icontains="일식") |
+            Q(subtext__icontains="일식")
+            )[:5] # 5개까지만 보여줌.
     restaurants = Restaurant.objects.order_by("-pk")
     context = {
         "restaurants": restaurants,
@@ -95,7 +127,11 @@ def japan(request):
 
 
 def western(request):
-    western_restaurants = Tag.objects.filter(name="양식")
+    western_restaurants = Restaurant.objects.filter(
+            Q(tags__name="양식") |
+            Q(name__icontains="양식") |
+            Q(subtext__icontains="양식")
+            )[:5] # 5개까지만 보여줌.
     restaurants = Restaurant.objects.order_by("-pk")
     context = {
         "restaurants": restaurants,
@@ -105,7 +141,11 @@ def western(request):
 
 
 def school(request):
-    school_restaurants = Tag.objects.filter(name="분식")
+    school_restaurants = Restaurant.objects.filter(
+            Q(tags__name="분식") |
+            Q(name__icontains="분식") |
+            Q(subtext__icontains="분식")
+            )[:5] # 5개까지만 보여줌.
     restaurants = Restaurant.objects.order_by("-pk")
     context = {
         "restaurants": restaurants,
