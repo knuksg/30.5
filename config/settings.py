@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "stories",
     "django_bootstrap5",
     "django_summernote",
+    'django_extensions',
     "imagekit",
     "django.contrib.admin",
     "django.contrib.auth",
