@@ -7,7 +7,7 @@
   {% comment %} .dotOverlay {position:relative;bottom:10px;border-radius:6px;border: 1px solid #ccc;border-bottom:2px solid #ddd;float:left;font-size:12px;padding:5px;background:#fff;} {% endcomment %}
   .number {font-weight:bold;color:#ee6152;}
   .distanceInfo {position:relative;top:0px;left:0px;list-style:none;margin:0;width:200px;padding: 5px;}
-  .distanceInfo .label {display:inline-block;width:50px;}
+  .distanceInfo .label {display:inline-block;width:100px;}
   {% comment %} .distanceInfo:after {content:none;} {% endcomment %}
 </style>
 
@@ -139,6 +139,16 @@
                 {% for tag in restaurant.tags.all %}
                 {{ tag.name }}
                 {% endfor %}
+              </td>
+            </tr>
+            <tr>
+              <th>음식점 소개</th>
+              <td>
+                {% if restaurant.subtext %}
+                "{{ restaurant.subtext }}"
+                {% else %}
+                소개글을 입력해주세요.
+                {% endif %}
               </td>
             </tr>
           </tbody>
