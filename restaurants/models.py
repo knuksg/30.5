@@ -17,6 +17,7 @@ class Restaurant(models.Model):
     def __str__(self):
         return self.name
 
+    # Restaurant/models.py
     @property
     def grade(self):
         reviews = Review.objects.filter(restaurant=self)
