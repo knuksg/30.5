@@ -224,6 +224,7 @@ input[type=button]{
 
 .visual-wrap {
   z-index: 2;
+  width: 100%;
 }
 
 .visual h1 {
