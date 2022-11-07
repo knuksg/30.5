@@ -11,11 +11,13 @@
         <!-- Rv-Top -->
         <div class="rv-top">
           <div class="rv-profile">
-            <div class="rv-profile__img">
-              {% if review.user.profile_image %}
-              <img src="{{ review.user.profile_image }}" alt="">
-              {% endif %}
-            </div>
+            <a href="{% url 'accounts:detail' review.user.pk %}">
+              <div class="rv-profile__img">
+                {% if review.user.profile_image %}
+                <img src="{{ review.user.profile_image }}" alt="" style="width: 100%;">
+                {% endif %}
+              </div>
+            </a>
             <div class="rv-profile__text">
               <p class="m-0 fs-5">{{ review.user.username }}</p>
               <div class="rv-profile__count">
