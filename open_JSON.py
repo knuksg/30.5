@@ -18,7 +18,7 @@ print(data['DATA'][0]['main_edf'])
 
 data = data['DATA']
 
-for i in range(100):
+for i in range(300):
     new_restaurant = Restaurant(
             name = data[i]['upso_nm'],
             address = data[i]['site_addr'],
@@ -28,13 +28,20 @@ for i in range(100):
             break_day = '음식점에 직접 문의해주세요.',)
     new_restaurant.save()
     try: 
-        tags = [(data[i]['snt_uptae_nm'])] + data[i]['main_edf'].split(",")
+        tags = data[i]['main_edf'].split(",")
+        for tag in tags:
+            if not tag:
+                continue
+            else:
+                tag = tag.strip()
+                _tag, _ = Tag.objects.get_or_create(name=tag)
+                new_restaurant.tags.add(_tag)
+
+        tag_nm = data[i]['snt_uptae_nm'].strip()
+        _tag, _ = Tag.objects.get_or_create(name=tag_nm)
+        new_restaurant.tags.add(_tag)
+        
     except:
-        tags = [(data[i]['snt_uptae_nm'])]
-    for tag in tags:
-        if not tag:
-            continue
-        else:
-            tag = tag.strip()
-            _tag, _ = Tag.objects.get_or_create(name=tag)
-            new_restaurant.tags.add(_tag)
+        tag = data[i]['snt_uptae_nm'].strip()
+        _tag, _ = Tag.objects.get_or_create(name=tag)
+        new_restaurant.tags.add(_tag)
