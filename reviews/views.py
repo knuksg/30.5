@@ -47,7 +47,7 @@ def review_create(request, pk):
 
 def review_detail(request, restaurant_pk, review_pk):
     review = get_object_or_404(Review, pk=review_pk)
-    reviewimage = ReviewImage.objects.get(pk=review_pk)
+    reviewimage = get_object_or_404(ReviewImage, reviews=review_pk)
     restaurant = get_object_or_404(Restaurant, pk=restaurant_pk)
     context = {
         "review": review,
@@ -72,7 +72,7 @@ def review_delete(request, restaurant_pk, review_pk):
         )
 
 
-def review_update(request, review_pk, restaurant_pk):
+def review_update(request, restaurant_pk, review_pk):
     review = get_object_or_404(Review, pk=review_pk)
     restaurant = get_object_or_404(Restaurant, pk=restaurant_pk)
     reviewimage = get_object_or_404(ReviewImage, pk=review_pk)

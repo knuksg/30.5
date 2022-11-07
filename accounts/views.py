@@ -35,6 +35,7 @@ def detail(request, user_pk):
     user = get_user_model().objects.get(pk=user_pk)
     context = {
         "user": user,
+        "my": request.user,
     }
     return render(request, "accounts/detail.html", context)
 
