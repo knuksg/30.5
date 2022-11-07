@@ -26,25 +26,25 @@
               {% csrf_token %}
               {% if request.user != user %}
                 {% if request.user in user.followings.all %}
-                <button type='submit' style="
-                border: 0; 
+                  <button type='submit' style="
+                border: 0;
                 background: none;
                 border: 1px solid var(--gray-light--color);
                 border-radius: 5px;
                 padding: 3px 25px;
                 margin: 0 10px 0 20px;">
-                  <i id="follow-{{ request.user.pk }}" class="fa-solid fa-user-check"></i>
-                </button>
+                    <i id="follow-{{ request.user.pk }}" class="fa-solid fa-user-check"></i>
+                  </button>
                 {% else %}
-                <button type='submit' style="
-                border: 0; 
+                  <button type='submit' style="
+                border: 0;
                 background: none;
                 border: 1px solid var(--gray-light--color);
                 border-radius: 5px;
                 padding: 3px 25px;
                 margin: 0 10px 0 20px;">
-                  <i id="follow-{{ request.user.pk }}" class="fa-solid fa-user-plus"></i>
-                </button>
+                    <i id="follow-{{ request.user.pk }}" class="fa-solid fa-user-plus"></i>
+                  </button>
                 {% endif %}
               {% endif %}
             </form>
@@ -75,14 +75,16 @@
                       <a href="#" class="fw-bold text-danger">
                         <p class="m-0 text-danger" style="padding: 12px">신고</p>
                       </a>
-                      <hr class="m-0">
-                      <a href="{% url 'accounts:update' %}" style="color: var(--dark-color);">
-                        <p class="m-0" style="padding: 12px">정보수정</p>
-                      </a>
-                      <hr class="m-0">
-                      <a href="{% url 'accounts:delete' %}" style="color: var(--dark-color);">
-                        <p class="m-0" style="padding: 12px">회원탈퇴</p>
-                      </a>
+                      {% if request.user == user %}
+                        <hr class="m-0">
+                        <a href="{% url 'accounts:update' %}" style="color: var(--dark-color);">
+                          <p class="m-0" style="padding: 12px">정보수정</p>
+                        </a>
+                        <hr class="m-0">
+                        <a href="{% url 'accounts:delete' %}" style="color: var(--dark-color);">
+                          <p class="m-0" style="padding: 12px">회원탈퇴</p>
+                        </a>
+                      {% endif %}
                       <hr class="m-0">
                       <a href="{% url 'accounts:detail' user.pk %}" style="color: var(--dark-color);">
                         <p class="m-0" style="padding: 12px">취소</p>
@@ -107,7 +109,6 @@
         <div class="pd__email">{{ request.user.email }}</div>
       </div>
     </div>
-
 
     <!-- Profile-Likes -->
     <div class="profile-likes">
@@ -171,11 +172,11 @@
 
     forms.addEventListener('submit', function (event) {
       event.preventDefault();
-      const userId = event
+      const userId = event.target.dataset.userId
+      const myId = event
         .target
         .dataset
-        .userId
-      const myId = event.target.dataset.myId
+        .myId
         axios({
           method: 'post',
           url: `http://127.0.0.1:8000/accounts/${userId}/follow/`,
@@ -187,11 +188,19 @@
           const isFollowed = response.data.is_followed
           const followBtn = document.querySelector(`#follow-${myId}`)
           if (isFollowed === true) {
-            followBtn.classList.remove('fa-user-plus');
-            followBtn.classList.add('fa-user-check');
+            followBtn
+              .classList
+              .remove('fa-user-plus');
+            followBtn
+              .classList
+              .add('fa-user-check');
           } else {
-            followBtn.classList.remove('fa-user-check');
-            followBtn.classList.add('fa-user-plus');
+            followBtn
+              .classList
+              .remove('fa-user-check');
+            followBtn
+              .classList
+              .add('fa-user-plus');
           }
           const followersCount = response.data.followers_count
           const followingsCount = response.data.followings_count

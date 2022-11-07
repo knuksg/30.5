@@ -1,438 +1,477 @@
 {% extends 'base.html' %}
 {% block title %}
-상세보기
+  상세보기
 {% endblock title %}
 {% block body %}
-<style>
-  {% comment %} .dotOverlay {position:relative;bottom:10px;border-radius:6px;border: 1px solid #ccc;border-bottom:2px solid #ddd;float:left;font-size:12px;padding:5px;background:#fff;} {% endcomment %}
-  .number {font-weight:bold;color:#ee6152;}
-  .distanceInfo {position:relative;top:0px;left:0px;list-style:none;margin:0;width:200px;padding: 5px;}
-  .distanceInfo .label {display:inline-block;width:100px;}
-  {% comment %} .distanceInfo:after {content:none;} {% endcomment %}
-</style>
+  <style>
+    {
+      % comment %
+    }
 
-<!-- Img-Top -->
-<div class="img-top">
-  <!-- Swiper -->
-  <div class="swiper mySwiper">
-    <div class="swiper-wrapper">
-    {% for review in reviews %}
-      {% if review.reviewimage_set.all %}
-        {% for reviewimage in review.reviewimage_set.all %}
-          {% if reviewimage.photo1 %}
-            <div class="swiper-slide">
-              <div class="img-top__img">
-                <img src="{{ reviewimage.photo1.url }}" alt="">
-              </div>
-            </div>
-            {% endif %}
-            {% if reviewimage.photo2 %}
-            <div class="swiper-slide">
-              <div class="img-top__img">
-                <img src="{{ reviewimage.photo2.url }}" alt="">
-              </div>
-            </div>
-            {% endif %}
-            {% if reviewimage.photo3 %}
-            <div class="swiper-slide">
-              <div class="img-top__img">
-                <img src="{{ reviewimage.photo3.url }}" alt="">
-              </div>
-            </div>
-            {% endif %}
-          {% endfor%}
-        {% endif %}
-      {% endfor %}
-    </div>
-  </div>
-  <!-- Swiper-End -->
-</div>
-<!-- Img-Top-End -->
+    .dotOverlay {
+      position: relative;
+      bottom: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      border-bottom: 2px solid #ddd;
+      float: left;
+      font-size: 12px;
+      padding: 5px;
+      background: #fff;
+    }
 
+    {
+      % endcomment %
+    }
 
-<!-- Detail & Review -->
-<div class="container">
-    <!-- Detail -->
-    <div class="detail">
-      <div id="map" class="my-3" style="width:100%;height:350px;"></div>
-      <!-- Detail-Top -->
-      <div class="detail-top">
-        <div class="">
-          <div class="detail__title">
-            <h2 id="restaurant_name">{{ restaurant.name }}</h2>
-            <span class="fs-2">{{ restaurant.grade }}</span>
-          </div>
-          <div class="detail__count d-flex">
-            <div class="d-flex align-items-center">
-              <i class="fa-solid fa-eye me-1"></i>
-              <p class="m-0">{{ restaurant.hits }}</p>
-            </div>
-            <div class="d-flex align-items-center">
-              <i class="fa-solid fa-pen ms-3 me-1"></i>
-              <p class="m-0">{{ reviews_count }}</p>
-            </div>
-            <div class="d-flex align-items-center">
-              <!-- Star-count -->
-              <i class="fa-solid fa-star ms-3 me-1"></i>
-              <div id="star-count">
-                <p class="m-0">{{ restaurant.like_users.count }}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="detail__btn d-flex">
-          <div class="text-center me-3">
-            <a href="{% url 'reviews:review_create' restaurant.pk %}">
-              <i class="fa-regular fa-pen-to-square fa-2x"></i>
-              <p>리뷰쓰기</p>
-            </a>
-          </div>
-          <div class="text-center">
-            <!-- Likes -->
-            {% if request.user.is_authenticated %}
-            <form class="like-forms" data-restaurant-id="{{ restaurant.pk }}">
-              {% csrf_token %}
-              {% if user in restaurant.like_users.all %}
-                <button id="like-{{ restaurant.pk }}" type="submit"
-                  style="background: none; border: 0; color: var(--main-color);">
-                  <i id="star-{{ restaurant.pk }}" class="fa-solid fa-star fa-2x"></i>
-                </button>
-              {% else %}
-                <button id="like-{{ restaurant.pk }}" type="submit"
-                  style="background: none; border: 0; color: var(--gray-color);">
-                  <i id="star-{{ restaurant.pk }}" class="fa-regular fa-star fa-2x"></i>
-                </button>
-              {% endif %}
-            </form>
-            {% endif %}
-          </div>
-        </div>
-      </div>
-      <!-- Detail-Info -->
-      <div class="detail-info">
-        <table>
-          <tbody>
-            <p></p>
-            <tr>
-              <th>주소</th>
-              <td id="address">{{ restaurant.address }}</td>
-            </tr>
-            <tr>
-              <th>전화번호</th>
-              <td>{{ restaurant.shop_number }}</td>
-            </tr>
-            <tr>
-              <th>가격대</th>
-              <td>{{ restaurant.between_pay }}</td>
-            </tr>
-            <tr>
-              <th>영업시간</th>
-              <td>{{ restaurant.opening_time }}</td>
-            </tr>
-            <tr>
-              <th>쉬는시간</th>
-              <td>{{ restaurant.break_day }}</td>
-            </tr>
-            <tr>
-              <th>태그 #</th>
-              <td>
-                {% for tag in restaurant.tags.all %}
-                {{ tag.name }}
-                {% endfor %}
-              </td>
-            </tr>
-            <tr>
-              <th>음식점 소개</th>
-              <td>
-                {% if restaurant.subtext %}
-                "{{ restaurant.subtext }}"
-                {% else %}
-                소개글을 입력해주세요.
-                {% endif %}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <!-- Detail-Update -->
-      <div class="detail-update text-end">
-        <p>업데이트 :{{ restaurant.updated_at|date:'Y-m-d' }}</p>
-      </div>
-    </div>
+    .number {
+      font-weight: bold;
+      color: #ee6152;
+    }
 
+    .distanceInfo {
+      position: relative;
+      top: 0;
+      left: 0;
+      list-style: none;
+      margin: 0;
+      width: 200px;
+      padding: 5px;
+    }
 
-    <!-- Review -->
-    <div class="review">
-      <div class="review-top">
-        <h6>리뷰
-          <span>({{ reviews_count }})</span>
-        </h6>
-        <div class="like-count">
-          <h6>전체 ({{ reviews_count }})</h6>
-          <h6>맛있다 ({{ upper }})</h6>
-          <h6>괜찮다 ({{ middle }})</h6>
-          <h6>별로 ({{ lower }})</h6>
-        </div>
-      </div>
+    .distanceInfo .label {
+      display: inline-block;
+      width: 100px;
+    }
 
-      {% for review in reviews %}
-      <a href="{% url 'reviews:review_detail' restaurant.pk review.pk %}" style="color: var(--dark--color);">
-        <!-- Review-content -->
-        <div class="review-content">
-          <!-- Review-left -->
-          <div class="review-left">
-            <div class="review__profile">
-              {% if review.user.profile_image %}
-              <img src="{{ review.user.profile_image }}" style="width: 100%;" alt="">
-              {% endif %}
-            </div>
-            <p class="m-0">{{ review.user.username }}</p>
-            <div class="user-count d-flex align-items-center">
-              <i class="fa-solid fa-pen"></i>
-              <span class="ms-1">{{ review.user.review_set.count }}</span>
-            </div>
-          </div>
-          <!-- Review-center -->
-          <div class="review-center">
-            <p class="review-create">{{ review.created_at|date:'Y-m-d' }}</p>
-            <p class="mb-2">{{ review.content }}</p>
-            {% if review.reviewimage_set.all %}
+    {
+      % comment %
+    }
+
+    .distanceInfo:after {
+      content: none;
+    }
+
+    {
+      % endcomment %
+    }
+  </style>
+
+  <!-- Img-Top -->
+  <div class="img-top">
+    <!-- Swiper -->
+    <div class="swiper mySwiper">
+      <div class="swiper-wrapper">
+        {% for review in reviews %}
+          {% if review.reviewimage_set.all %}
             {% for reviewimage in review.reviewimage_set.all %}
               {% if reviewimage.photo1 %}
-              <img src="{{ reviewimage.photo1.url }}" alt="">
+                <div class="swiper-slide">
+                  <div class="img-top__img">
+                    <img src="{{ reviewimage.photo1.url }}" alt="">
+                  </div>
+                </div>
               {% endif %}
               {% if reviewimage.photo2 %}
-              <img src="{{ reviewimage.photo2.url }}" alt="">
+                <div class="swiper-slide">
+                  <div class="img-top__img">
+                    <img src="{{ reviewimage.photo2.url }}" alt="">
+                  </div>
+                </div>
               {% endif %}
               {% if reviewimage.photo3 %}
-              <img src="{{ reviewimage.photo3.url }}" alt="">
+                <div class="swiper-slide">
+                  <div class="img-top__img">
+                    <img src="{{ reviewimage.photo3.url }}" alt="">
+                  </div>
+                </div>
               {% endif %}
-            {% endfor%}
+              {% endfor%}
             {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+      <!-- Swiper-End -->
+    </div>
+    <!-- Img-Top-End -->
+
+    <!-- Detail & Review -->
+    <div class="container">
+      <!-- Detail -->
+      <div class="detail">
+        <div id="map" class="my-3" style="width:100%;height:350px;"></div>
+        <!-- Detail-Top -->
+        <div class="detail-top">
+          <div class="">
+            <div class="detail__title mb-2">
+              <h2 id="restaurant_name">{{ restaurant.name }}</h2>
+              <span class="fs-2">{{ restaurant.grade }}</span>
+            </div>
+            <h6 class="text-muted">
+              {% if restaurant.subtext %}
+                "{{ restaurant.subtext }}"
+              {% else %}
+                소개글을 입력해주세요.
+              {% endif %}
+            </h6>
+            <div class="detail__count d-flex mt-3">
+              <div class="d-flex align-items-center">
+                <i class="fa-solid fa-eye me-1"></i>
+                <p class="m-0">{{ restaurant.hits }}</p>
+              </div>
+              <div class="d-flex align-items-center">
+                <i class="fa-solid fa-pen ms-3 me-1"></i>
+                <p class="m-0">{{ reviews_count }}</p>
+              </div>
+              <div class="d-flex align-items-center">
+                <!-- Star-count -->
+                <i class="fa-solid fa-star ms-3 me-1"></i>
+                <div id="star-count">
+                  <p class="m-0">{{ restaurant.like_users.count }}</p>
+                </div>
+              </div>
+            </div>
           </div>
-          <!-- Review-right -->
-          <div class="review-right">
-            {% if review.rating > 3 %}
-            <div style="color: var(--main-color);" class="d-flex flex-column flex-wrap align-items-center align-content-end">
-              <i class="fa-regular fa-face-grin-hearts fa-2x"></i>
-              <p>맛있다</p>
+          <div class="detail__btn d-flex">
+            <div class="text-center me-3">
+              <a href="{% url 'reviews:review_create' restaurant.pk %}">
+                <i class="fa-regular fa-pen-to-square fa-2x"></i>
+                <p>리뷰쓰기</p>
+              </a>
             </div>
-            {% elif review.rating == 3 %}
-            <div style="color: var(--main-color);" class="d-flex flex-column flex-wrap align-items-center align-content-end">
-              <i class="fa-regular fa-face-grin-wide fa-2x"></i>
-              <p>괜찮다</p>
+            <div class="text-center">
+              <!-- Likes -->
+              {% if request.user.is_authenticated %}
+                <form class="like-forms" data-restaurant-id="{{ restaurant.pk }}">
+                  {% csrf_token %}
+                  {% if user in restaurant.like_users.all %}
+                    <button id="like-{{ restaurant.pk }}" type="submit" style="background: none; border: 0; color: var(--main-color);">
+                      <i id="star-{{ restaurant.pk }}" class="fa-solid fa-star fa-2x"></i>
+                    </button>
+                  {% else %}
+                    <button id="like-{{ restaurant.pk }}" type="submit" style="background: none; border: 0; color: var(--gray-color);">
+                      <i id="star-{{ restaurant.pk }}" class="fa-regular fa-star fa-2x"></i>
+                    </button>
+                  {% endif %}
+                </form>
+              {% endif %}
             </div>
-            {% else %}
-            <div style="color: var(--main-color);" class="d-flex flex-column flex-wrap align-items-center align-content-end">
-              <i class="fa-regular fa-face-grin-beam-sweat fa-2x"></i>
-              <p>별로</p>
-            </div>
-            {% endif %}
           </div>
         </div>
-      </a>
-      {% endfor%}
-      <p></p>
-    </div>
-</div>
-<!-- Detail & Review-End -->
+        <!-- Detail-Info -->
+        <div class="detail-info">
+          <table>
+            <tbody>
+              <p></p>
+              <tr>
+                <th>주소</th>
+                <td id="address">{{ restaurant.address }}</td>
+              </tr>
+              <tr>
+                <th>전화번호</th>
+                <td>{{ restaurant.shop_number }}</td>
+              </tr>
+              <tr>
+                <th>가격대</th>
+                <td>{{ restaurant.between_pay }}</td>
+              </tr>
+              <tr>
+                <th>영업시간</th>
+                <td>{{ restaurant.opening_time }}</td>
+              </tr>
+              <tr>
+                <th>쉬는시간</th>
+                <td>{{ restaurant.break_day }}</td>
+              </tr>
+              <tr>
+                <th>태그 #</th>
+                <td>
+                  {% for tag in restaurant.tags.all %}
+                    {{ tag.name }}
+                  {% endfor %}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- Detail-Update -->
+        <div class="detail-update text-end">
+          <p>업데이트 :{{ restaurant.updated_at|date:'Y-m-d' }}</p>
+        </div>
+      </div>
 
+      <!-- Review -->
+      <div class="review">
+        <div class="review-top">
+          <h6>리뷰
+            <span>({{ reviews_count }})</span>
+          </h6>
+          <div class="like-count">
+            <h6>전체 ({{ reviews_count }})</h6>
+            <h6>맛있다 ({{ upper }})</h6>
+            <h6>괜찮다 ({{ middle }})</h6>
+            <h6>별로 ({{ lower }})</h6>
+          </div>
+        </div>
 
-<!-- Script -->
-<script type="text/javascript"
-  src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8148ff6f51862625ec940e0d841516dd&libraries=services"></script>
-<script>
-  var mapContainer = document.getElementById('map'), // 지도를 표시할 div
-    mapOption = {
-      center: new kakao
-        .maps
-        .LatLng(37.4882, 127.0412), // 지도의 중심좌표
-      level: 3 // 지도의 확대 레벨
-    };
+        {% for review in reviews %}
+          <a href="{% url 'reviews:review_detail' restaurant.pk review.pk %}" style="color: var(--dark--color);">
+            <!-- Review-content -->
+            <div class="review-content">
+              <!-- Review-left -->
+              <div class="review-left">
+                <div class="review__profile">
+                  {% if review.user.profile_image %}
+                    <img src="{{ review.user.profile_image }}" style="width: 100%;" alt="">
+                  {% endif %}
+                </div>
+                <p class="m-0">{{ review.user.username }}</p>
+                <div class="user-count d-flex align-items-center">
+                  <i class="fa-solid fa-pen"></i>
+                  <span class="ms-1">{{ review.user.review_set.count }}</span>
+                </div>
+              </div>
+              <!-- Review-center -->
+              <div class="review-center">
+                <p class="review-create">{{ review.created_at|date:'Y-m-d' }}</p>
+                <p class="mb-2">{{ review.content }}</p>
+                {% if review.reviewimage_set.all %}
+                  {% for reviewimage in review.reviewimage_set.all %}
+                    {% if reviewimage.photo1 %}
+                      <img src="{{ reviewimage.photo1.url }}" alt="">
+                    {% endif %}
+                    {% if reviewimage.photo2 %}
+                      <img src="{{ reviewimage.photo2.url }}" alt="">
+                    {% endif %}
+                    {% if reviewimage.photo3 %}
+                      <img src="{{ reviewimage.photo3.url }}" alt="">
+                    {% endif %}
+                    {% endfor%}
+                  {% endif %}
+                </div>
+                <!-- Review-right -->
+                <div class="review-right">
+                  {% if review.rating > 3 %}
+                    <div style="color: var(--main-color);" class="d-flex flex-column flex-wrap align-items-center align-content-end">
+                      <i class="fa-regular fa-face-grin-hearts fa-2x"></i>
+                      <p>맛있다</p>
+                    </div>
+                  {% elif review.rating == 3 %}
+                    <div style="color: var(--main-color);" class="d-flex flex-column flex-wrap align-items-center align-content-end">
+                      <i class="fa-regular fa-face-grin-wide fa-2x"></i>
+                      <p>괜찮다</p>
+                    </div>
+                  {% else %}
+                    <div style="color: var(--main-color);" class="d-flex flex-column flex-wrap align-items-center align-content-end">
+                      <i class="fa-regular fa-face-grin-beam-sweat fa-2x"></i>
+                      <p>별로</p>
+                    </div>
+                  {% endif %}
+                </div>
+              </div>
+            </a>
+            {% endfor%}
+            <p></p>
+          </div>
+        </div>
+        <!-- Detail & Review-End -->
 
-  // 지도를 생성합니다
-  var map = new kakao
-    .maps
-    .Map(mapContainer, mapOption);
+        <!-- Script -->
+        <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8148ff6f51862625ec940e0d841516dd&libraries=services"></script>
+        <script>
+          var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+            mapOption = {
+              center: new kakao
+                .maps
+                .LatLng(37.4882, 127.0412), // 지도의 중심좌표
+              level: 3 // 지도의 확대 레벨
+            };
 
-  // 주소-좌표 변환 객체를 생성합니다
-  var geocoder = new kakao
-    .maps
-    .services
-    .Geocoder();
+          // 지도를 생성합니다
+          var map = new kakao
+            .maps
+            .Map(mapContainer, mapOption);
 
-  // 주소로 좌표를 검색합니다
-  var address = document
-    .querySelector('#address')
-    .innerText
-  console
-    .log(address)
-  geocoder.addressSearch(address, function (result, status) {
+          // 주소-좌표 변환 객체를 생성합니다
+          var geocoder = new kakao
+            .maps
+            .services
+            .Geocoder();
 
-    // 정상적으로 검색이 완료됐으면
-    if (status === kakao.maps.services.Status.OK) {
+          // 주소로 좌표를 검색합니다
+          var address = document
+            .querySelector('#address')
+            .innerText
+            console
+            .log(address)
+          geocoder.addressSearch(address, function (result, status) {
 
-      var coords = new kakao
-        .maps
-        .LatLng(result[0].y, result[0].x);
+            // 정상적으로 검색이 완료됐으면
+            if (status === kakao.maps.services.Status.OK) {
 
-      // geolocation을 이용할 수 있으면
-      if (navigator.geolocation) {
-    
-        // GeoLocation을 이용해서 접속 위치를 얻어옵니다
-        navigator.geolocation.getCurrentPosition(function(position) {
-        
-        var lat = position.coords.latitude, // 위도
-            lon = position.coords.longitude; // 경도
-        
-        var locPosition = new kakao.maps.LatLng(lat, lon), // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
-            
-        polyline = new kakao.maps.Polyline({
-          path: [
-            locPosition, 
-            coords
-          ],
-          strokeColor: '#FF00FF',
-          strokeOpacity: 0.1,
-          strokeStyle: 'dashed'
-        })
+              var coords = new kakao
+                .maps
+                .LatLng(result[0].y, result[0].x);
 
-        var distance = Math.round(polyline.getLength())
+              // geolocation을 이용할 수 있으면
+              if (navigator.geolocation) {
 
-        message = distance; // 인포윈도우에 표시될 내용입니다
+                // GeoLocation을 이용해서 접속 위치를 얻어옵니다
+                navigator
+                  .geolocation
+                  .getCurrentPosition(function (position) {
 
-        console.log(message);
-  
-        // 결과값으로 받은 위치를 마커로 표시합니다
-        var marker = new kakao
-          .maps
-          .Marker({ map: map, position: coords });
-        // 인포윈도우로 장소에 대한 설명을 표시합니다
-        
-        function getTimeHTML(distance) {
-          var restaurant_name = document.querySelector('#restaurant_name').innerText
-      
-          // 도보의 시속은 평균 4km/h 이고 도보의 분속은 67m/min입니다
-          var walkkTime = distance / 67 | 0;
-          var walkHour = '', walkMin = '';
-      
-          // 계산한 도보 시간이 60분 보다 크면 시간으로 표시합니다
-          if (walkkTime > 60) {
-              walkHour = '<span class="number">' + Math.floor(walkkTime / 60) + '</span>시간 '
-          }
-          walkMin = '<span class="number">' + walkkTime % 60 + '</span>분'
-      
-          // 자전거의 평균 시속은 16km/h 이고 이것을 기준으로 자전거의 분속은 267m/min입니다
-          var bycicleTime = distance / 227 | 0;
-          var bycicleHour = '', bycicleMin = '';
-      
-          // 계산한 자전거 시간이 60분 보다 크면 시간으로 표출합니다
-          if (bycicleTime > 60) {
-              bycicleHour = '<span class="number">' + Math.floor(bycicleTime / 60) + '</span>시간 '
-          }
-          bycicleMin = '<span class="number">' + bycicleTime % 60 + '</span>분'
-      
-          // 거리와 도보 시간, 자전거 시간을 가지고 HTML Content를 만들어 리턴합니다
-          content = '<ul class="dotOverlay distanceInfo">';
-          content += '    <li>';
-          content += '        <span class="label fw-bold">' + restaurant_name + '</span>';
-          content += '    </li>';
-          content += '    <li>';
-          content += '        <span class="label">총거리</span><span class="number">' + distance + '</span>m';
-          content += '    </li>';
-          content += '    <li>';
-          content += '        <span class="label">도보</span>' + walkHour + walkMin;
-          content += '    </li>';
-          content += '    <li>';
-          content += '        <span class="label">자전거</span>' + bycicleHour + bycicleMin;
-          content += '    </li>';
-          content += '</ul>'
-      
-          return content;
-        }
+                    var lat = position.coords.latitude, // 위도
+                      lon = position.coords.longitude; // 경도
 
-        content = getTimeHTML(distance)
+                    var locPosition = new kakao
+                        .maps
+                        .LatLng(lat, lon), // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
 
-        var infowindow = new kakao
-          .maps
-          .InfoWindow({
-            position: coords,
-            content: content,
-            xAnchor: 0,
-            yAnchor: 0
+                      polyline = new kakao
+                        .maps
+                        .Polyline({
+                          path: [
+                            locPosition, coords
+                          ],
+                          strokeColor: '#FF00FF',
+                          strokeOpacity: 0.1,
+                          strokeStyle: 'dashed'
+                        })
+
+                    var distance = Math.round(polyline.getLength())
+
+                    message = distance; // 인포윈도우에 표시될 내용입니다
+
+                    console.log(message);
+
+                    // 결과값으로 받은 위치를 마커로 표시합니다
+                    var marker = new kakao
+                      .maps
+                      .Marker({map: map, position: coords});
+                    // 인포윈도우로 장소에 대한 설명을 표시합니다
+
+                    function getTimeHTML(distance) {
+                      var restaurant_name = document
+                        .querySelector('#restaurant_name')
+                        .innerText
+
+                      // 도보의 시속은 평균 4km/h 이고 도보의 분속은 67m/min입니다
+                      var walkkTime = distance / 67 | 0;
+                      var walkHour = '',
+                        walkMin = '';
+
+                      // 계산한 도보 시간이 60분 보다 크면 시간으로 표시합니다
+                      if (walkkTime > 60) {
+                        walkHour = '<span class="number">' + Math.floor(walkkTime / 60) + '</span>시간 '
+                      }
+                      walkMin = '<span class="number">' + walkkTime % 60 + '</span>분'
+
+                      // 자전거의 평균 시속은 16km/h 이고 이것을 기준으로 자전거의 분속은 267m/min입니다
+                      var bycicleTime = distance / 227 | 0;
+                      var bycicleHour = '',
+                        bycicleMin = '';
+
+                      // 계산한 자전거 시간이 60분 보다 크면 시간으로 표출합니다
+                      if (bycicleTime > 60) {
+                        bycicleHour = '<span class="number">' + Math.floor(bycicleTime / 60) + '</span>시간 '
+                      }
+                      bycicleMin = '<span class="number">' + bycicleTime % 60 + '</span>분'
+
+                      // 거리와 도보 시간, 자전거 시간을 가지고 HTML Content를 만들어 리턴합니다
+                      content = '<ul class="dotOverlay distanceInfo">';
+                      content += '    <li>';
+                      content += '        <span class="label fw-bold">' + restaurant_name + '</span>';
+                      content += '    </li>';
+                      content += '    <li>';
+                      content += '        <span class="label">총거리</span><span class="number">' + distance + '</span>m';
+                      content += '    </li>';
+                      content += '    <li>';
+                      content += '        <span class="label">도보</span>' + walkHour + walkMin;
+                      content += '    </li>';
+                      content += '    <li>';
+                      content += '        <span class="label">자전거</span>' + bycicleHour + bycicleMin;
+                      content += '    </li>';
+                      content += '</ul>'
+
+                      return content;
+                    }
+
+                    content = getTimeHTML(distance)
+
+                    var infowindow = new kakao
+                      .maps
+                      .InfoWindow({position: coords, content: content, xAnchor: 0, yAnchor: 0});
+
+                    infowindow.open(map, marker);
+
+                    // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+                    map.setCenter(coords);
+                  });
+
+              } else { // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
+                message = 'geolocation을 사용할수 없어요..'
+                cconsole.log(message);
+              }
+
+            }
           });
-  
-        infowindow.open(map, marker);
-  
-        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-        map.setCenter(coords);
-    });
-    
-      } else { // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
-              message = 'geolocation을 사용할수 없어요..'
-              cconsole.log(message);
-      }
+        </script>
 
-    }
-  });
+        <!-- CDN axios -->
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script>
+          const forms = document.querySelectorAll('.like-forms')
+          const csrftoken = document
+            .querySelector('[name=csrfmiddlewaretoken]')
+            .value;
 
+          forms.forEach((form) => {
+            form.addEventListener('submit', function (event) {
+              event.preventDefault();
+              const restaurantId = event
+                .target
+                .dataset
+                .restaurantId
+                axios({
+                  method: 'post',
+                  url: `http://127.0.0.1:8000/restaurants/${restaurantId}/like/`,
+                  headers: {
+                    'X-CSRFToken': csrftoken
+                  }, // csrf token
+                })
+                .then((response) => {
+                  console.log(response.data)
+                  const isLiked = response.data.is_liked
+                  const likeBtn = document.querySelector(`#like-${restaurantId}`)
+                  const starBtn = document.querySelector(`#star-${restaurantId}`)
+                  const likeCountTag = document.querySelector('#star-count')
+                  const likeCount = response.data.like_count
+                  likeCountTag.innerText = likeCount
+                  if (isLiked === true) {
+                    starBtn
+                      .classList
+                      .remove('fa-regular')
+                    starBtn
+                      .classList
+                      .add('fa-solid')
+                    starBtn.style.color = 'var(--main-color)';
+                  } else {
+                    starBtn
+                      .classList
+                      .remove('fa-solid')
+                    starBtn
+                      .classList
+                      .add('fa-regular')
+                    starBtn.style.color = 'var(--gray-color)';
+                  }
+                })
+                .catch((error) => {
+                  console.log(error.response)
+                })
+              })
+          })
+        </script>
 
-</script>
-
-<!-- CDN axios -->
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script>
-  const forms = document.querySelectorAll('.like-forms')
-  const csrftoken = document
-    .querySelector('[name=csrfmiddlewaretoken]')
-    .value;
-
-  forms.forEach((form) => {
-    form.addEventListener('submit', function (event) {
-      event.preventDefault();
-      const restaurantId = event
-        .target
-        .dataset
-        .restaurantId
-      axios({
-        method: 'post',
-        url: `http://127.0.0.1:8000/restaurants/${restaurantId}/like/`,
-        headers: {
-          'X-CSRFToken': csrftoken
-        }, // csrf token
-      })
-        .then((response) => {
-          console.log(response.data)
-          const isLiked = response.data.is_liked
-          const likeBtn = document.querySelector(`#like-${restaurantId}`)
-          const starBtn = document.querySelector(`#star-${restaurantId}`)
-          const likeCountTag = document.querySelector('#star-count')
-          const likeCount = response.data.like_count
-          likeCountTag.innerText = likeCount
-          if (isLiked === true) {
-            starBtn
-              .classList
-              .remove('fa-regular')
-            starBtn
-              .classList
-              .add('fa-solid')
-            starBtn.style.color = 'var(--main-color)';
-          } else {
-            starBtn
-              .classList
-              .remove('fa-solid')
-            starBtn
-              .classList
-              .add('fa-regular')
-            starBtn.style.color = 'var(--gray-color)';
-          }
-        })
-        .catch((error) => {
-          console.log(error.response)
-        })
-    })
-  })
-</script>
-
-{% include 'footer.html' %}
-{% endblock body %}
+        {% include 'footer.html' %}
+      {% endblock body %}
