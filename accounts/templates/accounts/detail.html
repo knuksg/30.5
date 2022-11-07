@@ -79,18 +79,13 @@
 
     <!-- followersing -->
     <p>
-      {%if request.user == user %}
-        following :<span id='followings-count'>{{ user.followers.count }}</span>
-        | follower :<span id='followers-count'>{{ user.followings.count }}</span>
-      {% else %}
-        following :<span id='followings-count'>{{ user.followings.count }}</span>
-        | follower :<span id='followers-count'>{{ user.followers.count }}</span>
-      {% endif %}
+      following :<span id='followings-count'>{{ user.followers.count }}</span>
+      | follower :<span id='followers-count'>{{ user.followings.count }}</span>
     </p>
     <form id='follow-form' data-user-id='{{ user.pk }}'>
       {% csrf_token %}
       {% if request.user != user %}
-        {% if request.user in user.followers.all %}
+        {% if request.user in user.followings.all %}
           <button class='btn btn-dark' type='submit'>팔로우 취소</button>
         {% else %}
           <button class='btn btn-dark' type='submit'>팔로우</button>
