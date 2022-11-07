@@ -135,10 +135,6 @@
   margin-right: 10px;
 }
 
-.rv-profile__img img {
-  width: 100%;
-}
-
 .rv-profile__count {
   color: var(--gray-dark--color);
   font-size: 12px;
