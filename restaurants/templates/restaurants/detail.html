@@ -4,10 +4,10 @@
 {% endblock title %}
 {% block body %}
 
-  <!-- Img-Top -->
-  <div class="img-top">
-    <!-- Swiper -->
-    <div class="swiper mySwiper">
+<!-- Img-Top -->
+<div class="img-top">
+  <!-- Swiper -->
+  <div class="swiper mySwiper">
       <div class="swiper-wrapper">
         {% for review in reviews %}
           {% if review.reviewimage_set.all %}
@@ -38,33 +38,26 @@
           {% endfor %}
         </div>
       </div>
-
-      <!-- Detail & Review -->
-      <div class="container cont">
-        <!-- Detail -->
-        <div class="detail">
-          <div id="map" class="my-3" style="width:100%;height:350px;"></div>
-          <!-- Detail-Top -->
-          <div class="detail-top">
-            <div class="">
-              <div class="detail__title">
-                <h2 id="restaurant_name">{{ restaurant.name }}</h2>
-                <span class="fs-2">{{ restaurant.grade }}</span>
-              </div>
-              <div class="detail__count d-flex">
-                <div class="d-flex align-items-center">
-                  <i class="fa-solid fa-eye me-1"></i>
-                  <p class="m-0">{{ restaurant.hits }}</p>
-                </div>
-                <div class="d-flex align-items-center">
-                  <i class="fa-solid fa-pen ms-3 me-1"></i>
-                  <p class="m-0">{{ reviews_count }}</p>
-                </div>
-                <div class="d-flex align-items-center">
-                  <i class="fa-solid fa-star ms-3 me-1"></i>
-                  <span id="like-count">{{ restaurant.like_users.count }}</span>
-                </div>
-              </div>
+  <!-- Detail & Review -->
+  <div class="container">
+    <!-- Detail -->
+    <div class="detail">
+      <div id="map" class="my-3" style="width:100%;height:350px;"></div>
+      <!-- Detail-Top -->
+      <div class="detail-top">
+        <div class="">
+          <div class="detail__title">
+            <h2 id="restaurant_name">{{ restaurant.name }}</h2>
+            <span class="fs-2">{{ restaurant.grade }}</span>
+          </div>
+          <div class="detail__count d-flex">
+            <div class="d-flex align-items-center">
+              <i class="fa-solid fa-eye me-1"></i>
+              <p class="m-0">{{ restaurant.hits }}</p>
+            </div>
+            <div class="d-flex align-items-center">
+              <i class="fa-solid fa-pen ms-3 me-1"></i>
+              <p class="m-0">{{ reviews_count }}</p>
             </div>
             <div class="detail__btn d-flex">
               <div class="text-center me-3">
@@ -135,6 +128,7 @@
           </div>
         </div>
 
+
         <!-- Review -->
         <div class="review">
           <div class="review-top">
@@ -145,6 +139,19 @@
               <h6>맛있다 ({{ upper }})</h6>
               <h6>괜찮다 ({{ middle }})</h6>
               <h6>별로 ({{ lower }})</h6>
+      {% for review in reviews %}
+      <a href="{% url 'reviews:review_detail' restaurant.pk review.pk %}" style="color: var(--dark--color);">
+        <div class="review-content">
+          <div class="review-left">
+            <div class="review__profile">
+              {% if review.user.profile_image %}
+              <img src="{{ review.user.profile_image }}" style="width: 100%;" alt="">
+              {% endif %}
+            </div>
+            <p class="m-0">{{ review.user.username }}</p>
+            <div class="user-count d-flex align-items-center">
+                <i class="fa-solid fa-pen"></i>
+                <span class="ms-1">{{ review.user.review_set.count }}</span>
             </div>
           </div>
 
