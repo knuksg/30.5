@@ -7,32 +7,52 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Tag',
+            name="Tag",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=30)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=30)),
             ],
         ),
         migrations.CreateModel(
-            name='Restaurant',
+            name="Restaurant",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=80)),
-                ('address', models.CharField(max_length=80)),
-                ('shop_number', models.CharField(max_length=80)),
-                ('between_pay', models.CharField(max_length=80)),
-                ('opening_time', models.CharField(max_length=80)),
-                ('break_day', models.CharField(max_length=80)),
-                ('subtext', models.CharField(max_length=140)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('hits', models.IntegerField(default=0)),
-                ('tags', models.ManyToManyField(related_name='restaurants', to='restaurants.Tag')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=80)),
+                ("address", models.CharField(max_length=80)),
+                ("shop_number", models.CharField(max_length=80)),
+                ("between_pay", models.CharField(max_length=80)),
+                ("opening_time", models.CharField(max_length=80)),
+                ("break_day", models.CharField(max_length=80)),
+                ("subtext", models.CharField(max_length=140)),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
+                ("hits", models.IntegerField(default=0)),
+                (
+                    "tags",
+                    models.ManyToManyField(
+                        related_name="restaurants", to="restaurants.Tag"
+                    ),
+                ),
             ],
         ),
     ]

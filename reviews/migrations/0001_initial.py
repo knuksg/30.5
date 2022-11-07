@@ -10,35 +10,103 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
+        ("restaurants", "0001_initial"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('restaurants', '0001_initial'),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Review',
+            name="Review",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('content', models.TextField(max_length=500, null=True)),
-                ('rating', models.IntegerField(choices=[(1, '🍚'), (2, '🍚☕️'), (3, '🍚☕️🍷'), (4, '🍚☕️🍷🍰'), (5, '🍚☕️🍷🍰🍔')], default=None)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('restaurant', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='reviews', to='restaurants.restaurant')),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("content", models.TextField(max_length=500, null=True)),
+                (
+                    "rating",
+                    models.IntegerField(
+                        choices=[
+                            (1, "🍚"),
+                            (2, "🍚☕️"),
+                            (3, "🍚☕️🍷"),
+                            (4, "🍚☕️🍷🍰"),
+                            (5, "🍚☕️🍷🍰🍔"),
+                        ],
+                        default=None,
+                    ),
+                ),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
+                (
+                    "restaurant",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="reviews",
+                        to="restaurants.restaurant",
+                    ),
+                ),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='ReviewImage',
+            name="ReviewImage",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('photo1', models.ImageField(blank=True, upload_to='reviewBoard/images')),
-                ('photo2', models.ImageField(blank=True, upload_to='reviewBoard/images')),
-                ('photo3', models.ImageField(blank=True, upload_to='reviewBoard/images')),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('restaurant', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='review_images', to='restaurants.restaurant')),
-                ('reviews', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='reviews.review')),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "photo1",
+                    models.ImageField(blank=True, upload_to="reviewBoard/images"),
+                ),
+                (
+                    "photo2",
+                    models.ImageField(blank=True, upload_to="reviewBoard/images"),
+                ),
+                (
+                    "photo3",
+                    models.ImageField(blank=True, upload_to="reviewBoard/images"),
+                ),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
+                (
+                    "restaurant",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="review_images",
+                        to="restaurants.restaurant",
+                    ),
+                ),
+                (
+                    "reviews",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, to="reviews.review"
+                    ),
+                ),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
     ]
