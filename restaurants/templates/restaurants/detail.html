@@ -10,35 +10,34 @@
   <div class="swiper mySwiper">
       <div class="swiper-wrapper">
         {% for review in reviews %}
-        {% if review.reviewimage_set.all %}
-        {% for reviewimage in review.reviewimage_set.all %}
-          {% if reviewimage.photo1 %}
-          <div class="swiper-slide">
-            <div class="img-top__img">
-              <img src="{{ reviewimage.photo1.url }}" alt="">
-            </div>
-          </div>
-          {% endif %}
-          {% if reviewimage.photo2 %}
-          <div class="swiper-slide">
-            <div class="img-top__img">
-              <img src="{{ reviewimage.photo2.url }}" alt="">
-            </div>
-          </div>
-          {% endif %}
-          {% if reviewimage.photo3 %}
-          <div class="swiper-slide">
-            <div class="img-top__img">
-              <img src="{{ reviewimage.photo3.url }}" alt="">
-            </div>
-          </div>
-          {% endif %}
-        {% endfor%}
-        {% endif %}
-      {% endfor %}
-    </div>
-  </div>
-
+          {% if review.reviewimage_set.all %}
+            {% for reviewimage in review.reviewimage_set.all %}
+              {% if reviewimage.photo1 %}
+                <div class="swiper-slide">
+                  <div class="img-top__img">
+                    <img src="{{ reviewimage.photo1.url }}" alt="">
+                  </div>
+                </div>
+              {% endif %}
+              {% if reviewimage.photo2 %}
+                <div class="swiper-slide">
+                  <div class="img-top__img">
+                    <img src="{{ reviewimage.photo2.url }}" alt="">
+                  </div>
+                </div>
+              {% endif %}
+              {% if reviewimage.photo3 %}
+                <div class="swiper-slide">
+                  <div class="img-top__img">
+                    <img src="{{ reviewimage.photo3.url }}" alt="">
+                  </div>
+                </div>
+              {% endif %}
+              {% endfor%}
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
   <!-- Detail & Review -->
   <div class="container">
     <!-- Detail -->
@@ -60,94 +59,86 @@
               <i class="fa-solid fa-pen ms-3 me-1"></i>
               <p class="m-0">{{ reviews_count }}</p>
             </div>
-            <div class="d-flex align-items-center">
-              <i class="fa-solid fa-star ms-3 me-1"></i>
-              <span id="like-count">{{ restaurant.like_users.count }}</span>
+            <div class="detail__btn d-flex">
+              <div class="text-center me-3">
+                <a href="{% url 'reviews:review_create' restaurant.pk %}">
+                  <i class="fa-regular fa-pen-to-square fa-2x"></i>
+                  <p>리뷰쓰기</p>
+                </a>
+              </div>
+              <div class="text-center">
+                <!-- Likes -->
+                {% if request.user.is_authenticated %}
+                  <form class="like-forms" data-restaurant-id="{{ restaurant.pk }}">
+                    {% csrf_token %}
+                    {% if user in restaurant.like_users.all %}
+                      <button id="like-{{ restaurant.pk }}" type="submit" style="background: none; border: 0; color: var(--main-color);">
+                        <i id="star-{{ restaurant.pk }}" class="fa-solid fa-star fa-2x"></i>
+                      </button>
+                    {% else %}
+                      <button id="like-{{ restaurant.pk }}" type="submit" style="background: none; border: 0; color: var(--gray-color);">
+                        <i id="star-{{ restaurant.pk }}" class="fa-regular fa-star fa-2x"></i>
+                      </button>
+                    {% endif %}
+                  </form>
+                {% endif %}
+              </div>
             </div>
           </div>
-        </div>
-        <div class="detail__btn d-flex">
-          <div class="text-center me-3">
-            <a href="{% url 'reviews:review_create' restaurant.pk %}">
-              <i class="fa-regular fa-pen-to-square fa-2x"></i>
-              <p>리뷰쓰기</p>
-            </a>
+          <!-- Detail-Info -->
+          <div class="detail-info">
+            <table>
+              <tbody>
+                <p></p>
+                <tr>
+                  <th>주소</th>
+                  <td id="address">{{ restaurant.address }}</td>
+                </tr>
+                <tr>
+                  <th>전화번호</th>
+                  <td>{{ restaurant.shop_number }}</td>
+                </tr>
+                <tr>
+                  <th>가격대</th>
+                  <td>{{ restaurant.between_pay }}</td>
+                </tr>
+                <tr>
+                  <th>영업시간</th>
+                  <td>{{ restaurant.opening_time }}</td>
+                </tr>
+                <tr>
+                  <th>쉬는시간</th>
+                  <td>{{ restaurant.break_day }}</td>
+                </tr>
+                <tr>
+                  <th>태그 #</th>
+                  <td>
+                    {% for tag in restaurant.tags.all %}
+                      {{ tag.name }}
+                    {% endfor %}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-          <div class="text-center">
-            <!-- Likes -->
-            {% if request.user.is_authenticated %}
-            <form class="like-forms" data-restaurant-id="{{ restaurant.pk }}">
-              {% csrf_token %}
-              {% if user in restaurant.like_users.all %}
-                <button id="like-{{ restaurant.pk }}" type="submit" style="background: none; border: 0; color: var(--main-color);">
-                  <i id="star-{{ restaurant.pk }}" class="fa-solid fa-star fa-2x"></i>
-                </button>
-                {% else %}
-                <button id="like-{{ restaurant.pk }}" type="submit" style="background: none; border: 0; color: var(--gray-color);">
-                  <i id="star-{{ restaurant.pk }}" class="fa-regular fa-star fa-2x"></i>
-                </button>
-              {% endif %}
-            </form>
-            {% endif %}
+          <!-- Detail-Update -->
+          <div class="detail-update text-end">
+            <p>업데이트 :
+              {{ restaurant.updated_at|date:'Y-m-d' }}</p>
           </div>
         </div>
-      </div>
-      <!-- Detail-Info -->
-      <div class="detail-info">
-        <table>
-          <tbody>
-            <p></p>
-            <tr>
-              <th>주소</th>
-              <td id="address">{{ restaurant.address }}</td>
-            </tr>
-            <tr>
-              <th>전화번호</th>
-              <td>{{ restaurant.shop_number }}</td>
-            </tr>
-            <tr>
-              <th>가격대</th>
-              <td>{{ restaurant.between_pay }}</td>
-            </tr>
-            <tr>
-              <th>영업시간</th>
-              <td>{{ restaurant.opening_time }}</td>
-            </tr>
-            <tr>
-              <th>쉬는시간</th>
-              <td>{{ restaurant.break_day }}</td>
-            </tr>
-            <tr>
-              <th>태그 #</th>
-              <td>
-                {% for tag in restaurant.tags.all %}
-                {{ tag.name }}
-                {% endfor %}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <!-- Detail-Update -->
-      <div class="detail-update text-end">
-        <p>업데이트 :
-          {{ restaurant.updated_at|date:'Y-m-d' }}</p>
-      </div>
-    </div>
 
 
-    <!-- Review -->
-    <div class="review">
-      <div class="review-top">
-        <h6>리뷰 <span>({{ reviews_count }})</span></h6>
-        <div class="like-count">
-          <h6>전체 ({{ reviews_count }})</h6>
-          <h6>맛있다 ({{ upper }})</h6>
-          <h6>괜찮다 ({{ middle }})</h6>
-          <h6>별로 ({{ lower }})</h6>
-        </div>
-      </div>
-
+        <!-- Review -->
+        <div class="review">
+          <div class="review-top">
+            <h6>리뷰
+              <span>({{ reviews_count }})</span></h6>
+            <div class="like-count">
+              <h6>전체 ({{ reviews_count }})</h6>
+              <h6>맛있다 ({{ upper }})</h6>
+              <h6>괜찮다 ({{ middle }})</h6>
+              <h6>별로 ({{ lower }})</h6>
       {% for review in reviews %}
       <a href="{% url 'reviews:review_detail' restaurant.pk review.pk %}" style="color: var(--dark--color);">
         <div class="review-content">
@@ -163,82 +154,110 @@
                 <span class="ms-1">{{ review.user.review_set.count }}</span>
             </div>
           </div>
-          <div class="review-center">
-            <p class="review-create">{{ review.created_at|date:'Y-m-d' }}</p>
-              <p class="mb-2">{{ review.content }}</p>
 
-              {% if review.reviewimage_set.all %}
-              {% for reviewimage in review.reviewimage_set.all %}
-                {% if reviewimage.photo1 %}
-                <img src="{{ reviewimage.photo1.url }}" alt="">
-                {% endif %}
-                {% if reviewimage.photo2 %}
-                <img src="{{ reviewimage.photo2.url }}" alt="">
-                {% endif %}
-                {% if reviewimage.photo3 %}
-                <img src="{{ reviewimage.photo3.url }}" alt="">
-                {% endif %}
+          {% for review in reviews %}
+            <a href="{% url 'reviews:review_detail' restaurant.pk review.pk %}" style="color: var(--dark--color);">
+              <div class="review-content">
+                <div class="review-left">
+                  <a href="{% url 'accounts:detail' review.user.pk %}">
+                    <div class="review__profile">
+                      {% if review.user.profile_image %}
+                        <img src="{{ review.user.profile_image }}" alt="">
+                      {% endif %}
+                    </div>
+                  </a>
+                  <p class="m-0">{{ review.user.username }}</p>
+                  <div class="user-count d-flex align-items-center">
+                    <i class="fa-solid fa-pen"></i>
+                    <span class="ms-1">{{ review.user.review_set.count }}</span>
+                  </div>
+                </div>
+                <div class="review-center">
+                  <p class="review-create">{{ review.created_at|date:'Y-m-d' }}</p>
+                  <p class="mb-2">{{ review.content }}</p>
+
+                  {% if review.reviewimage_set.all %}
+                    {% for reviewimage in review.reviewimage_set.all %}
+                      {% if reviewimage.photo1 %}
+                        <img src="{{ reviewimage.photo1.url }}" alt="">
+                      {% endif %}
+                      {% if reviewimage.photo2 %}
+                        <img src="{{ reviewimage.photo2.url }}" alt="">
+                      {% endif %}
+                      {% if reviewimage.photo3 %}
+                        <img src="{{ reviewimage.photo3.url }}" alt="">
+                      {% endif %}
+                      {% endfor%}
+                    {% endif %}
+
+                  </div>
+                  <div class="review-right">
+                    {% if review.rating > 3 %}
+                      <div style="color: var(--main-color);">
+                        <i class="fa-regular fa-face-grin-hearts fa-2x"></i>
+                        <p>맛있다</p>
+                      </div>
+                    {% elif review.rating == 3 %}
+                      <div style="color: var(--main-color);">
+                        <i class="fa-regular fa-face-grin-wide fa-2x"></i>
+                        <p>괜찮다</p>
+                      </div>
+                    {% else %}
+                      <div style="color: var(--main-color);">
+                        <i class="fa-regular fa-face-grin-beam-sweat fa-2x"></i>
+                        <p>별로</p>
+                      </div>
+                    {% endif %}
+                  </div>
+                </div>
+              </a>
               {% endfor%}
-              {% endif %}
-                
-          </div>
-          <div class="review-right">
-            {% if review.rating > 3 %}
-            <div style="color: var(--main-color);">
-              <i class="fa-regular fa-face-grin-hearts fa-2x"></i>
-              <p>맛있다</p>
+              <p></p>
             </div>
-            {% elif review.rating == 3 %}
-            <div style="color: var(--main-color);">
-              <i class="fa-regular fa-face-grin-wide fa-2x"></i>
-              <p>괜찮다</p>
-            </div>
-            {% else %}
-            <div style="color: var(--main-color);">
-              <i class="fa-regular fa-face-grin-beam-sweat fa-2x"></i>
-              <p>별로</p>
-            </div>
-            {% endif %}
           </div>
         </div>
-      </a>
-      {% endfor%}
-      <p></p>
-    </div>
-  </div>
-</div>
 
+        <!-- Script -->
+        <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8148ff6f51862625ec940e0d841516dd&libraries=services"></script>
+        <script>
+          var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+            mapOption = {
+              center: new kakao
+                .maps
+                .LatLng(37.4882, 127.0412), // 지도의 중심좌표
+              level: 3 // 지도의 확대 레벨
+            };
 
-<!-- Script -->
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8148ff6f51862625ec940e0d841516dd&libraries=services"></script>
-<script>
-  var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-      mapOption = {
-          center: new kakao.maps.LatLng(37.4882, 127.0412), // 지도의 중심좌표
-          level: 3 // 지도의 확대 레벨
-      };  
+          // 지도를 생성합니다
+          var map = new kakao
+            .maps
+            .Map(mapContainer, mapOption);
 
-  // 지도를 생성합니다    
-  var map = new kakao.maps.Map(mapContainer, mapOption); 
+          // 주소-좌표 변환 객체를 생성합니다
+          var geocoder = new kakao
+            .maps
+            .services
+            .Geocoder();
 
-  // 주소-좌표 변환 객체를 생성합니다
-  var geocoder = new kakao.maps.services.Geocoder();
+          // 주소로 좌표를 검색합니다
+          var address = document
+            .querySelector('#address')
+            .innerText
+            console
+            .log(address)
+          geocoder.addressSearch(address, function (result, status) {
 
-  // 주소로 좌표를 검색합니다
-  var address = document.querySelector('#address').innerText
-  console.log(address)
-  geocoder.addressSearch(address, function(result, status) {
+            // 정상적으로 검색이 완료됐으면
+            if (status === kakao.maps.services.Status.OK) {
 
-      // 정상적으로 검색이 완료됐으면 
-      if (status === kakao.maps.services.Status.OK) {
+              var coords = new kakao
+                .maps
+                .LatLng(result[0].y, result[0].x);
 
-          var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-
-          // 결과값으로 받은 위치를 마커로 표시합니다
-          var marker = new kakao.maps.Marker({
-              map: map,
-              position: coords
-          });
+              // 결과값으로 받은 위치를 마커로 표시합니다
+              var marker = new kakao
+                .maps
+                .Marker({map: map, position: coords});
               // 인포윈도우로 장소에 대한 설명을 표시합니다
               var restaurant_name = document
                 .querySelector('#restaurant_name')
@@ -253,50 +272,63 @@
               // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
               map.setCenter(coords);
             }
-    });
-</script>
+          });
+        </script>
 
-  <!-- CDN axios -->
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <script>
+        <!-- CDN axios -->
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script>
+          const forms = document.querySelectorAll('.like-forms')
+          const csrftoken = document
+            .querySelector('[name=csrfmiddlewaretoken]')
+            .value;
 
-    const forms = document.querySelectorAll('.like-forms')
-    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+          forms.forEach((form) => {
+            form.addEventListener('submit', function (event) {
+              event.preventDefault();
+              const restaurantId = event
+                .target
+                .dataset
+                .restaurantId
+                axios({
+                  method: 'post',
+                  url: `http://127.0.0.1:8000/restaurants/${restaurantId}/like/`,
+                  headers: {
+                    'X-CSRFToken': csrftoken
+                  }, // csrf token
+                })
+                .then((response) => {
+                  console.log(response.data)
+                  const isLiked = response.data.is_liked
+                  const likeBtn = document.querySelector(`#like-${restaurantId}`)
+                  const starBtn = document.querySelector(`#star-${restaurantId}`)
+                  const likeCountTag = document.querySelector('#like-count')
+                  const likeCount = response.data.like_count
+                  likeCountTag.innerText = likeCount
+                  if (isLiked === true) {
+                    starBtn
+                      .classList
+                      .remove('fa-regular')
+                    starBtn
+                      .classList
+                      .add('fa-solid')
+                    starBtn.style.color = 'var(--main-color)';
+                  } else {
+                    starBtn
+                      .classList
+                      .remove('fa-solid')
+                    starBtn
+                      .classList
+                      .add('fa-regular')
+                    starBtn.style.color = 'var(--gray-color)';
+                  }
+                })
+                .catch((error) => {
+                  console.log(error.response)
+                })
+              })
+          })
+        </script>
 
-    forms.forEach((form) => {
-      form.addEventListener('submit', function(event) {
-        event.preventDefault();
-        const restaurantId = event.target.dataset.restaurantId
-        axios({
-          method: 'post',
-          url: `http://127.0.0.1:8000/restaurants/${restaurantId}/like/`,
-          headers: {'X-CSRFToken': csrftoken}, // csrf token
-        })
-        .then((response) => {
-          console.log(response.data)
-          const isLiked = response.data.is_liked
-          const likeBtn = document.querySelector(`#like-${restaurantId}`)
-          const starBtn = document.querySelector(`#star-${restaurantId}`)
-          const likeCountTag = document.querySelector('#like-count')
-          const likeCount = response.data.like_count
-          likeCountTag.innerText = likeCount
-          if (isLiked === true) {
-            starBtn.classList.remove('fa-regular')
-            starBtn.classList.add('fa-solid')
-            starBtn.style.color='var(--main-color)';
-          } else {
-            starBtn.classList.remove('fa-solid')
-            starBtn.classList.add('fa-regular')
-            starBtn.style.color='var(--gray-color)';
-          }
-        })
-        .catch((error) => {
-          console.log(error.response)
-        })
-      })
-    })
-
-  </script>
-
-{% include 'footer.html' %}
-{% endblock body %}
+        {% include 'footer.html' %}
+      {% endblock body %}
