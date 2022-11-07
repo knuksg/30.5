@@ -20,6 +20,7 @@ data = content_dict['data']
 # print(data[0]['MNU'])
 # print(data[0]['MBZ_HR'])
 # print(data[0]['FD_CS'])
+# print(data[0]['SMPL_DESC'])
 
 for i in range(101):
     pay = data[i]['MNU'].replace(',', '')
@@ -50,7 +51,8 @@ for i in range(101):
         shop_number = data[i]['TLNO'],
         between_pay = pay,
         opening_time = data[i]['MBZ_HR'],
-        break_day = '음식점에 직접 문의해주세요.')
+        break_day = '음식점에 직접 문의해주세요.',
+        subtext = data[i]['SMPL_DESC'])
     new_restaurant.save()
     tags = data[i]['FD_CS'].split("/")
     for tag in tags:
