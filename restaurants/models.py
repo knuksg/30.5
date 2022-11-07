@@ -12,11 +12,12 @@ class Restaurant(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     hits = models.IntegerField(default=0)
-    tags = models.ManyToManyField('restaurants.Tag', related_name='restaurants')
+    tags = models.ManyToManyField("restaurants.Tag", related_name="restaurants")
 
     def __str__(self):
         return self.name
 
+    # Restaurant/models.py
     @property
     def grade(self):
         reviews = Review.objects.filter(restaurant=self)
@@ -27,6 +28,7 @@ class Restaurant(models.Model):
             return sum(ratings) / len(ratings)
         else:
             return 0
+
 
 class Tag(models.Model):
     name = models.CharField(max_length=30)
