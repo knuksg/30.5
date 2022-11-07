@@ -3,6 +3,13 @@
 상세보기
 {% endblock title %}
 {% block body %}
+<style>
+  {% comment %} .dotOverlay {position:relative;bottom:10px;border-radius:6px;border: 1px solid #ccc;border-bottom:2px solid #ddd;float:left;font-size:12px;padding:5px;background:#fff;} {% endcomment %}
+  .number {font-weight:bold;color:#ee6152;}
+  .distanceInfo {position:relative;top:0px;left:0px;list-style:none;margin:0;width:200px;padding: 5px;}
+  .distanceInfo .label {display:inline-block;width:50px;}
+  {% comment %} .distanceInfo:after {content:none;} {% endcomment %}
+</style>
 
 <!-- Img-Top -->
 <div class="img-top">
@@ -259,25 +266,107 @@
         .maps
         .LatLng(result[0].y, result[0].x);
 
-      // 결과값으로 받은 위치를 마커로 표시합니다
-      var marker = new kakao
-        .maps
-        .Marker({ map: map, position: coords });
-      // 인포윈도우로 장소에 대한 설명을 표시합니다
-      var restaurant_name = document
-        .querySelector('#restaurant_name')
-        .innerText
-      var infowindow = new kakao
-        .maps
-        .InfoWindow({
-          content: '<div style="width:150px;text-align:center;padding:6px 0;">' + restaurant_name + '</div>'
-        });
-      infowindow.open(map, marker);
+      // geolocation을 이용할 수 있으면
+      if (navigator.geolocation) {
+    
+        // GeoLocation을 이용해서 접속 위치를 얻어옵니다
+        navigator.geolocation.getCurrentPosition(function(position) {
+        
+        var lat = position.coords.latitude, // 위도
+            lon = position.coords.longitude; // 경도
+        
+        var locPosition = new kakao.maps.LatLng(lat, lon), // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
+            
+        polyline = new kakao.maps.Polyline({
+          path: [
+            locPosition, 
+            coords
+          ],
+          strokeColor: '#FF00FF',
+          strokeOpacity: 0.1,
+          strokeStyle: 'dashed'
+        })
 
-      // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-      map.setCenter(coords);
+        var distance = Math.round(polyline.getLength())
+
+        message = distance; // 인포윈도우에 표시될 내용입니다
+
+        console.log(message);
+  
+        // 결과값으로 받은 위치를 마커로 표시합니다
+        var marker = new kakao
+          .maps
+          .Marker({ map: map, position: coords });
+        // 인포윈도우로 장소에 대한 설명을 표시합니다
+        
+        function getTimeHTML(distance) {
+          var restaurant_name = document.querySelector('#restaurant_name').innerText
+      
+          // 도보의 시속은 평균 4km/h 이고 도보의 분속은 67m/min입니다
+          var walkkTime = distance / 67 | 0;
+          var walkHour = '', walkMin = '';
+      
+          // 계산한 도보 시간이 60분 보다 크면 시간으로 표시합니다
+          if (walkkTime > 60) {
+              walkHour = '<span class="number">' + Math.floor(walkkTime / 60) + '</span>시간 '
+          }
+          walkMin = '<span class="number">' + walkkTime % 60 + '</span>분'
+      
+          // 자전거의 평균 시속은 16km/h 이고 이것을 기준으로 자전거의 분속은 267m/min입니다
+          var bycicleTime = distance / 227 | 0;
+          var bycicleHour = '', bycicleMin = '';
+      
+          // 계산한 자전거 시간이 60분 보다 크면 시간으로 표출합니다
+          if (bycicleTime > 60) {
+              bycicleHour = '<span class="number">' + Math.floor(bycicleTime / 60) + '</span>시간 '
+          }
+          bycicleMin = '<span class="number">' + bycicleTime % 60 + '</span>분'
+      
+          // 거리와 도보 시간, 자전거 시간을 가지고 HTML Content를 만들어 리턴합니다
+          content = '<ul class="dotOverlay distanceInfo">';
+          content += '    <li>';
+          content += '        <span class="label fw-bold">' + restaurant_name + '</span>';
+          content += '    </li>';
+          content += '    <li>';
+          content += '        <span class="label">총거리</span><span class="number">' + distance + '</span>m';
+          content += '    </li>';
+          content += '    <li>';
+          content += '        <span class="label">도보</span>' + walkHour + walkMin;
+          content += '    </li>';
+          content += '    <li>';
+          content += '        <span class="label">자전거</span>' + bycicleHour + bycicleMin;
+          content += '    </li>';
+          content += '</ul>'
+      
+          return content;
+        }
+
+        content = getTimeHTML(distance)
+
+        var infowindow = new kakao
+          .maps
+          .InfoWindow({
+            position: coords,
+            content: content,
+            xAnchor: 0,
+            yAnchor: 0
+          });
+  
+        infowindow.open(map, marker);
+  
+        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+        map.setCenter(coords);
+    });
+    
+      } else { // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
+              message = 'geolocation을 사용할수 없어요..'
+              cconsole.log(message);
+      }
+
     }
   });
+
+
 </script>
 
 <!-- CDN axios -->
